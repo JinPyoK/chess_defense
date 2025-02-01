@@ -17,4 +17,13 @@ final class SavedDataRepository {
     } catch (_) {
     }
   }
+
+  Future<void> removeInGameData() async {
+    try {
+      final pref = await SharedPreferences.getInstance();
+
+      await pref.remove('savedData');
+    } catch (_) {
+    }
+  }
 }
