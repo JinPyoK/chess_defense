@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "601408095464",
+    "firebase_url": "https://chess-defense-98af5-default-rtdb.firebaseio.com",
+    "project_id": "chess-defense-98af5",
+    "storage_bucket": "chess-defense-98af5.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:601408095464:android:756e1aefc0afbc5fcaf55d",
+        "android_client_info": {
+          "package_name": "com.jinpyok.chess_defense"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCdePR2ulZ6GhLPIwRYMUffa5Rj32Zyq_Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

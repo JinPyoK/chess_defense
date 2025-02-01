@@ -35,6 +35,37 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
 
+  # UI
+  font_awesome_flutter: ^10.8.0 # 아이콘
+  google_fonts: ^6.2.1 # 구글 폰트
+  skeletonizer: ^1.4.3 # 로딩 스켈레톤
+  flutter_animate: ^4.5.2 # 기물 장군 표시
+  animated_flip_counter: ^0.3.4 # 골드
+
+  # Riverpod
+  flutter_riverpod: ^2.6.1
+  riverpod_annotation: ^2.6.1
+
+  # Firebase
+  firebase_core: ^3.10.1
+  firebase_database: ^11.3.1
+
+  # Local Database
+  shared_preferences: ^2.5.1
+
+  # Google AdMob
+  google_mobile_ads: ^5.3.1
+
+  # Audio
+  audioplayers: ^6.1.1
+
+  # Util
+  easy_debounce: # 환경 설정 사운드 조절
+  package_info_plus: ^8.1.2 # 업데이트 알림 다이얼로그
+  dio: ^5.7.0 # 스토어 버전 정보 가져오기 위한 Rest API 통신 (GET)
+  url_launcher: ^6.3.1 # 홈 스크린 도움말 -> 개인 정보 처리 방침 및 이용 약관 URL 연결
+  safe_text: ^1.0.7 # 랭크 욕설 필터링
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -46,8 +77,25 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^5.0.0
 
+  # Build Runner
+  build_runner:
+
+  # Riverpod
+  riverpod_generator:
+
+  # Icon
+  flutter_launcher_icons: ^0.14.2
+
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/image/app_icon.png"
+  min_sdk_android: 23
+  adaptive_icon_background: "#ffffff"
+  adaptive_icon_foreground: "assets/image/app_icon.png"
 
 # The following section is specific to Flutter packages.
 flutter:
@@ -58,9 +106,20 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+  assets:
+    - assets/image/app_icon.png
+
+    - assets/sound/game_start.mp3
+    - assets/sound/piece_move.mp3
+    - assets/sound/piece_tap.mp3
+    - assets/sound/white_killed.mp3
+    - assets/sound/black_killed.mp3
+    - assets/sound/execute_check.mp3
+    - assets/sound/spawn_queen.mp3
+    - assets/sound/spawn_rook.mp3
+    - assets/sound/spawn_knight.mp3
+    - assets/sound/spawn_bishop.mp3
+    - assets/sound/spawn_pawn.mp3
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
