@@ -1,6 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
-final class SavedDataRepository {
+final class InGameSavedDataRepository {
   Future<List<String>?> getSavedData() async {
     final pref = await SharedPreferences.getInstance();
 
@@ -14,8 +14,7 @@ final class SavedDataRepository {
       final pref = await SharedPreferences.getInstance();
 
       await pref.setStringList('savedData', inGameData);
-    } catch (_) {
-    }
+    } catch (_) {}
   }
 
   Future<void> removeInGameData() async {
@@ -23,7 +22,6 @@ final class SavedDataRepository {
       final pref = await SharedPreferences.getInstance();
 
       await pref.remove('savedData');
-    } catch (_) {
-    }
+    } catch (_) {}
   }
 }
