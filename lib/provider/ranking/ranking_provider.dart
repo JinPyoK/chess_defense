@@ -1,4 +1,4 @@
-import 'package:chess_defense/data/ranking/model/ranking_model.dart';
+import 'package:chess_defense/data/ranking/model/rank_model.dart';
 import 'package:chess_defense/data/ranking/repository_impl/ranking_repository.dart';
 import 'package:chess_defense/domain/ranking/entity/ranking_entity.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';

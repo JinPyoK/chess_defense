@@ -1,4 +1,4 @@
-import 'package:chess_defense/data/ranking/model/ranking_model.dart';
+import 'package:chess_defense/data/ranking/model/rank_model.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 final _realtime = FirebaseDatabase.instance;

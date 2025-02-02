@@ -1,4 +1,4 @@
-import 'package:chess_defense/data/ranking/model/ranking_model.dart';
+import 'package:chess_defense/data/ranking/model/rank_model.dart';
 import 'package:chess_defense/domain/ranking/entity/ranking_entity.dart';
 import 'package:chess_defense/provider/ranking/ranking_provider.dart';
 import 'package:chess_defense/ui/common/controller/screen_size.dart';

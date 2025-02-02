@@ -1,4 +1,4 @@
-import 'package:chess_defense/data/ranking/model/ranking_model.dart';
+import 'package:chess_defense/data/ranking/model/rank_model.dart';
 import 'package:chess_defense/ui/common/controller/screen_size.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
