@@ -1,7 +1,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 final class PrivacyPolicyRepository {
-  Future<bool?> getPrivacyPolicy() async {
+  Future<bool> getPrivacyPolicy() async {
     final pref = await SharedPreferences.getInstance();
 
     final bool? privacyPolicy = pref.getBool('privacyPolicy');
@@ -14,7 +14,6 @@ final class PrivacyPolicyRepository {
       final pref = await SharedPreferences.getInstance();
 
       await pref.setBool('privacyPolicy', true);
-    } catch (_) {
-    }
+    } catch (_) {}
   }
 }
