@@ -2,6 +2,7 @@ import 'package:chess_defense/core/constant/color.dart';
 import 'package:chess_defense/data/privacy_policy/repository/privacy_policy_repository.dart';
 import 'package:chess_defense/ui/agreement/widget/agreement_contents.dart';
 import 'package:chess_defense/ui/agreement/widget/agreement_title.dart';
+import 'package:chess_defense/ui/common/screen/main_navigation_screen.dart';
 import 'package:chess_defense/ui/common/widget/launch_url_text_button.dart';
 import 'package:flutter/material.dart';
 
@@ -99,15 +100,15 @@ class _TermsOfUseScreenState extends State<TermsOfUseScreen> {
                         await PrivacyPolicyRepository()
                             .setPrivacyPolicy(userAgree: true);
 
-                        // if (context.mounted) {
-                        //   Navigator.pushAndRemoveUntil(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //         builder: (context) =>
-                        //             const HomeNavigationScreen()),
-                        //     (route) => false,
-                        //   );
-                        // }
+                        if (context.mounted) {
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const MainNavigationScreen()),
+                            (route) => false,
+                          );
+                        }
                       }
                     },
                     child:

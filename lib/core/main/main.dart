@@ -3,7 +3,9 @@ import 'dart:async';
 import 'package:chess_defense/core/constant/color.dart';
 import 'package:chess_defense/core/firebase/firebase_options.dart';
 import 'package:chess_defense/data/privacy_policy/repository/privacy_policy_repository.dart';
+import 'package:chess_defense/ui/agreement/screen/privacy_policy_screen.dart';
 import 'package:chess_defense/ui/common/controller/screen_size.dart';
+import 'package:chess_defense/ui/common/screen/main_navigation_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -31,7 +33,7 @@ class ChessDefense extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: _customTheme,
-        title: 'samyeonchoga',
+        title: 'Chess Defense',
         home: FutureBuilder(
             future: PrivacyPolicyRepository().getPrivacyPolicy(),
             builder: (context, snapshot) {
@@ -39,12 +41,13 @@ class ChessDefense extends StatelessWidget {
                 return Container();
               } else if (snapshot.hasData) {
                 if (snapshot.data!) {
-                  return Text("홈 스크린");
+                  return const MainNavigationScreen();
                 } else {
-                  return Text("동의 스크린");
+                  return const PrivacyPolicyScreen();
                 }
               } else {
-                return Scaffold(body: Center(child: Text("게임을 실행할 수 없습니다")));
+                return Scaffold(
+                    body: Center(child: Text("The game cannot be run")));
               }
             }),
       ),

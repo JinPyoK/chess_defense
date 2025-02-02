@@ -1,9 +1,12 @@
 import 'package:chess_defense/core/constant/color.dart';
 import 'package:chess_defense/data/gold/repository/gold_repository.dart';
+import 'package:chess_defense/ui/ad/screen/ad_screen.dart';
 import 'package:chess_defense/ui/common/controller/compare_store_version.dart';
 import 'package:chess_defense/ui/common/controller/show_custom_dialog.dart';
 import 'package:chess_defense/ui/common/controller/util_function.dart';
 import 'package:chess_defense/ui/common/widget/gold_widget.dart';
+import 'package:chess_defense/ui/home/screen/home_screen.dart';
+import 'package:chess_defense/ui/rank/screen/rank_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -99,9 +102,9 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           controller: _pageController,
           physics: const NeverScrollableScrollPhysics(),
           children: const [
-            // HomeScreen(),
-            // RankScreen(),
-            // AdScreen(),
+            HomeScreen(),
+            RankScreen(),
+            AdScreen(),
           ],
         ),
         bottomNavigationBar: NavigationBar(
