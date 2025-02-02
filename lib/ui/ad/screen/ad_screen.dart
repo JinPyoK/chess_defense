@@ -24,7 +24,7 @@ class _AdScreenState extends State<AdScreen>
         Padding(
           padding: EdgeInsets.only(left: 20 * wu),
           child: Text(
-            "광고",
+            "Ad",
             style: TextStyle(
               fontSize: 36 * hu,
               fontWeight: FontWeight.bold,
@@ -41,9 +41,11 @@ class _AdScreenState extends State<AdScreen>
           padding: EdgeInsets.all(12 * hu),
           child: AdReward(adUnitId: rewardUnitId),
         ),
-        _renderCaution("광고를 올바르게 시청하지 않은 경우 보상이 주어지지 않을 수 있습니다."),
-        _renderCaution("앱을 삭제하면 골드가 사라집니다."),
-        _renderCaution("자세한 내용은 Home 탭의 도움말 버튼을 눌러보세요."),
+        _renderCaution(
+            "You may not receive a reward if the ad is not watched correctly."),
+        _renderCaution("Gold will be lost if the app is deleted."),
+        _renderCaution(
+            "For more details, please tap the Help button in the Home tab."),
       ],
     );
   }

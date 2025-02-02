@@ -24,7 +24,7 @@ final class Rank extends _$Rank {
       /// 랭크 데이터가 없을 경우
       if (newRankList.isEmpty) {
         state = RankEntity(
-            rankState: RankState.error, errorMessage: '랭크 데이터가 존재하지 않습니다');
+            rankState: RankState.error, errorMessage: "No rank data available");
         return;
       }
 
@@ -32,7 +32,7 @@ final class Rank extends _$Rank {
     } catch (_) {
       state = RankEntity(
           rankState: RankState.error,
-          errorMessage: '랭크 데이터를 불러오는 도중 에러가 발생했습니다');
+          errorMessage: "An error occurred while loading rank data");
     }
   }
 

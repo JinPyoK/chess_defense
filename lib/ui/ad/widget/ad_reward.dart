@@ -67,7 +67,7 @@ class _AdRewardState extends State<AdReward> {
         },
         // Called when an ad request failed.
         onAdFailedToLoad: (_) {
-          showCustomSnackBar(context, '광고 로드 실패');
+          showCustomSnackBar(context, "Failed to load ad");
         },
       ),
     );
@@ -83,12 +83,13 @@ class _AdRewardState extends State<AdReward> {
         ),
         onPressed: () {
           if (_rewardedAd == null) {
-            showCustomSnackBar(context, '잠시 후 다시 시도해 주세요');
+            showCustomSnackBar(context, "Please try again later");
           } else {
             try {
               _rewardedAd!.show(
                 onUserEarnedReward: (_, __) {
                   myGolds += 1000;
+
                   if (setStateGold != null) {
                     setStateGold!(() {});
                   }
@@ -99,11 +100,11 @@ class _AdRewardState extends State<AdReward> {
                 },
               );
             } catch (_) {
-              showCustomSnackBar(context, '잠시 후 다시 시도해 주세요');
+              showCustomSnackBar(context, "Please try again later");
             }
           }
         },
-        child: const Text("광고 시청 후 1000골드 획득"),
+        child: const Text("Earn 1000 Gold after watching the ad"),
       ),
     );
   }

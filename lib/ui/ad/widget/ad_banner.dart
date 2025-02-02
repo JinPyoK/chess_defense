@@ -78,7 +78,7 @@ class _AdBannerState extends State<AdBanner> {
                   children: [
                     CircularProgressIndicator(color: blackColor),
                     SizedBox(height: 5),
-                    Text("배너 광고가 업로드 되는 중입니다..."),
+                    Text("Banner ad is being uploaded..."),
                   ],
                 ),
               )

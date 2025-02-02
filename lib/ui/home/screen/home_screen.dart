@@ -16,39 +16,29 @@ class HomeScreen extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        Column(
-          children: [
-            Text(
-              "四 面 楚 歌",
-              style: _textStyle,
-            ),
-            Text(
-              "사 면 초 가",
-              style: _textStyle,
-            ),
-          ],
+        Text(
+          "Chess Defense",
+          style: GoogleFonts.roboto(
+            fontWeight: FontWeight.bold,
+            color: blackColor,
+            fontSize: 36 * hu,
+          ),
         ),
         Column(
           children: [
-            _renderButton(context, '게임 시작', const HomeGameStartChild(),
+            _renderButton(context, 'Game Start', const HomeGameStartChild(),
                 defaultAction: false),
             SizedBox(height: 20 * hu),
-            _renderButton(context, '도움말', const HomeHelpChild()),
+            _renderButton(context, 'Help', const HomeHelpChild()),
             SizedBox(height: 20 * hu),
-            _renderButton(context, '환경 설정', const HomeSettingChild()),
+            _renderButton(context, 'Settings', const HomeSettingChild()),
           ],
         ),
-        Container(), // spaceAround를 위한 더미 컨테이너
+        Container(), // spaceAround 밸런스 맞추기 위한 더미 컨테이너
       ],
     );
   }
 }
-
-final _textStyle = GoogleFonts.songMyung(
-  fontWeight: FontWeight.bold,
-  color: blackColor,
-  fontSize: 42 * hu,
-);
 
 OutlinedButton _renderButton(BuildContext context, String text, Widget child,
         {bool defaultAction = true}) =>

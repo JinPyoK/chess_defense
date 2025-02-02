@@ -145,7 +145,7 @@ class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                         ),
                       );
                     },
-                    child: const Text("위 내용을 확인 및 동의합니다 1/2"),
+                    child: const Text("I agree 1/2"),
                   ),
                 ],
               ),

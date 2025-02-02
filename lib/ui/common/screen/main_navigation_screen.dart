@@ -60,7 +60,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const Text("게임을 종료하시겠습니까?"),
+                const Text("Are you sure you want to exit the game?"),
                 const SizedBox(height: 30),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -72,7 +72,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
                       onPressed: () {
                         Navigator.of(context, rootNavigator: true).pop();
                       },
-                      child: const Text("취소"),
+                      child: const Text("Cancel"),
                     ),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
@@ -81,7 +81,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
                       onPressed: () {
                         SystemNavigator.pop();
                       },
-                      child: const Text("게임 종료"),
+                      child: const Text("Exit"),
                     )
                   ],
                 )
@@ -133,7 +133,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
                 FontAwesomeIcons.rankingStar,
                 color: whiteColor,
               ),
-              label: "Rank",
+              label: "Ranking",
             ),
             NavigationDestination(
               icon: Icon(Icons.live_tv_outlined),

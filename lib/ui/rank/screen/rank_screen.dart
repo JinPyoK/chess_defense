@@ -46,7 +46,7 @@ class _RankScreenState extends ConsumerState<RankScreen>
             Padding(
               padding: EdgeInsets.only(left: 20 * wu),
               child: Text(
-                "랭크",
+                "Ranking",
                 style: TextStyle(
                   fontSize: 36 * hu,
                   fontWeight: FontWeight.bold,

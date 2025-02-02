@@ -34,7 +34,7 @@ class _HomeGameStartChildState extends ConsumerState<HomeGameStartChild> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text("게임 시작 골드 (최대 3000골드)",
+        const Text("Starting Gold (Max 3000 Gold)",
             style: TextStyle(fontWeight: FontWeight.bold)),
         SizedBox(height: 20 * hu),
         Row(
@@ -69,7 +69,7 @@ class _HomeGameStartChildState extends ConsumerState<HomeGameStartChild> {
                       _startGold = 0;
                       setState(() {});
                     },
-                    child: const Text("최소")),
+                    child: const Text("Min")),
                 const SizedBox(width: 10),
                 OutlinedButton(
                     onPressed: () {
@@ -100,7 +100,7 @@ class _HomeGameStartChildState extends ConsumerState<HomeGameStartChild> {
 
                       setState(() {});
                     },
-                    child: const Text("최대")),
+                    child: const Text("Max")),
               ],
             ),
           ),
@@ -113,7 +113,7 @@ class _HomeGameStartChildState extends ConsumerState<HomeGameStartChild> {
                 onPressed: () {
                   Navigator.of(context, rootNavigator: true).pop();
                 },
-                child: const Text("취소")),
+                child: const Text("Cancel")),
             ElevatedButton(
                 onPressed: () async {
                   myGolds -= _startGold;
@@ -136,7 +136,7 @@ class _HomeGameStartChildState extends ConsumerState<HomeGameStartChild> {
                     //             const InGameScreen(gameHadSaved: false)));
                   }
                 },
-                child: const Text("게임 시작")),
+                child: const Text("Game Start")),
           ],
         )
       ],

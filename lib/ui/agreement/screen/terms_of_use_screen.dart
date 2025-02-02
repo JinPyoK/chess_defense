@@ -111,8 +111,7 @@ class _TermsOfUseScreenState extends State<TermsOfUseScreen> {
                         }
                       }
                     },
-                    child:
-                        Text(_isLoading ? "게임 시작..." : "위 내용을 확인 및 동의합니다 2/2"),
+                    child: Text(_isLoading ? "Game Start..." : "I agree 2/2"),
                   ),
                 ],
               ),

@@ -34,7 +34,7 @@ class _HomeSettingChildState extends State<HomeSettingChild> {
         const Padding(
           padding: EdgeInsets.only(left: 10),
           child: Text(
-            "효과음",
+            "Sound Effect Volume",
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
