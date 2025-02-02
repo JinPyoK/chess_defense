@@ -5,6 +5,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 
 Future<bool?> compareVersionWithStoreUploadedVersion() async {
   final repo = StoreVersionRepository();
+
   String? storeVersion;
 
   if (Platform.isAndroid) {
