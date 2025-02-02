@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+int myGolds = 0;
+
 class MainNavigationScreen extends StatefulWidget {
   const MainNavigationScreen({super.key});
 
@@ -19,10 +21,9 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   final _pageController = PageController();
 
   int _currentIndex = 0;
-  int _myGolds = 0;
 
   Future<void> _getGolds() async {
-    _myGolds = await GoldRepository().getGolds();
+    myGolds = await GoldRepository().getGolds();
     setState(() {});
   }
 
@@ -90,7 +91,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           actions: [
             Padding(
               padding: const EdgeInsets.only(right: 24),
-              child: GoldWidget(gold: _myGolds),
+              child: GoldWidget(gold: myGolds),
             ),
           ],
         ),
