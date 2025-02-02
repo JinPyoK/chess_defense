@@ -1,19 +1,20 @@
 import 'dart:async';
 
 import 'package:chess_defense/core/constant/color.dart';
-import 'package:chess_defense/provider/rank/rank_provider.dart';
+import 'package:chess_defense/provider/ranking/ranking_provider.dart';
 import 'package:chess_defense/ui/common/controller/screen_size.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class RankRefreshButton extends ConsumerStatefulWidget {
-  const RankRefreshButton({super.key});
+class RankingRefreshButton extends ConsumerStatefulWidget {
+  const RankingRefreshButton({super.key});
 
   @override
-  ConsumerState<RankRefreshButton> createState() => _RankRefreshButtonState();
+  ConsumerState<RankingRefreshButton> createState() =>
+      _RankRefreshButtonState();
 }
 
-class _RankRefreshButtonState extends ConsumerState<RankRefreshButton> {
+class _RankRefreshButtonState extends ConsumerState<RankingRefreshButton> {
   bool _coolTime = false;
 
   Future<void> _refreshCoolTime() async {
@@ -36,7 +37,7 @@ class _RankRefreshButtonState extends ConsumerState<RankRefreshButton> {
               ? null
               : () async {
                   if (!_coolTime) {
-                    await ref.read(rankProvider.notifier).getRankList();
+                    await ref.read(rankingProvider.notifier).getRankList();
                     await _refreshCoolTime();
                   }
                 },

@@ -1,21 +1,21 @@
-import 'package:chess_defense/data/rank/model/rank_model.dart';
-import 'package:chess_defense/domain/rank/entity/rank_entity.dart';
-import 'package:chess_defense/provider/rank/rank_provider.dart';
+import 'package:chess_defense/data/ranking/model/ranking_model.dart';
+import 'package:chess_defense/domain/ranking/entity/ranking_entity.dart';
+import 'package:chess_defense/provider/ranking/ranking_provider.dart';
 import 'package:chess_defense/ui/common/controller/screen_size.dart';
 import 'package:chess_defense/ui/common/widget/loading_skeleton.dart';
-import 'package:chess_defense/ui/rank/widget/rank_refresh_button.dart';
-import 'package:chess_defense/ui/rank/widget/rank_tile.dart';
+import 'package:chess_defense/ui/ranking/widget/ranking_refresh_button.dart';
+import 'package:chess_defense/ui/ranking/widget/ranking_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class RankScreen extends ConsumerStatefulWidget {
-  const RankScreen({super.key});
+class RankingScreen extends ConsumerStatefulWidget {
+  const RankingScreen({super.key});
 
   @override
-  ConsumerState<RankScreen> createState() => _RankScreenState();
+  ConsumerState<RankingScreen> createState() => _RankScreenState();
 }
 
-class _RankScreenState extends ConsumerState<RankScreen>
+class _RankScreenState extends ConsumerState<RankingScreen>
     with AutomaticKeepAliveClientMixin {
   /// 공동 순위 스택
   int rankStack = 0;
@@ -28,14 +28,14 @@ class _RankScreenState extends ConsumerState<RankScreen>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(rankProvider.notifier).getRankList();
+      ref.read(rankingProvider.notifier).getRankList();
     });
   }
 
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    final rankEntity = ref.watch(rankProvider);
+    final rankEntity = ref.watch(rankingProvider);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -53,22 +53,22 @@ class _RankScreenState extends ConsumerState<RankScreen>
                 ),
               ),
             ),
-            const RankRefreshButton(),
+            const RankingRefreshButton(),
           ],
         ),
-        if (rankEntity.rankState == RankState.loading)
+        if (rankEntity.rankState == RankingState.loading)
           const Padding(
             padding: EdgeInsets.only(top: 10),
             child: LoadingSkeleton(),
           ),
-        if (rankEntity.rankState == RankState.error)
+        if (rankEntity.rankState == RankingState.error)
           Padding(
             padding: const EdgeInsets.only(top: 30),
             child: Center(
               child: Text(rankEntity.errorMessage),
             ),
           ),
-        if (rankEntity.rankState == RankState.fetch)
+        if (rankEntity.rankState == RankingState.fetch)
           Expanded(
             child: ListView(
               children: rankEntity.rankList.asMap().entries.map((entry) {
@@ -89,7 +89,7 @@ class _RankScreenState extends ConsumerState<RankScreen>
                   sameMove = item.moves;
                 }
 
-                return RankTile(
+                return RankingTile(
                   rank: index + 1 - rankStack,
                   model: RankModel(
                     id: item.id,

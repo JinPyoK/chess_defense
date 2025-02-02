@@ -1,23 +1,23 @@
-import 'package:chess_defense/data/rank/model/rank_model.dart';
+import 'package:chess_defense/data/ranking/model/ranking_model.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 final _realtime = FirebaseDatabase.instance;
 
-final class RankRepository {
-  factory RankRepository() => RankRepository._();
+final class RankingRepository {
+  factory RankingRepository() => RankingRepository._();
 
-  RankRepository._();
+  RankingRepository._();
 
   /// 랭크 데이터 가져오기
   Future<List<RankModel>> readRank() async {
-    final snapShot = await _realtime.ref().child('rank').get();
+    final snapShot = await _realtime.ref().child('ranking').get();
     if (snapShot.value == null) return <RankModel>[];
     return _makeSortedRankList(snapShot.value);
   }
 
   Future<void> writeRank({required RankModel rankModel}) async {
     /// 동시성 문제 방지
-    await _realtime.ref('rank').runTransaction(
+    await _realtime.ref('ranking').runTransaction(
       (rankSnapshotValue) {
         try {
           final rankList = _makeSortedRankList(rankSnapshotValue);

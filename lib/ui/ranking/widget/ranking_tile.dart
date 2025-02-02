@@ -1,10 +1,10 @@
-import 'package:chess_defense/data/rank/model/rank_model.dart';
+import 'package:chess_defense/data/ranking/model/ranking_model.dart';
 import 'package:chess_defense/ui/common/controller/screen_size.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class RankTile extends StatelessWidget {
-  const RankTile({
+class RankingTile extends StatelessWidget {
+  const RankingTile({
     super.key,
     required this.rank,
     required this.model,

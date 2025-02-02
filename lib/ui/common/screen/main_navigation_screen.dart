@@ -6,7 +6,7 @@ import 'package:chess_defense/ui/common/controller/show_custom_dialog.dart';
 import 'package:chess_defense/ui/common/controller/util_function.dart';
 import 'package:chess_defense/ui/common/widget/gold_widget.dart';
 import 'package:chess_defense/ui/home/screen/home_screen.dart';
-import 'package:chess_defense/ui/rank/screen/rank_screen.dart';
+import 'package:chess_defense/ui/ranking/screen/ranking_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -103,7 +103,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           physics: const NeverScrollableScrollPhysics(),
           children: const [
             HomeScreen(),
-            RankScreen(),
+            RankingScreen(),
             AdScreen(),
           ],
         ),
