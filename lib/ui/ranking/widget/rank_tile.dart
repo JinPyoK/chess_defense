@@ -3,8 +3,8 @@ import 'package:chess_defense/ui/common/controller/screen_size.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class RankingTile extends StatelessWidget {
-  const RankingTile({
+class RankTile extends StatelessWidget {
+  const RankTile({
     super.key,
     required this.rank,
     required this.model,
@@ -65,7 +65,7 @@ class RankingTile extends StatelessWidget {
                   ),
                   SizedBox(width: 5 * wu),
                   Text(
-                    '수',
+                    'moves',
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(fontSize: 10 * wu),
                   ),

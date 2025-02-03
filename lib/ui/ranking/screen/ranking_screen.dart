@@ -3,8 +3,8 @@ import 'package:chess_defense/domain/ranking/entity/ranking_entity.dart';
 import 'package:chess_defense/provider/ranking/ranking_provider.dart';
 import 'package:chess_defense/ui/common/controller/screen_size.dart';
 import 'package:chess_defense/ui/common/widget/loading_skeleton.dart';
+import 'package:chess_defense/ui/ranking/widget/rank_tile.dart';
 import 'package:chess_defense/ui/ranking/widget/ranking_refresh_button.dart';
-import 'package:chess_defense/ui/ranking/widget/ranking_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -89,7 +89,7 @@ class _RankScreenState extends ConsumerState<RankingScreen>
                   sameMove = item.moves;
                 }
 
-                return RankingTile(
+                return RankTile(
                   rank: index + 1 - rankStack,
                   model: RankModel(
                     id: item.id,
