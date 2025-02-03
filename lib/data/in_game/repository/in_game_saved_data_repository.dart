@@ -1,7 +1,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 final class InGameSavedDataRepository {
-  Future<List<String>?> getSavedData() async {
+  Future<List<String>> getSavedData() async {
     final pref = await SharedPreferences.getInstance();
 
     final List<String>? savedData = pref.getStringList('savedData');

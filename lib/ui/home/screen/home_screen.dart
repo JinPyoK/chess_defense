@@ -50,9 +50,7 @@ OutlinedButton _renderButton(BuildContext context, String text, Widget child,
         if (context.mounted) {
           /// 게임 시작 버튼일 때
           if (defaultAction == false) {
-            if (inGameSave != null &&
-                context.mounted &&
-                inGameSave.isNotEmpty) {
+            if (context.mounted && inGameSave.isNotEmpty) {
               // Navigator.push(
               //     context,
               //     MaterialPageRoute(
