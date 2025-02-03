@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:chess_defense/data/gold/repository/gold_repository.dart';
 import 'package:chess_defense/ui/common/controller/screen_size.dart';
 import 'package:chess_defense/ui/common/controller/show_custom_snackbar.dart';
@@ -87,14 +85,18 @@ class _AdRewardState extends State<AdReward> {
           } else {
             try {
               _rewardedAd!.show(
-                onUserEarnedReward: (_, __) {
+                onUserEarnedReward: (_, __) async {
                   myGolds += 1000;
 
                   if (setStateGold != null) {
                     setStateGold!(() {});
                   }
 
-                  unawaited(GoldRepository().setGolds(golds: myGolds));
+                  await GoldRepository().setGolds(golds: myGolds);
+
+                  await _rewardedAd!.dispose();
+
+                  _rewardedAd = null;
 
                   _loadAd();
                 },
