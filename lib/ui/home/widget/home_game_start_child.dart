@@ -2,6 +2,7 @@ import 'package:chess_defense/data/gold/repository/gold_repository.dart';
 import 'package:chess_defense/ui/common/controller/screen_size.dart';
 import 'package:chess_defense/ui/common/controller/util_function.dart';
 import 'package:chess_defense/ui/common/screen/main_navigation_screen.dart';
+import 'package:chess_defense/ui/in_game/screen/in_game_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -129,11 +130,11 @@ class _HomeGameStartChildState extends ConsumerState<HomeGameStartChild> {
                   if (context.mounted) {
                     Navigator.of(context, rootNavigator: true).pop();
 
-                    // Navigator.push(
-                    //     context,
-                    //     MaterialPageRoute(
-                    //         builder: (_) =>
-                    //             const InGameScreen(gameHadSaved: false)));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) =>
+                                const InGameScreen(gameHadSaved: false)));
                   }
                 },
                 child: const Text("Game Start")),

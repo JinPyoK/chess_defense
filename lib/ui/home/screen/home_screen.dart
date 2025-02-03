@@ -5,6 +5,7 @@ import 'package:chess_defense/ui/common/controller/show_custom_dialog.dart';
 import 'package:chess_defense/ui/home/widget/home_game_start_child.dart';
 import 'package:chess_defense/ui/home/widget/home_help_child.dart';
 import 'package:chess_defense/ui/home/widget/home_setting_child.dart';
+import 'package:chess_defense/ui/in_game/screen/in_game_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -51,10 +52,10 @@ OutlinedButton _renderButton(BuildContext context, String text, Widget child,
           /// 게임 시작 버튼일 때
           if (defaultAction == false) {
             if (context.mounted && inGameSave.isNotEmpty) {
-              // Navigator.push(
-              //     context,
-              //     MaterialPageRoute(
-              //         builder: (_) => const InGameScreen(gameHadSaved: true)));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (_) => const InGameScreen(gameHadSaved: true)));
             } else {
               if (context.mounted) {
                 showCustomDialog(
