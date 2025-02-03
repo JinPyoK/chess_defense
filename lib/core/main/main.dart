@@ -38,7 +38,7 @@ class ChessDefense extends StatelessWidget {
             future: PrivacyPolicyRepository().getPrivacyPolicy(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return Container();
+                return Scaffold(body: Container());
               } else if (snapshot.hasData) {
                 if (snapshot.data!) {
                   return const MainNavigationScreen();
