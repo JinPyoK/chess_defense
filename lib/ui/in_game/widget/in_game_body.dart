@@ -1,4 +1,5 @@
 import 'package:chess_defense/core/constant/color.dart';
+import 'package:chess_defense/ui/in_game/controller/in_game_control_value.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -16,8 +17,8 @@ class _InGameBodyState extends ConsumerState<InGameBody> {
     return Align(
       alignment: Alignment.bottomLeft,
       child: SizedBox(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.width,
+        width: boardSize,
+        height: boardSize,
         child: GridView.builder(
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 8, // 8칸씩 배치

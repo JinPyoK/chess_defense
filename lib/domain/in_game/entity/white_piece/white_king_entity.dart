@@ -1,6 +1,7 @@
 import 'package:chess_defense/core/constant/color.dart';
 import 'package:chess_defense/domain/in_game/entity/piece_base_entity.dart';
 import 'package:chess_defense/domain/in_game/entity/piece_enum.dart';
+import 'package:chess_defense/ui/in_game/controller/in_game_control_value.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 final class WhiteKingEntity extends WhitePieceBaseEntity {
@@ -14,6 +15,7 @@ final class WhiteKingEntity extends WhitePieceBaseEntity {
           pieceIcon: FaIcon(
             FontAwesomeIcons.chessKing,
             color: whiteColor,
+            size: pieceIconSize,
           ),
         );
 
