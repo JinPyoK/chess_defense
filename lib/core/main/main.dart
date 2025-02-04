@@ -46,7 +46,7 @@ class ChessDefense extends StatelessWidget {
                   return const PrivacyPolicyScreen();
                 }
               } else {
-                return Scaffold(
+                return const Scaffold(
                     body: Center(child: Text("The game cannot be run")));
               }
             }),
