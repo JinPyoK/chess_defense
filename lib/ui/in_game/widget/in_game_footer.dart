@@ -162,7 +162,7 @@ class _InGameFooterState extends ConsumerState<InGameFooter> {
       child: Padding(
         padding: EdgeInsets.all(10 * hu),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -12,6 +12,31 @@ class InGameBody extends ConsumerStatefulWidget {
 }
 
 class _InGameBodyState extends ConsumerState<InGameBody> {
+  Widget _renderChessBoard() {
+    return Align(
+      alignment: Alignment.bottomLeft,
+      child: SizedBox(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.width,
+        child: GridView.builder(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 8, // 8칸씩 배치
+            childAspectRatio: 1, // 정사각형 유지
+          ),
+          physics: const NeverScrollableScrollPhysics(), // 스크롤 방지
+          itemCount: 64, // 총 64개
+          itemBuilder: (context, index) {
+            // 번갈아 가며 색상 지정 (체스판 스타일)
+            bool isBlack = (index ~/ 8 + index) % 2 == 1;
+            return ColoredBox(
+              color: isBlack ? Color(0xffC78E53) : Color(0xffF7D0A4),
+            );
+          },
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     // final pieceSet = ref.watch(inGamePieceSetProvider);
@@ -24,13 +49,7 @@ class _InGameBodyState extends ConsumerState<InGameBody> {
         child: Stack(
           alignment: AlignmentDirectional.bottomStart,
           children: [
-            // Align(
-            //   alignment: Alignment.bottomLeft,
-            //   child: Image(
-            //     image: imageBoard,
-            //     key: imageBoardKey,
-            //   ),
-            // ),
+            _renderChessBoard(),
             // ...pieceSet,
             // ...navigatorBoxList,
             // ...systemNotification,
