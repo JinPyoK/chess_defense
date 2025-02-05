@@ -1,4 +1,5 @@
 import 'package:chess_defense/data/gold/repository/gold_repository.dart';
+import 'package:chess_defense/provider/in_game/in_game_gold_provider.dart';
 import 'package:chess_defense/ui/common/controller/screen_size.dart';
 import 'package:chess_defense/ui/common/controller/util_function.dart';
 import 'package:chess_defense/ui/common/screen/main_navigation_screen.dart';
@@ -123,9 +124,9 @@ class _HomeGameStartChildState extends ConsumerState<HomeGameStartChild> {
 
                   setStateGold!(() {});
 
-                  // ref
-                  //     .read(inGameGoldProvider.notifier)
-                  //     .setInGameGold(_startGold);
+                  ref
+                      .read(inGameGoldProvider.notifier)
+                      .setInGameGold(_startGold);
 
                   if (context.mounted) {
                     Navigator.of(context, rootNavigator: true).pop();

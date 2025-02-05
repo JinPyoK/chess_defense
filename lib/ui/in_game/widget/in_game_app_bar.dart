@@ -1,4 +1,6 @@
 import 'package:chess_defense/core/constant/color.dart';
+import 'package:chess_defense/provider/in_game/in_game_gold_provider.dart';
+import 'package:chess_defense/provider/in_game/in_game_move_provider.dart';
 import 'package:chess_defense/ui/common/controller/screen_size.dart';
 import 'package:chess_defense/ui/common/widget/gold_widget.dart';
 import 'package:flutter/material.dart';
@@ -12,8 +14,8 @@ class InGameAppBar extends ConsumerWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // final inGameGold = ref.watch(inGameGoldProvider);
-    // final inGameMove = ref.watch(inGameMoveProvider);
+    final inGameGold = ref.watch(inGameGoldProvider);
+    final inGameMove = ref.watch(inGameMoveProvider);
     // final isMyTurn = ref.watch(inGameTurnProvider);
     final isMyTurn = false;
     // final goldNotification = ref.watch(getGoldNotificationWidgetProvider);
@@ -28,8 +30,7 @@ class InGameAppBar extends ConsumerWidget implements PreferredSizeWidget {
             ),
       centerTitle: true,
       title: Text(
-        // inGameMove.toString(),
-        "10",
+        inGameMove.toString(),
         style: const TextStyle(fontWeight: FontWeight.bold, color: whiteColor),
       ),
       actions: [
@@ -38,8 +39,7 @@ class InGameAppBar extends ConsumerWidget implements PreferredSizeWidget {
         Padding(
           padding: EdgeInsets.only(right: 10 * wu),
           child: GoldWidget(
-            // gold: inGameGold,
-            gold: 2800,
+            gold: inGameGold,
             goldTextColor: whiteColor,
           ),
         ),
