@@ -1,3 +1,4 @@
+import 'package:chess_defense/ui/in_game/controller/in_game_selected_piece_entity.dart';
 import 'package:chess_defense/ui/in_game/widget/in_game_app_bar.dart';
 import 'package:chess_defense/ui/in_game/widget/in_game_body.dart';
 import 'package:chess_defense/ui/in_game/widget/in_game_footer.dart';
@@ -17,11 +18,11 @@ class InGameScreen extends ConsumerWidget {
         onTap: () {
           // ref.read(inGameNavigatorProvider.notifier).clearNavigator();
           //
-          // /// 최근 탭한 기물 setState
-          // if (selectedPieceModel != null) {
-          //   selectedPieceModel!.justTapped = false;
-          //   selectedPieceModel!.setStateThisPiece!(() {});
-          // }
+          /// 최근 탭한 기물 setState
+          if (selectedPieceEntity != null) {
+            selectedPieceEntity!.justTapped = false;
+            selectedPieceEntity!.setStateThisPiece!(() {});
+          }
         },
         child: Scaffold(
           resizeToAvoidBottomInset: false,
