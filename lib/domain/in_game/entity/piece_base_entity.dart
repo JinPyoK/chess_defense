@@ -1,5 +1,17 @@
+import 'package:chess_defense/domain/in_game/entity/black_piece/black_bishop_entity.dart';
+import 'package:chess_defense/domain/in_game/entity/black_piece/black_knight_entity.dart';
+import 'package:chess_defense/domain/in_game/entity/black_piece/black_pawn_entity.dart';
+import 'package:chess_defense/domain/in_game/entity/black_piece/black_queen_entity.dart';
+import 'package:chess_defense/domain/in_game/entity/black_piece/black_rook_entity.dart';
+import 'package:chess_defense/domain/in_game/entity/in_game_board_status.dart';
 import 'package:chess_defense/domain/in_game/entity/piece_actionable_entity.dart';
 import 'package:chess_defense/domain/in_game/entity/piece_enum.dart';
+import 'package:chess_defense/domain/in_game/entity/white_piece/white_bishop_entity.dart';
+import 'package:chess_defense/domain/in_game/entity/white_piece/white_king_entity.dart';
+import 'package:chess_defense/domain/in_game/entity/white_piece/white_knight_entity.dart';
+import 'package:chess_defense/domain/in_game/entity/white_piece/white_pawn_entity.dart';
+import 'package:chess_defense/domain/in_game/entity/white_piece/white_queen_entity.dart';
+import 'package:chess_defense/domain/in_game/entity/white_piece/white_rook_entity.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 abstract base class PieceOrJustActionable {}
@@ -42,68 +54,53 @@ abstract base class PieceBaseEntity extends PieceOrJustActionable {
     required this.y,
   });
 
-  // PieceBaseEntity getNewPieceInstance() {
-  //   late PieceBaseEntity pieceModel;
-  //
-  //   /// 백
-  //   if (team == Team.black) {
-  //     switch (pieceType) {
-  //       case PieceType.king:
-  //       case PieceType.queen:
-  //       case PieceType.rook:
-  //       case PieceType.knight:
-  //       case PieceType.bishop:
-  //       case PieceType.pawn:
-  //     }
-  //
-  //     // if (pieceType == PieceType.king) {
-  //     //   pieceModel = BlueKingModel(x: x, y: y);
-  //     // } else if (pieceType == PieceType.queen) {
-  //     //   pieceModel = BlueSaModel(x: x, y: y);
-  //     // } else if (pieceType == PieceType.rook) {
-  //     //   pieceModel = BlueChaModel(x: x, y: y);
-  //     // } else if (pieceType == PieceType.knight) {
-  //     //   pieceModel = BluePoModel(x: x, y: y);
-  //     // } else if (pieceType == PieceType.bishop) {
-  //     //   pieceModel = BlueMaModel(x: x, y: y);
-  //     // } else if (pieceType == PieceType.pawn) {
-  //     //   pieceModel = BlueSangModel(x: x, y: y);
-  //     // }
-  //   }
-  //
-  //
-  //   /// 흑
-  //   else {
-  //     switch (pieceType) {
-  //       case PieceType.queen:
-  //       case PieceType.rook:
-  //       case PieceType.knight:
-  //       case PieceType.bishop:
-  //       case PieceType.pawn:
-  //       default:
-  //     }
-  //
-  //     // if (pieceType == PieceType.queen) {
-  //     //   pieceModel = RedChaModel(x: x, y: y);
-  //     // } else if (pieceType == PieceType.rook) {
-  //     //   pieceModel = RedPoModel(x: x, y: y);
-  //     // } else if (pieceType == PieceType.knight) {
-  //     //   pieceModel = RedMaModel(x: x, y: y);
-  //     // } else if (pieceType == PieceType.bishop) {
-  //     //   pieceModel = RedSangModel(x: x, y: y);
-  //     // } else if (){
-  //     //   pieceModel = RedByungModel(x: x, y: y);
-  //     // }
-  //   }
-  //
-  //   return pieceModel;
-  // }
+  PieceBaseEntity getNewPieceInstance() {
+    late PieceBaseEntity pieceEntity;
+
+    /// 백
+    if (team == Team.white) {
+      switch (pieceType) {
+        case PieceType.king:
+          pieceEntity = WhiteKingEntity(x: x, y: y);
+        case PieceType.queen:
+          pieceEntity = WhiteQueenEntity(x: x, y: y);
+        case PieceType.rook:
+          pieceEntity = WhiteRookEntity(x: x, y: y);
+        case PieceType.knight:
+          pieceEntity = WhiteKnightEntity(x: x, y: y);
+        case PieceType.bishop:
+          pieceEntity = WhiteBishopEntity(x: x, y: y);
+        case PieceType.pawn:
+          pieceEntity = WhitePawnEntity(x: x, y: y);
+      }
+    }
+
+    /// 흑
+    else {
+      switch (pieceType) {
+        case PieceType.queen:
+          pieceEntity = BlackQueenEntity(x: x, y: y);
+        case PieceType.rook:
+          pieceEntity = BlackRookEntity(x: x, y: y);
+        case PieceType.knight:
+          pieceEntity = BlackKnightEntity(x: x, y: y);
+        case PieceType.bishop:
+          pieceEntity = BlackBishopEntity(x: x, y: y);
+        case PieceType.pawn:
+          pieceEntity = BlackPawnEntity(x: x, y: y);
+        default:
+          pieceEntity = BlackPawnEntity(x: x, y: y);
+      }
+    }
+
+    return pieceEntity;
+  }
 
   /// 기물의 움직임 애니메이션 setState
   void Function(void Function())? setStateThisPiece;
 
   /// 기물 길 찾기 함수
-// void searchActionable(InGameBoardStatus statusBoard) {}
+  void searchActionable(InGameBoardStatus statusBoard) {}
 }
 
 abstract base class WhitePieceBaseEntity extends PieceBaseEntity {

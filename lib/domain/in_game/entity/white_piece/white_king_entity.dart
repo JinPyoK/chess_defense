@@ -13,7 +13,7 @@ final class WhiteKingEntity extends WhitePieceBaseEntity {
           pieceType: PieceType.king,
           value: 1000,
           pieceIcon: FaIcon(
-            FontAwesomeIcons.chessKing,
+            FontAwesomeIcons.solidChessKing,
             color: whiteColor,
             size: pieceIconSize,
           ),

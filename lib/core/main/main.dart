@@ -72,6 +72,9 @@ Future<void> _initGame() async {
 
   /// 구글 애드몹
   await MobileAds.instance.initialize();
+
+  /// 포지션 값 초기화
+  initBoardPositionValue();
 }
 
 final _customTheme = ThemeData(
