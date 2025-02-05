@@ -35,8 +35,8 @@ final class InGameNavigator extends _$InGameNavigator {
     clearNavigator();
     final navigatorBoxList = <InGameNavigatorBox>[];
 
-    for (int i = 0; i < 9; i++) {
-      for (int j = 6; j < 10; j++) {
+    for (int i = 0; i < 8; i++) {
+      for (int j = 6; j < 8; j++) {
         final pieceModel = inGameBoardStatus.getStatus(i, j);
         if (pieceModel is PieceActionableEntity) {
           navigatorBoxList.add(
@@ -58,8 +58,8 @@ final class InGameNavigator extends _$InGameNavigator {
     clearNavigator();
     final navigatorBoxList = <InGameNavigatorBox>[];
 
-    for (int i = 0; i < 9; i++) {
-      for (int j = 0; j < 10; j++) {
+    for (int i = 0; i < 8; i++) {
+      for (int j = 0; j < 8; j++) {
         final pieceModel = inGameBoardStatus.getStatus(i, j);
         if (pieceModel is PieceBaseEntity) {
           if (pieceModel.pieceType != PieceType.king) {
