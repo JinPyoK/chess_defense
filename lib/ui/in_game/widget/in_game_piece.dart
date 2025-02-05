@@ -3,6 +3,7 @@ import 'package:chess_defense/domain/in_game/entity/in_game_board_status.dart';
 import 'package:chess_defense/domain/in_game/entity/piece_base_entity.dart';
 import 'package:chess_defense/domain/in_game/entity/piece_enum.dart';
 import 'package:chess_defense/provider/in_game/in_game_black_status.dart';
+import 'package:chess_defense/provider/in_game/in_game_navigator_provider.dart';
 import 'package:chess_defense/ui/audio/controller/audio_play.dart';
 import 'package:chess_defense/ui/in_game/controller/in_game_control_value.dart';
 import 'package:chess_defense/ui/in_game/controller/in_game_selected_piece_entity.dart';
@@ -39,9 +40,9 @@ class _InGamePieceState extends ConsumerState<InGamePiece> {
 
       widget.pieceEntity.searchActionable(inGameBoardStatus);
 
-      // ref
-      //     .read(inGameNavigatorProvider.notifier)
-      //     .showPieceNavigator(widget.pieceEntity.pieceActionable);
+      ref
+          .read(inGameNavigatorProvider.notifier)
+          .showPieceMoveNavigator(widget.pieceEntity.pieceActionable);
 
       makePieceTapSound();
     }

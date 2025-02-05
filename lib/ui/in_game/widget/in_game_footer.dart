@@ -5,6 +5,7 @@ import 'package:chess_defense/domain/in_game/entity/in_game_board_status.dart';
 import 'package:chess_defense/domain/in_game/entity/piece_enum.dart';
 import 'package:chess_defense/provider/in_game/in_game_gold_provider.dart';
 import 'package:chess_defense/provider/in_game/in_game_move_provider.dart';
+import 'package:chess_defense/provider/in_game/in_game_navigator_provider.dart';
 import 'package:chess_defense/ui/common/controller/screen_size.dart';
 import 'package:chess_defense/ui/common/controller/show_custom_dialog.dart';
 import 'package:chess_defense/ui/common/controller/util_function.dart';
@@ -86,7 +87,9 @@ class _InGameFooterState extends ConsumerState<InGameFooter> {
         _selectedPiece = piece;
         setState(() {});
         Navigator.pop(context);
-        // ref.read(inGameNavigatorProvider.notifier).showSpawnNavigator();
+        ref
+            .read(inGameNavigatorProvider.notifier)
+            .showSpawnNavigator(_selectedPiece);
       },
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -162,7 +165,9 @@ class _InGameFooterState extends ConsumerState<InGameFooter> {
       child: GestureDetector(
         onTap: isMyTurn
             ? () {
-                // ref.read(inGameNavigatorProvider.notifier).showSpawnNavigator();
+                ref
+                    .read(inGameNavigatorProvider.notifier)
+                    .showSpawnNavigator(_selectedPiece);
               }
             : null,
         child: SizedBox(
@@ -347,9 +352,9 @@ class _InGameFooterState extends ConsumerState<InGameFooter> {
                   child: ElevatedButton(
                       onPressed: isMyTurn
                           ? () {
-                              // ref
-                              //     .read(inGameNavigatorProvider.notifier)
-                              //     .showExecuteNavigator();
+                              ref
+                                  .read(inGameNavigatorProvider.notifier)
+                                  .showExecuteNavigator();
                             }
                           : null,
                       child: const Row(

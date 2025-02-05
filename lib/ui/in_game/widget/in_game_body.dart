@@ -1,4 +1,6 @@
 import 'package:chess_defense/core/constant/color.dart';
+import 'package:chess_defense/provider/in_game/in_game_navigator_provider.dart';
+import 'package:chess_defense/provider/in_game/in_game_system_notification_provider.dart';
 import 'package:chess_defense/ui/in_game/controller/in_game_control_value.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -41,8 +43,8 @@ class _InGameBodyState extends ConsumerState<InGameBody> {
   @override
   Widget build(BuildContext context) {
     // final pieceSet = ref.watch(inGamePieceSetProvider);
-    // final navigatorBoxList = ref.watch(inGameNavigatorProvider);
-    // final systemNotification = ref.watch(inGameSystemNotificationProvider);
+    final navigatorBoxList = ref.watch(inGameNavigatorProvider);
+    final systemNotification = ref.watch(inGameSystemNotificationProvider);
 
     return ColoredBox(
       color: inGameBlackColor,
@@ -52,8 +54,8 @@ class _InGameBodyState extends ConsumerState<InGameBody> {
           children: [
             _renderChessBoard(),
             // ...pieceSet,
-            // ...navigatorBoxList,
-            // ...systemNotification,
+            ...navigatorBoxList,
+            ...systemNotification,
           ],
         ),
       ),
