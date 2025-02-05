@@ -3,6 +3,8 @@ import 'package:chess_defense/data/gold/repository/gold_repository.dart';
 import 'package:chess_defense/data/in_game/repository/in_game_saved_data_repository.dart';
 import 'package:chess_defense/domain/in_game/entity/in_game_board_status.dart';
 import 'package:chess_defense/domain/in_game/entity/piece_enum.dart';
+import 'package:chess_defense/provider/in_game/in_game_gold_provider.dart';
+import 'package:chess_defense/provider/in_game/in_game_move_provider.dart';
 import 'package:chess_defense/ui/common/controller/screen_size.dart';
 import 'package:chess_defense/ui/common/controller/show_custom_dialog.dart';
 import 'package:chess_defense/ui/common/controller/util_function.dart';
@@ -242,16 +244,16 @@ class _InGameFooterState extends ConsumerState<InGameFooter> {
                                           onPressed: () async {
                                             final tempList = <String>[];
 
-                                            // final move =
-                                            // ref.read(inGameMoveProvider);
-                                            // final inGameGold =
-                                            // ref.read(inGameGoldProvider);
+                                            final move =
+                                                ref.read(inGameMoveProvider);
+                                            final inGameGold =
+                                                ref.read(inGameGoldProvider);
                                             final inGameSaveDataList =
                                                 inGameBoardStatus
                                                     .refinePieceEntityForSave();
 
-                                            // tempList.add(move.toString());
-                                            // tempList.add(inGameGold.toString());
+                                            tempList.add(move.toString());
+                                            tempList.add(inGameGold.toString());
 
                                             final saveDataList = [
                                               ...tempList,
@@ -274,10 +276,10 @@ class _InGameFooterState extends ConsumerState<InGameFooter> {
                                             backgroundColor: Colors.redAccent,
                                           ),
                                           onPressed: () async {
-                                            // final inGameGold =
-                                            // ref.read(inGameGoldProvider);
-                                            //
-                                            // myGolds += inGameGold;
+                                            final inGameGold =
+                                                ref.read(inGameGoldProvider);
+
+                                            myGolds += inGameGold;
 
                                             await GoldRepository()
                                                 .setGolds(golds: myGolds);
