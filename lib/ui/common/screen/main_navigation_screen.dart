@@ -2,6 +2,7 @@ import 'package:chess_defense/core/constant/color.dart';
 import 'package:chess_defense/data/gold/repository/gold_repository.dart';
 import 'package:chess_defense/ui/ad/screen/ad_screen.dart';
 import 'package:chess_defense/ui/common/controller/compare_store_version.dart';
+import 'package:chess_defense/ui/common/controller/global_context.dart';
 import 'package:chess_defense/ui/common/controller/show_custom_dialog.dart';
 import 'package:chess_defense/ui/common/controller/util_function.dart';
 import 'package:chess_defense/ui/common/widget/gold_widget.dart';
@@ -35,7 +36,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     super.initState();
     setStateGold = setState;
 
-    // globalContext = context;
+    globalContext = context;
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _getGolds();

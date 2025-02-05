@@ -2,6 +2,7 @@ import 'package:chess_defense/core/constant/color.dart';
 import 'package:chess_defense/domain/in_game/entity/in_game_board_status.dart';
 import 'package:chess_defense/domain/in_game/entity/piece_base_entity.dart';
 import 'package:chess_defense/domain/in_game/entity/piece_enum.dart';
+import 'package:chess_defense/provider/in_game/in_game_black_status.dart';
 import 'package:chess_defense/ui/audio/controller/audio_play.dart';
 import 'package:chess_defense/ui/in_game/controller/in_game_control_value.dart';
 import 'package:chess_defense/ui/in_game/controller/in_game_selected_piece_entity.dart';
@@ -47,9 +48,8 @@ class _InGamePieceState extends ConsumerState<InGamePiece> {
   }
 
   List<Color> _justTurnPieceColor() {
-    /// 한나라 기물의 수가 30 이상
-    // final onTheRopes = ref.watch(inGameOnTheRopesProvider);
-    final onTheRopes = false;
+    /// 흑 기물의 수가 30 이상
+    final onTheRopes = ref.watch(inGameOnTheRopesProvider);
 
     if (widget.pieceEntity.justTapped) {
       return [

@@ -1,5 +1,6 @@
 import 'package:chess_defense/core/constant/color.dart';
 import 'package:chess_defense/data/in_game/repository/in_game_saved_data_repository.dart';
+import 'package:chess_defense/ui/audio/controller/audio_play.dart';
 import 'package:chess_defense/ui/common/controller/screen_size.dart';
 import 'package:chess_defense/ui/common/controller/show_custom_dialog.dart';
 import 'package:chess_defense/ui/home/widget/home_game_start_child.dart';
@@ -47,6 +48,7 @@ OutlinedButton _renderButton(BuildContext context, String text, Widget child,
       onPressed: () async {
         /// 앱 시작시 저장된 게임 있는지 확인
         final inGameSave = await InGameSavedDataRepository().getSavedData();
+        await soundInit();
 
         if (context.mounted) {
           /// 게임 시작 버튼일 때

@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class JanggoonSystemNotification extends StatelessWidget {
-  const JanggoonSystemNotification({super.key});
+class CheckSystemNotification extends StatelessWidget {
+  const CheckSystemNotification({super.key});
 
   @override
   Widget build(BuildContext context) {

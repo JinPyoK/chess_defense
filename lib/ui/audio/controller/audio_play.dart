@@ -3,7 +3,6 @@ import 'package:chess_defense/data/sound/repository/sound_repository.dart';
 import 'package:chess_defense/domain/in_game/entity/piece_enum.dart';
 import 'package:just_audio/just_audio.dart';
 
-
 Future<void> makePieceSpawnSound(PieceType pieceType) async {
   switch (pieceType) {
     case PieceType.queen:
@@ -46,7 +45,7 @@ Future<void> makeSystemErrorSound() async {
   await _makeSound(soundWhiteKilledPath);
 }
 
-Future<void> makeExecuteOrJanggoonSound() async {
+Future<void> makeExecuteOrCheckSound() async {
   await _makeSound(soundExecuteCheckPath);
 }
 
