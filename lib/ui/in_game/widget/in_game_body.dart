@@ -66,17 +66,29 @@ class _InGameBodyState extends ConsumerState<InGameBody> {
 
     return ColoredBox(
       color: inGameBlackColor,
-      child: Center(
-        child: Stack(
-          alignment: AlignmentDirectional.bottomStart,
-          children: [
-            _renderChessBoard(),
-            ...pieceSet,
-            ...navigatorBoxList,
-            ...systemNotification,
-          ],
-        ),
-      ),
+      child: LayoutBuilder(builder: (context, box) {
+        /// 체스판 크기 구해서 더 작은 값으로 체스판 조정
+        final width = box.maxWidth;
+        final height = box.maxHeight;
+
+        boardSize = width < height ? width : height;
+        pieceIconSize = boardSize / 10;
+
+        /// 포지션 값 백기화
+        initBoardPositionValue();
+
+        return Center(
+          child: Stack(
+            alignment: AlignmentDirectional.bottomStart,
+            children: [
+              _renderChessBoard(),
+              ...pieceSet,
+              ...navigatorBoxList,
+              ...systemNotification,
+            ],
+          ),
+        );
+      }),
     );
   }
 }

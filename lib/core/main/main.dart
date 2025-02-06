@@ -6,7 +6,6 @@ import 'package:chess_defense/data/privacy_policy/repository/privacy_policy_repo
 import 'package:chess_defense/ui/agreement/screen/privacy_policy_screen.dart';
 import 'package:chess_defense/ui/common/controller/screen_size.dart';
 import 'package:chess_defense/ui/common/screen/main_navigation_screen.dart';
-import 'package:chess_defense/ui/in_game/controller/in_game_control_value.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -29,12 +28,6 @@ class ChessDefense extends StatelessWidget {
   Widget build(BuildContext context) {
     wu = MediaQuery.of(context).size.width / 320;
     hu = MediaQuery.of(context).size.height / 690;
-
-    boardSize = MediaQuery.of(context).size.width;
-    pieceIconSize = boardSize / 10;
-
-    /// 포지션 값 백기화
-    initBoardPositionValue();
 
     return ProviderScope(
       child: MaterialApp(
