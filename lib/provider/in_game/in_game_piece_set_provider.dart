@@ -55,11 +55,11 @@ final class InGamePieceSet extends _$InGamePieceSet {
 
     _numOfPiece = {
       PieceType.king: 1,
-      PieceType.queen: 0,
-      PieceType.rook: 0,
-      PieceType.knight: 0,
-      PieceType.bishop: 0,
-      PieceType.pawn: 0,
+      PieceType.queen: 1,
+      PieceType.rook: 2,
+      PieceType.knight: 2,
+      PieceType.bishop: 2,
+      PieceType.pawn: 8,
     };
 
     ref.read(inGameOnTheRopesProvider.notifier).initOnTheRopes();
