@@ -236,7 +236,7 @@ class _InGameFooterState extends ConsumerState<InGameFooter> {
                                         CrossAxisAlignment.stretch,
                                     children: [
                                       const Text(
-                                        "Do you want to exit the game?\n\n If you exit without saving, any remaining Gold will be refunded.",
+                                        "Do you want to exit the game?\n\nIf you exit without saving, any remaining Gold will be refunded.",
                                         style: TextStyle(
                                           color: blackColor,
                                           fontWeight: FontWeight.bold,

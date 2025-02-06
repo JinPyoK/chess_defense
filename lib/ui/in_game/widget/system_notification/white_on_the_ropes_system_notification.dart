@@ -9,10 +9,8 @@ class WhiteOnTheRopesSystemNotification extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double leftPadding = pieceIconSize * 0.67;
-
     return Positioned(
-      left: leftPadding,
+      left: pieceIconSize * 2.47,
       bottom: pieceIconSize,
       child: IgnorePointer(
         child: Container(
@@ -27,7 +25,7 @@ class WhiteOnTheRopesSystemNotification extends StatelessWidget {
             style: GoogleFonts.roboto(
               color: whiteColor,
               fontWeight: FontWeight.bold,
-              fontSize: pieceIconSize / 2.5,
+              fontSize: pieceIconSize / 1.5,
             ),
           ),
         )

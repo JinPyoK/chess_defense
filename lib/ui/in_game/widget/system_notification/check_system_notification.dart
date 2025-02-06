@@ -10,7 +10,7 @@ class CheckSystemNotification extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      left: pieceIconSize * 2.45,
+      left: pieceIconSize * 2.58,
       bottom: pieceIconSize * 6.5,
       child: IgnorePointer(
         child: Container(

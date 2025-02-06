@@ -12,11 +12,11 @@ class ErrorSystemNotification extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String message = 'Not enough Gold';
-    double leftPadding = pieceIconSize * 1.65;
+    double leftPadding = pieceIconSize * 2.1;
 
     if (errorMessage == 1) {
       message = 'Maximum number of pieces reached';
-      leftPadding = pieceIconSize * 1.2;
+      leftPadding = pieceIconSize * 0.3;
     }
 
     return Positioned(
@@ -35,7 +35,8 @@ class ErrorSystemNotification extends StatelessWidget {
             style: GoogleFonts.roboto(
               color: whiteColor,
               fontWeight: FontWeight.bold,
-              fontSize: pieceIconSize / 2,
+              fontSize:
+                  errorMessage == 0 ? pieceIconSize / 2 : pieceIconSize / 2.3,
             ),
           ),
         )

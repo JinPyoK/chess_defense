@@ -272,7 +272,7 @@ final class InGameTurn extends _$InGameTurn {
     }
 
     if (targetKing) {
-      ref.read(inGameSystemNotificationProvider.notifier).notifyJanggoon();
+      ref.read(inGameSystemNotificationProvider.notifier).notifyCheck();
     }
   }
 

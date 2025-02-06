@@ -49,8 +49,8 @@ class _HomeSettingChildState extends State<HomeSettingChild> {
             _volume = value;
             setState(() {});
 
-            EasyDebounce.debounce('soundSetting', const Duration(seconds: 1),
-                () async {
+            EasyDebounce.debounce(
+                'soundSetting', const Duration(milliseconds: 500), () async {
               /// 기기에 소리 저장 볼륨값 저장
               await SoundVolumeRepository().setSoundVolume(volume: _volume);
             });
