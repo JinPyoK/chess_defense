@@ -6,6 +6,7 @@ import 'package:chess_defense/domain/in_game/entity/piece_enum.dart';
 import 'package:chess_defense/provider/in_game/in_game_gold_provider.dart';
 import 'package:chess_defense/provider/in_game/in_game_move_provider.dart';
 import 'package:chess_defense/provider/in_game/in_game_navigator_provider.dart';
+import 'package:chess_defense/provider/in_game/in_game_turn_provider.dart';
 import 'package:chess_defense/ui/common/controller/screen_size.dart';
 import 'package:chess_defense/ui/common/controller/show_custom_dialog.dart';
 import 'package:chess_defense/ui/common/controller/util_function.dart';
@@ -157,8 +158,7 @@ class _InGameFooterState extends ConsumerState<InGameFooter> {
         break;
     }
 
-    // final isMyTurn = ref.watch(inGameTurnProvider);
-    final isMyTurn = true;
+    final isMyTurn = ref.watch(inGameTurnProvider);
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -206,8 +206,7 @@ class _InGameFooterState extends ConsumerState<InGameFooter> {
 
   @override
   Widget build(BuildContext context) {
-    // final isMyTurn = ref.watch(inGameTurnProvider);
-    final isMyTurn = true;
+    final isMyTurn = ref.watch(inGameTurnProvider);
 
     return ColoredBox(
       color: inGameBlackColor,
@@ -237,7 +236,7 @@ class _InGameFooterState extends ConsumerState<InGameFooter> {
                                         CrossAxisAlignment.stretch,
                                     children: [
                                       const Text(
-                                        "게임을 종료하시겠습니까?\n\n게임을 저장하지 않고 종료하면 남은 골드는 돌려받습니다.",
+                                        "Do you want to exit the game?\n\n If you exit without saving, any remaining Gold will be refunded.",
                                         style: TextStyle(
                                           color: blackColor,
                                           fontWeight: FontWeight.bold,
@@ -274,7 +273,7 @@ class _InGameFooterState extends ConsumerState<InGameFooter> {
                                               Navigator.pop(context);
                                             }
                                           },
-                                          child: const Text("게임 저장 후 종료")),
+                                          child: const Text("Save and Exit")),
                                       const SizedBox(height: 15),
                                       ElevatedButton(
                                           style: ElevatedButton.styleFrom(
@@ -299,14 +298,15 @@ class _InGameFooterState extends ConsumerState<InGameFooter> {
 
                                             setStateGold!(() {});
                                           },
-                                          child: const Text("저장하지 않고 종료")),
+                                          child: const Text(
+                                              "Exit Without Saving")),
                                     ],
                                   ),
                                   actionButtonColor: Colors.grey,
                                 );
                               }
                             : null,
-                        child: const Text("게임 저장 및 종료")),
+                        child: const Text("Exit")),
                   ),
                 ),
               ],

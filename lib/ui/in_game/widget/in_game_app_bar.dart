@@ -1,6 +1,7 @@
 import 'package:chess_defense/core/constant/color.dart';
 import 'package:chess_defense/provider/in_game/in_game_gold_provider.dart';
 import 'package:chess_defense/provider/in_game/in_game_move_provider.dart';
+import 'package:chess_defense/provider/in_game/in_game_turn_provider.dart';
 import 'package:chess_defense/ui/common/controller/screen_size.dart';
 import 'package:chess_defense/ui/common/widget/gold_widget.dart';
 import 'package:chess_defense/ui/in_game/controller/get_gold_notification.dart';
@@ -17,8 +18,7 @@ class InGameAppBar extends ConsumerWidget implements PreferredSizeWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final inGameGold = ref.watch(inGameGoldProvider);
     final inGameMove = ref.watch(inGameMoveProvider);
-    // final isMyTurn = ref.watch(inGameTurnProvider);
-    final isMyTurn = false;
+    final isMyTurn = ref.watch(inGameTurnProvider);
     final goldNotification = ref.watch(getGoldNotificationWidgetProvider);
 
     return AppBar(

@@ -1,5 +1,6 @@
 import 'package:chess_defense/core/constant/color.dart';
 import 'package:chess_defense/provider/in_game/in_game_navigator_provider.dart';
+import 'package:chess_defense/provider/in_game/in_game_piece_set_provider.dart';
 import 'package:chess_defense/provider/in_game/in_game_system_notification_provider.dart';
 import 'package:chess_defense/ui/in_game/controller/in_game_control_value.dart';
 import 'package:flutter/material.dart';
@@ -41,8 +42,25 @@ class _InGameBodyState extends ConsumerState<InGameBody> {
   }
 
   @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (widget.gameHadSaved) {
+        /// 기물 저장된 데이터로 초기화
+        await ref
+            .read(inGamePieceSetProvider.notifier)
+            .initPieceWithSavedData();
+      } else {
+        /// 기물 초기화
+        ref.read(inGamePieceSetProvider.notifier).initPieceSet();
+      }
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    // final pieceSet = ref.watch(inGamePieceSetProvider);
+    final pieceSet = ref.watch(inGamePieceSetProvider);
     final navigatorBoxList = ref.watch(inGameNavigatorProvider);
     final systemNotification = ref.watch(inGameSystemNotificationProvider);
 
@@ -53,7 +71,7 @@ class _InGameBodyState extends ConsumerState<InGameBody> {
           alignment: AlignmentDirectional.bottomStart,
           children: [
             _renderChessBoard(),
-            // ...pieceSet,
+            ...pieceSet,
             ...navigatorBoxList,
             ...systemNotification,
           ],

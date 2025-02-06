@@ -52,16 +52,16 @@ final class InGameBoardStatus {
     return blackList;
   }
 
-  /// 흑 기물 개수 -> 한나라 기물이 40개 이상이면 게임 종료
+  /// 흑 기물 개수 -> 흑 기물이 40개 이상이면 게임 종료
   /// 흑이 공격을 안하고 무한 반복수 하는 경우를 방비
-  int getNumOfRed() {
-    final redList = getBlackAll();
+  int getNumOfBlack() {
+    final blackList = getBlackAll();
 
-    return redList.length;
+    return blackList.length;
   }
 
   /// 백 행마 조사 (미니맥스)
-  List<PieceBaseEntity> getBlueAll() {
+  List<PieceBaseEntity> getWhiteAll() {
     final whiteList = <PieceBaseEntity>[];
 
     for (List<PieceOrJustActionable> pieceList in boardStatus) {
@@ -95,7 +95,7 @@ final class InGameBoardStatus {
     return inGameSaveDataList;
   }
 
-  /// 저장된 게임 데이터로 초기화
+  /// 저장된 게임 데이터로 백기화
   void initStatusBoardWithSavedData(List<String> savedData) {
     initStatusBoard();
 
@@ -168,7 +168,7 @@ final class InGameBoardStatus {
     return boardStatusJsonList;
   }
 
-  /// 저장된 게임 데이터로 초기화 (미니맥스)
+  /// 저장된 게임 데이터로 백기화 (미니맥스)
   void boardStatusFromJsonList(List<Map<String, dynamic>> boardStatusJsonList) {
     initStatusBoard();
 

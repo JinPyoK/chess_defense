@@ -7,13 +7,15 @@ import 'package:google_fonts/google_fonts.dart';
 class ErrorSystemNotification extends StatelessWidget {
   const ErrorSystemNotification({super.key, required this.errorMessage});
 
-  final String errorMessage;
+  final int errorMessage;
 
   @override
   Widget build(BuildContext context) {
+    String message = 'Not enough Gold';
     double leftPadding = pieceIconSize * 1.65;
 
-    if (errorMessage == '기물의 수가 최대입니다') {
+    if (errorMessage == 1) {
+      message = 'Maximum number of pieces reached';
       leftPadding = pieceIconSize * 1.2;
     }
 
@@ -29,7 +31,7 @@ class ErrorSystemNotification extends StatelessWidget {
           padding: EdgeInsets.symmetric(
               horizontal: pieceIconSize, vertical: pieceIconSize / 2),
           child: Text(
-            errorMessage,
+            message,
             style: GoogleFonts.roboto(
               color: whiteColor,
               fontWeight: FontWeight.bold,

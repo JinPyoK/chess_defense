@@ -39,14 +39,16 @@ class _InGameResultState extends ConsumerState<InGameResult> {
   Future<bool> _nickNameHasBadWords(String nickName) async {
     if (nickName == '') {
       if (context.mounted) {
-        showCustomSnackBar(context, "닉네임을 1글자 이상 입력해주세요");
+        showCustomSnackBar(
+            context, "Please enter at least one character for the nickname");
       }
       return true;
     }
 
     if (await hasBadWords(nickName)) {
       if (mounted) {
-        showCustomSnackBar(context, "비속어, 연속적인 번호는 금지입니다.");
+        showCustomSnackBar(
+            context, "Profanity and consecutive numbers are not allowed");
       }
       return true;
     }
@@ -69,7 +71,7 @@ class _InGameResultState extends ConsumerState<InGameResult> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "게임 종료",
+            "Game Over",
             style: TextStyle(
               fontWeight: FontWeight.bold,
               color: blackColor,
@@ -78,7 +80,9 @@ class _InGameResultState extends ConsumerState<InGameResult> {
           ),
           SizedBox(height: 5 * hu),
           Text(
-            widget.reason == 0 ? '왕이 사망하였습니다.' : '한나라 기물의 수가 50을 초과하였습니다.',
+            widget.reason == 0
+                ? "The King has been captured."
+                : "The number of Black pieces has exceeded 40.",
             style: TextStyle(
               color: blackColor,
               fontSize: 10 * hu,
@@ -101,14 +105,14 @@ class _InGameResultState extends ConsumerState<InGameResult> {
                   ),
                 ),
               ),
-              const Text("수"),
+              const Text("Moves"),
             ],
           ),
           SizedBox(height: 30 * hu),
           TextField(
             controller: _textController,
             decoration: const InputDecoration(
-              hintText: "닉네임을 입력해주세요",
+              hintText: "Please enter a nickname",
             ),
             maxLength: 10,
           ),
@@ -145,13 +149,14 @@ class _InGameResultState extends ConsumerState<InGameResult> {
                             _nicknameChecking = false;
                             setState(() {});
                             if (context.mounted) {
-                              showCustomSnackBar(context, "랭킹에 등록하였습니다");
+                              showCustomSnackBar(
+                                  context, "Your rank has been registered");
                             }
                           }
                         } catch (_) {
                           if (context.mounted) {
-                            showCustomSnackBar(
-                                context, "랭킹 등록에 실패했습니다. 다시 시도해 주세요.");
+                            showCustomSnackBar(context,
+                                "Failed to register rank. Please try again");
                           }
                         }
                       }
@@ -162,7 +167,7 @@ class _InGameResultState extends ConsumerState<InGameResult> {
                           color: whiteColor,
                         ),
                       )
-                    : const Text("랭킹 등록"),
+                    : const Text("Register Rank"),
               ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
@@ -184,7 +189,7 @@ class _InGameResultState extends ConsumerState<InGameResult> {
 
                   setStateGold!(() {});
                 },
-                child: const Text("게임 종료"),
+                child: const Text("Exit"),
               ),
             ],
           ),

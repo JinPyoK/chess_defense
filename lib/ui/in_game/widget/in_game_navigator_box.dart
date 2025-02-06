@@ -10,6 +10,8 @@ import 'package:chess_defense/domain/in_game/entity/white_piece/white_pawn_entit
 import 'package:chess_defense/domain/in_game/entity/white_piece/white_queen_entity.dart';
 import 'package:chess_defense/domain/in_game/entity/white_piece/white_rook_entity.dart';
 import 'package:chess_defense/provider/in_game/in_game_navigator_provider.dart';
+import 'package:chess_defense/provider/in_game/in_game_piece_set_provider.dart';
+import 'package:chess_defense/provider/in_game/in_game_turn_provider.dart';
 import 'package:chess_defense/ui/audio/controller/audio_play.dart';
 import 'package:chess_defense/ui/in_game/controller/in_game_control_value.dart';
 import 'package:chess_defense/ui/in_game/controller/in_game_selected_piece_entity.dart';
@@ -57,9 +59,9 @@ class _InGameNavigatorState extends ConsumerState<InGameNavigatorBox> {
           widget.pieceActionable.targetX, widget.pieceActionable.targetY);
       if (status is PieceBaseEntity) {
         if (status.team == Team.black) {
-          // ref
-          //     .read(inGamePieceSetProvider.notifier)
-          //     .removePiece(widget.pieceActionable);
+          ref
+              .read(inGamePieceSetProvider.notifier)
+              .removePiece(widget.pieceActionable);
         }
       }
 
@@ -85,7 +87,7 @@ class _InGameNavigatorState extends ConsumerState<InGameNavigatorBox> {
       selectedPieceEntity!.x = widget.pieceActionable.targetX;
       selectedPieceEntity!.y = widget.pieceActionable.targetY;
       selectedPieceEntity!.setStateThisPiece!(() {});
-      // ref.read(inGameTurnProvider.notifier).changeTurn();
+      ref.read(inGameTurnProvider.notifier).changeTurn();
 
       selectedPieceEntity = null;
 
@@ -128,13 +130,13 @@ class _InGameNavigatorState extends ConsumerState<InGameNavigatorBox> {
           );
       }
 
-      // ref.read(inGamePieceSetProvider.notifier).spawnPiece(spawnPieceModel);
+      ref.read(inGamePieceSetProvider.notifier).spawnPiece(spawnPieceEntity);
     } else if (widget.navigatorType == NavigatorType.execute) {
       ref.read(inGameNavigatorProvider.notifier).clearNavigator();
-      // ref
-      //     .read(inGamePieceSetProvider.notifier)
-      //     .removePiece(widget.pieceActionable, true);
-      // ref.read(inGameTurnProvider.notifier).determineIfJanggoon();
+      ref
+          .read(inGamePieceSetProvider.notifier)
+          .removePiece(widget.pieceActionable, true);
+      ref.read(inGameTurnProvider.notifier).determineIfCheck();
     }
   }
 
@@ -150,9 +152,9 @@ class _InGameNavigatorState extends ConsumerState<InGameNavigatorBox> {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      left: boardPositionValue[widget.pieceActionable.targetX]! +
+      left: boardPositionXValue[widget.pieceActionable.targetX]! +
           pieceIconSize / 5,
-      bottom: boardPositionValue[widget.pieceActionable.targetY]! +
+      bottom: boardPositionYValue[widget.pieceActionable.targetY]! +
           pieceIconSize / 5,
       child: AnimatedOpacity(
         opacity: _navigatorOpacity,

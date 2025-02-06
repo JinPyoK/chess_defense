@@ -4,6 +4,7 @@ import 'package:chess_defense/domain/in_game/entity/piece_base_entity.dart';
 import 'package:chess_defense/domain/in_game/entity/piece_enum.dart';
 import 'package:chess_defense/provider/in_game/in_game_black_status.dart';
 import 'package:chess_defense/provider/in_game/in_game_navigator_provider.dart';
+import 'package:chess_defense/provider/in_game/in_game_turn_provider.dart';
 import 'package:chess_defense/ui/audio/controller/audio_play.dart';
 import 'package:chess_defense/ui/in_game/controller/in_game_control_value.dart';
 import 'package:chess_defense/ui/in_game/controller/in_game_selected_piece_entity.dart';
@@ -27,8 +28,7 @@ class _InGamePieceState extends ConsumerState<InGamePiece> {
   bool _callJanggoon = false;
 
   void _onPieceTaped() {
-    // final isMyTurn = ref.read(inGameTurnProvider);
-    final isMyTurn = true;
+    final isMyTurn = ref.read(inGameTurnProvider);
 
     if (widget.pieceEntity.team == Team.white && isMyTurn) {
       if (selectedPieceEntity != null) {
@@ -125,8 +125,8 @@ class _InGamePieceState extends ConsumerState<InGamePiece> {
     return AnimatedPositioned(
       duration: const Duration(milliseconds: 500),
       curve: Curves.easeOutCubic,
-      left: boardPositionValue[widget.pieceEntity.x],
-      bottom: boardPositionValue[widget.pieceEntity.y],
+      left: boardPositionXValue[widget.pieceEntity.x],
+      bottom: boardPositionYValue[widget.pieceEntity.y],
       child: Stack(
         alignment: AlignmentDirectional.topCenter,
         children: [

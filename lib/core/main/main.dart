@@ -31,7 +31,10 @@ class ChessDefense extends StatelessWidget {
     hu = MediaQuery.of(context).size.height / 690;
 
     boardSize = MediaQuery.of(context).size.width;
-    pieceIconSize = boardSize / 100;
+    pieceIconSize = boardSize / 10;
+
+    /// 포지션 값 백기화
+    initBoardPositionValue();
 
     return ProviderScope(
       child: MaterialApp(
@@ -72,9 +75,6 @@ Future<void> _initGame() async {
 
   /// 구글 애드몹
   await MobileAds.instance.initialize();
-
-  /// 포지션 값 초기화
-  initBoardPositionValue();
 }
 
 final _customTheme = ThemeData(

@@ -23,8 +23,8 @@ final class _InGameRedStatusProvider {
   int sangSpawnStartRange = 30;
   int sangSpawnEndRange = 60;
 
-  /// 한나라 알고리즘 강화
-  void upgradeRed(int level) {
+  /// 흑 알고리즘 강화
+  void upgradeBlack(int level) {
     switch (level) {
       case 0:
         minimaxTreeDepth = 3;
@@ -154,7 +154,7 @@ final class InGameOnTheRopes extends _$InGameOnTheRopes {
   }
 
   void checkOnTheRopes() {
-    final numOfRedPieces = inGameBoardStatus.getNumOfRed();
+    final numOfRedPieces = inGameBoardStatus.getNumOfBlack();
 
     if (numOfRedPieces >= 30) {
       state = true;

@@ -23,7 +23,7 @@ final class InGameSystemNotification extends _$InGameSystemNotification {
     makeExecuteOrCheckSound();
   }
 
-  void notifyRedUpgrade(int level) {
+  void notifyBlackUpgrade(int level) {
     state = <Widget>[
       ...state,
       BlackUpgradeSystemNotification(key: GlobalKey(), level: level),
@@ -31,7 +31,7 @@ final class InGameSystemNotification extends _$InGameSystemNotification {
     makeGameStartSound();
   }
 
-  void notifySystemError(String errorMessage) {
+  void notifySystemError(int errorMessage) {
     state = <Widget>[
       ...state,
       ErrorSystemNotification(key: GlobalKey(), errorMessage: errorMessage),
