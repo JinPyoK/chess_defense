@@ -82,6 +82,7 @@ class _InGameNavigatorState extends ConsumerState<InGameNavigatorBox> {
 
       lastTurnPiece = selectedPieceEntity;
       lastTurnPiece!.justTurn = true;
+      lastTurnPiece!.firstMove = true;
 
       /// 기물 착수
       selectedPieceEntity!.x = widget.pieceActionable.targetX;
