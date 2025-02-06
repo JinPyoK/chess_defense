@@ -52,16 +52,20 @@ final class WhitePawnEntity extends WhitePieceBaseEntity {
     /// 처음 움직일 때 2칸 전진
     if (!firstMove) {
       if (y > 1) {
-        final status = statusBoard.getStatus(x, y - 2);
+        final status = statusBoard.getStatus(x, y - 1);
 
         if (status is PieceActionableEntity) {
-          pieceActionable.add(
-            PieceActionableEntity(
-              targetX: status.targetX,
-              targetY: status.targetY,
-              targetValue: 0,
-            ),
-          );
+          final status = statusBoard.getStatus(x, y - 2);
+
+          if (status is PieceActionableEntity) {
+            pieceActionable.add(
+              PieceActionableEntity(
+                targetX: status.targetX,
+                targetY: status.targetY,
+                targetValue: 0,
+              ),
+            );
+          }
         }
       }
     }
