@@ -12,6 +12,7 @@ import 'package:chess_defense/ui/common/controller/util_function.dart';
 import 'package:chess_defense/ui/common/screen/main_navigation_screen.dart';
 import 'package:chess_defense/ui/in_game/controller/check_bad_words.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class InGameResult extends ConsumerStatefulWidget {
@@ -115,6 +116,10 @@ class _InGameResultState extends ConsumerState<InGameResult> {
               hintText: "Please enter a nickname",
             ),
             maxLength: 10,
+            inputFormatters: [
+              FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9 ]')),
+              // 영어와 숫자만 허용
+            ],
           ),
           SizedBox(height: 30 * hu),
           Row(
