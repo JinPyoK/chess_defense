@@ -90,6 +90,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
             ));
       },
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           backgroundColor: whiteColor,
           actions: [
