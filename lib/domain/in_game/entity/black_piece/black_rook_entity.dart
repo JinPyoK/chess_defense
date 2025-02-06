@@ -3,6 +3,7 @@ import 'package:chess_defense/domain/in_game/entity/in_game_board_status.dart';
 import 'package:chess_defense/domain/in_game/entity/piece_base_entity.dart';
 import 'package:chess_defense/domain/in_game/entity/piece_enum.dart';
 import 'package:chess_defense/ui/in_game/controller/in_game_control_value.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 final class BlackRookEntity extends BlackPieceBaseEntity {
@@ -13,10 +14,15 @@ final class BlackRookEntity extends BlackPieceBaseEntity {
           team: Team.black,
           pieceType: PieceType.rook,
           value: 5,
-          pieceIcon: FaIcon(
-            FontAwesomeIcons.solidChessRook,
-            color: blackColor,
-            size: pieceIconSize,
+          pieceIcon: SizedBox(
+            width: pieceIconSize,
+            height: pieceIconSize,
+            child: FittedBox(
+              child: FaIcon(
+                FontAwesomeIcons.solidChessRook,
+                color: blackColor,
+              ),
+            ),
           ),
         );
 

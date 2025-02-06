@@ -3,6 +3,7 @@ import 'package:chess_defense/domain/in_game/entity/in_game_board_status.dart';
 import 'package:chess_defense/domain/in_game/entity/piece_base_entity.dart';
 import 'package:chess_defense/domain/in_game/entity/piece_enum.dart';
 import 'package:chess_defense/ui/in_game/controller/in_game_control_value.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 final class WhiteKnightEntity extends WhitePieceBaseEntity {
@@ -13,10 +14,15 @@ final class WhiteKnightEntity extends WhitePieceBaseEntity {
           team: Team.white,
           pieceType: PieceType.knight,
           value: 30,
-          pieceIcon: FaIcon(
-            FontAwesomeIcons.solidChessKnight,
-            color: whiteColor,
-            size: pieceIconSize,
+          pieceIcon: SizedBox(
+            width: pieceIconSize,
+            height: pieceIconSize,
+            child: FittedBox(
+              child: FaIcon(
+                FontAwesomeIcons.solidChessKnight,
+                color: whiteColor,
+              ),
+            ),
           ),
         );
 

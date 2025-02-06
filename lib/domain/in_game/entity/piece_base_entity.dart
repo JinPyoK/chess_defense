@@ -12,7 +12,7 @@ import 'package:chess_defense/domain/in_game/entity/white_piece/white_knight_ent
 import 'package:chess_defense/domain/in_game/entity/white_piece/white_pawn_entity.dart';
 import 'package:chess_defense/domain/in_game/entity/white_piece/white_queen_entity.dart';
 import 'package:chess_defense/domain/in_game/entity/white_piece/white_rook_entity.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter/cupertino.dart';
 
 abstract base class PieceOrJustActionable {}
 
@@ -27,7 +27,7 @@ abstract base class PieceBaseEntity extends PieceOrJustActionable {
   final int value;
 
   /// 기물 아이콘
-  final FaIcon pieceIcon;
+  final SizedBox pieceIcon;
 
   /// 기물을 방금 착수했는지 -> UI 표시
   bool justTurn = false;
