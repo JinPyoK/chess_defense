@@ -10,6 +10,7 @@ import 'package:chess_defense/domain/in_game/entity/piece_base_entity.dart';
 import 'package:chess_defense/domain/in_game/entity/piece_enum.dart';
 import 'package:chess_defense/domain/in_game/entity/white_piece/white_bishop_entity.dart';
 import 'package:chess_defense/domain/in_game/entity/white_piece/white_king_entity.dart';
+import 'package:chess_defense/domain/in_game/entity/white_piece/white_knight_entity.dart';
 import 'package:chess_defense/domain/in_game/entity/white_piece/white_queen_entity.dart';
 import 'package:chess_defense/domain/in_game/entity/white_piece/white_rook_entity.dart';
 import 'package:chess_defense/provider/in_game/in_game_black_status.dart';
@@ -66,16 +67,16 @@ final class InGamePieceSet extends _$InGamePieceSet {
     spawnPiece(WhiteKingEntity(x: 4, y: 7), true);
 
     spawnPiece(WhiteQueenEntity(x: 3, y: 7), true);
-    //
+
     spawnPiece(WhiteRookEntity(x: 0, y: 7), true);
     spawnPiece(WhiteRookEntity(x: 7, y: 7), true);
-    //
-    // spawnPiece(WhiteKnightEntity(x: 1, y: 7), true);
-    // spawnPiece(WhiteKnightEntity(x: 6, y: 7), true);
-    //
+
+    spawnPiece(WhiteKnightEntity(x: 1, y: 7), true);
+    spawnPiece(WhiteKnightEntity(x: 6, y: 7), true);
+
     spawnPiece(WhiteBishopEntity(x: 2, y: 7), true);
     spawnPiece(WhiteBishopEntity(x: 5, y: 7), true);
-    //
+
     // spawnPiece(WhitePawnEntity(x: 0, y: 6), true);
     // spawnPiece(WhitePawnEntity(x: 1, y: 6), true);
     // spawnPiece(WhitePawnEntity(x: 2, y: 6), true);
