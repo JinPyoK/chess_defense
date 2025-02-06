@@ -133,7 +133,7 @@ final class InGameTurn extends _$InGameTurn {
     /// 흑 진영에 부활할 자리가 없으면 백 진영 포함 나머지 구역 조사
     if (blackSpawnPositionList.isEmpty) {
       for (int i = 0; i < 8; i++) {
-        for (int j = 5; j < 8; j++) {
+        for (int j = 3; j < 6; j++) {
           final whitePlace = inGameBoardStatus.getStatus(i, j);
           if (whitePlace is PieceActionableEntity) {
             blackSpawnPositionList.add(whitePlace);
