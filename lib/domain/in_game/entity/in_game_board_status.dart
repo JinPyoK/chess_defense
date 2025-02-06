@@ -168,7 +168,7 @@ final class InGameBoardStatus {
     return boardStatusJsonList;
   }
 
-  /// 저장된 게임 데이터로 백기화 (미니맥스)
+  /// 저장된 게임 데이터로 초기화 (미니맥스)
   void boardStatusFromJsonList(List<Map<String, dynamic>> boardStatusJsonList) {
     initStatusBoard();
 
@@ -177,8 +177,8 @@ final class InGameBoardStatus {
 
       final team = Team.values.byName(boardStatusJson['team']);
       final pieceType = PieceType.values.byName(boardStatusJson['pieceType']);
-      final x = int.parse(boardStatusJson['x']);
-      final y = int.parse(boardStatusJson['y']);
+      final x = boardStatusJson['x'];
+      final y = boardStatusJson['y'];
 
       /// 백
       if (team == Team.white) {

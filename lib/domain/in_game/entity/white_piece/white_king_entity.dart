@@ -1,6 +1,8 @@
 import 'package:chess_defense/core/constant/color.dart';
+import 'package:chess_defense/domain/in_game/entity/in_game_board_status.dart';
 import 'package:chess_defense/domain/in_game/entity/piece_base_entity.dart';
 import 'package:chess_defense/domain/in_game/entity/piece_enum.dart';
+import 'package:chess_defense/domain/in_game/entity/white_piece/find_white_piece.dart';
 import 'package:chess_defense/ui/in_game/controller/in_game_control_value.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -19,97 +21,51 @@ final class WhiteKingEntity extends WhitePieceBaseEntity {
           ),
         );
 
-// @override
-// void searchActionable(InGameBoardStatus statusBoard) {
-//   /// 현재 액션 가능한 리스트를 비워준다.
-//   pieceActionable.clear();
-//
-//   /// 기물이 갈 수 있는 길을 찾아서 리스트에 넣는다.
-//
-//   // /// 왕 액션 탐색
-//   // void findKingActions(List<PieceOrJustActionable> statusList) {
-//   //   for (PieceOrJustActionable status in statusList) {
-//   //     findBlueActions(status, pieceActionable);
-//   //   }
-//   // }
-//   //
-//   // if (x == 3 && y == 9) {
-//   //   final statusList = <PieceOrJustActionable>[
-//   //     statusBoard.getStatus(3, 8),
-//   //     statusBoard.getStatus(4, 9),
-//   //     statusBoard.getStatus(4, 8),
-//   //   ];
-//   //
-//   //   findKingActions(statusList);
-//   // } else if (x == 4 && y == 9) {
-//   //   final statusList = <PieceOrJustActionable>[
-//   //     statusBoard.getStatus(3, 9),
-//   //     statusBoard.getStatus(4, 8),
-//   //     statusBoard.getStatus(5, 9),
-//   //   ];
-//   //
-//   //   findKingActions(statusList);
-//   // } else if (x == 5 && y == 9) {
-//   //   final statusList = <PieceOrJustActionable>[
-//   //     statusBoard.getStatus(4, 9),
-//   //     statusBoard.getStatus(4, 8),
-//   //     statusBoard.getStatus(5, 8),
-//   //   ];
-//   //
-//   //   findKingActions(statusList);
-//   // } else if (x == 3 && y == 8) {
-//   //   final statusList = <PieceOrJustActionable>[
-//   //     statusBoard.getStatus(3, 7),
-//   //     statusBoard.getStatus(4, 8),
-//   //     statusBoard.getStatus(3, 9),
-//   //   ];
-//   //
-//   //   findKingActions(statusList);
-//   // } else if (x == 4 && y == 8) {
-//   //   final statusList = <PieceOrJustActionable>[
-//   //     statusBoard.getStatus(3, 7),
-//   //     statusBoard.getStatus(4, 7),
-//   //     statusBoard.getStatus(5, 7),
-//   //     statusBoard.getStatus(3, 8),
-//   //     statusBoard.getStatus(5, 8),
-//   //     statusBoard.getStatus(3, 9),
-//   //     statusBoard.getStatus(4, 9),
-//   //     statusBoard.getStatus(5, 9),
-//   //   ];
-//   //
-//   //   findKingActions(statusList);
-//   // } else if (x == 5 && y == 8) {
-//   //   final statusList = <PieceOrJustActionable>[
-//   //     statusBoard.getStatus(5, 7),
-//   //     statusBoard.getStatus(4, 8),
-//   //     statusBoard.getStatus(5, 9),
-//   //   ];
-//   //
-//   //   findKingActions(statusList);
-//   // } else if (x == 3 && y == 7) {
-//   //   final statusList = <PieceOrJustActionable>[
-//   //     statusBoard.getStatus(4, 7),
-//   //     statusBoard.getStatus(4, 8),
-//   //     statusBoard.getStatus(3, 8),
-//   //   ];
-//   //
-//   //   findKingActions(statusList);
-//   // } else if (x == 4 && y == 7) {
-//   //   final statusList = <PieceOrJustActionable>[
-//   //     statusBoard.getStatus(3, 7),
-//   //     statusBoard.getStatus(4, 8),
-//   //     statusBoard.getStatus(5, 7),
-//   //   ];
-//   //
-//   //   findKingActions(statusList);
-//   // } else if (x == 5 && y == 7) {
-//   //   final statusList = <PieceOrJustActionable>[
-//   //     statusBoard.getStatus(4, 7),
-//   //     statusBoard.getStatus(4, 8),
-//   //     statusBoard.getStatus(5, 8),
-//   //   ];
-//   //
-//   //   findKingActions(statusList);
-//   // }
-// }
+  @override
+  void searchActionable(InGameBoardStatus statusBoard) {
+    /// 현재 액션 가능한 리스트를 비워준다.
+    pieceActionable.clear();
+
+    /// 기물이 갈 수 있는 길을 찾아서 리스트에 넣는다.
+
+    /// 위
+    if (y > 0) {
+      findWhiteActions(statusBoard.getStatus(x, y - 1), pieceActionable);
+
+      /// 위 왼쪽
+      if (x > 0) {
+        findWhiteActions(statusBoard.getStatus(x - 1, y - 1), pieceActionable);
+      }
+
+      /// 위 오른쪽
+      if (x < 7) {
+        findWhiteActions(statusBoard.getStatus(x + 1, y - 1), pieceActionable);
+      }
+    }
+
+    /// 왼쪽
+    if (x > 0) {
+      findWhiteActions(statusBoard.getStatus(x - 1, y), pieceActionable);
+    }
+
+    /// 오른쪽
+    if (x < 7) {
+      findWhiteActions(statusBoard.getStatus(x + 1, y), pieceActionable);
+    }
+
+    /// 아래
+    if (y < 7) {
+      findWhiteActions(statusBoard.getStatus(x, y + 1), pieceActionable);
+
+      /// 아래 왼쪽
+      if (x > 0) {
+        findWhiteActions(statusBoard.getStatus(x - 1, y + 1), pieceActionable);
+      }
+
+      /// 아래 오른쪽
+      if (x < 7) {
+        findWhiteActions(statusBoard.getStatus(x + 1, y + 1), pieceActionable);
+      }
+    }
+  }
 }

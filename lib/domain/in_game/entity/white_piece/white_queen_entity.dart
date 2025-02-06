@@ -11,7 +11,7 @@ final class WhiteQueenEntity extends WhitePieceBaseEntity {
     required super.y,
   }) : super(
           team: Team.white,
-          pieceType: PieceType.knight,
+          pieceType: PieceType.queen,
           value: 90,
           pieceIcon: FaIcon(
             FontAwesomeIcons.solidChessQueen,

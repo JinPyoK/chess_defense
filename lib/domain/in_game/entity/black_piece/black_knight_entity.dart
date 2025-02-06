@@ -5,7 +5,7 @@ import 'package:chess_defense/domain/in_game/entity/piece_enum.dart';
 import 'package:chess_defense/ui/in_game/controller/in_game_control_value.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-final class BlackKnightEntity extends WhitePieceBaseEntity {
+final class BlackKnightEntity extends BlackPieceBaseEntity {
   BlackKnightEntity({
     required super.x,
     required super.y,

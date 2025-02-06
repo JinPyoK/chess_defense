@@ -2,7 +2,7 @@ import 'package:chess_defense/domain/in_game/entity/piece_actionable_entity.dart
 import 'package:chess_defense/domain/in_game/entity/piece_base_entity.dart';
 import 'package:chess_defense/domain/in_game/entity/piece_enum.dart';
 
-void findBlueActions(
+void findWhiteActions(
     PieceOrJustActionable status, List<PieceActionableEntity> pieceActionable) {
   if (status is PieceActionableEntity) {
     pieceActionable.add(

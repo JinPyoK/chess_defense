@@ -121,7 +121,7 @@ final class InGameTurn extends _$InGameTurn {
     final blackSpawnPositionList = <PieceActionableEntity>[];
 
     /// 흑 기물 부활 자리 찾기
-    for (int i = 0; i < 9; i++) {
+    for (int i = 0; i < 7; i++) {
       for (int j = 0; j < 4; j++) {
         final whitePlace = inGameBoardStatus.getStatus(i, j);
         if (whitePlace is PieceActionableEntity) {
@@ -132,8 +132,8 @@ final class InGameTurn extends _$InGameTurn {
 
     /// 흑 진영에 부활할 자리가 없으면 백 진영 포함 나머지 구역 조사
     if (blackSpawnPositionList.isEmpty) {
-      for (int i = 0; i < 9; i++) {
-        for (int j = 4; j < 10; j++) {
+      for (int i = 0; i < 7; i++) {
+        for (int j = 5; j < 7; j++) {
           final whitePlace = inGameBoardStatus.getStatus(i, j);
           if (whitePlace is PieceActionableEntity) {
             blackSpawnPositionList.add(whitePlace);
