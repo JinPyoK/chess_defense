@@ -36,7 +36,7 @@ final class InGameNavigator extends _$InGameNavigator {
     final navigatorBoxList = <InGameNavigatorBox>[];
 
     for (int i = 0; i < 8; i++) {
-      for (int j = 6; j < 8; j++) {
+      for (int j = 5; j < 8; j++) {
         final pieceModel = inGameBoardStatus.getStatus(i, j);
         if (pieceModel is PieceActionableEntity) {
           navigatorBoxList.add(
