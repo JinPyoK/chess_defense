@@ -11,17 +11,17 @@ final class _InGameRedStatusProvider {
 
   int spawnMove = 8;
 
-  int chaSpawnStartRange = 0;
-  int chaSpawnEndRange = 5;
+  int queenSpawnStartRange = 0;
+  int queenSpawnEndRange = 5;
 
-  int poSpawnStartRange = 5;
-  int poSpawnEndRange = 15;
+  int rookSpawnStartRange = 5;
+  int rookSpawnEndRange = 15;
 
-  int maSpawnStartRange = 15;
-  int maSpawnEndRange = 30;
+  int knightSpawnStartRange = 15;
+  int knightSpawnEndRange = 30;
 
-  int sangSpawnStartRange = 30;
-  int sangSpawnEndRange = 60;
+  int bishopSpawnStartRange = 30;
+  int bishopSpawnEndRange = 60;
 
   /// 흑 알고리즘 강화
   void upgradeBlack(int level) {
@@ -31,17 +31,17 @@ final class _InGameRedStatusProvider {
 
         spawnMove = 8;
 
-        chaSpawnStartRange = 0;
-        chaSpawnEndRange = 5;
+        queenSpawnStartRange = 0;
+        queenSpawnEndRange = 5;
 
-        poSpawnStartRange = 5;
-        poSpawnEndRange = 15;
+        rookSpawnStartRange = 5;
+        rookSpawnEndRange = 15;
 
-        maSpawnStartRange = 15;
-        maSpawnEndRange = 30;
+        knightSpawnStartRange = 15;
+        knightSpawnEndRange = 30;
 
-        sangSpawnStartRange = 30;
-        sangSpawnEndRange = 60;
+        bishopSpawnStartRange = 30;
+        bishopSpawnEndRange = 60;
         break;
 
       case 1:
@@ -49,17 +49,17 @@ final class _InGameRedStatusProvider {
 
         spawnMove = 4;
 
-        chaSpawnStartRange = 0;
-        chaSpawnEndRange = 5;
+        queenSpawnStartRange = 0;
+        queenSpawnEndRange = 5;
 
-        poSpawnStartRange = 5;
-        poSpawnEndRange = 15;
+        rookSpawnStartRange = 5;
+        rookSpawnEndRange = 15;
 
-        maSpawnStartRange = 15;
-        maSpawnEndRange = 30;
+        knightSpawnStartRange = 15;
+        knightSpawnEndRange = 30;
 
-        sangSpawnStartRange = 30;
-        sangSpawnEndRange = 70;
+        bishopSpawnStartRange = 30;
+        bishopSpawnEndRange = 70;
         break;
 
       case 2:
@@ -67,17 +67,17 @@ final class _InGameRedStatusProvider {
 
         spawnMove = 8;
 
-        chaSpawnStartRange = 0;
-        chaSpawnEndRange = 5;
+        queenSpawnStartRange = 0;
+        queenSpawnEndRange = 5;
 
-        poSpawnStartRange = 5;
-        poSpawnEndRange = 15;
+        rookSpawnStartRange = 5;
+        rookSpawnEndRange = 15;
 
-        maSpawnStartRange = 15;
-        maSpawnEndRange = 40;
+        knightSpawnStartRange = 15;
+        knightSpawnEndRange = 40;
 
-        sangSpawnStartRange = 40;
-        sangSpawnEndRange = 60;
+        bishopSpawnStartRange = 40;
+        bishopSpawnEndRange = 60;
         break;
 
       case 3:
@@ -85,17 +85,17 @@ final class _InGameRedStatusProvider {
 
         spawnMove = 4;
 
-        chaSpawnStartRange = 0;
-        chaSpawnEndRange = 10;
+        queenSpawnStartRange = 0;
+        queenSpawnEndRange = 10;
 
-        poSpawnStartRange = 10;
-        poSpawnEndRange = 30;
+        rookSpawnStartRange = 10;
+        rookSpawnEndRange = 30;
 
-        maSpawnStartRange = 30;
-        maSpawnEndRange = 60;
+        knightSpawnStartRange = 30;
+        knightSpawnEndRange = 60;
 
-        sangSpawnStartRange = 60;
-        sangSpawnEndRange = 80;
+        bishopSpawnStartRange = 60;
+        bishopSpawnEndRange = 80;
         break;
 
       case 4:
@@ -103,17 +103,17 @@ final class _InGameRedStatusProvider {
 
         spawnMove = 8;
 
-        chaSpawnStartRange = 0;
-        chaSpawnEndRange = 15;
+        queenSpawnStartRange = 0;
+        queenSpawnEndRange = 15;
 
-        poSpawnStartRange = 15;
-        poSpawnEndRange = 45;
+        rookSpawnStartRange = 15;
+        rookSpawnEndRange = 45;
 
-        maSpawnStartRange = 45;
-        maSpawnEndRange = 70;
+        knightSpawnStartRange = 45;
+        knightSpawnEndRange = 70;
 
-        sangSpawnStartRange = 70;
-        sangSpawnEndRange = 90;
+        bishopSpawnStartRange = 70;
+        bishopSpawnEndRange = 90;
         break;
 
       default:
@@ -121,17 +121,17 @@ final class _InGameRedStatusProvider {
 
         spawnMove = 4;
 
-        chaSpawnStartRange = 0;
-        chaSpawnEndRange = 25;
+        queenSpawnStartRange = 0;
+        queenSpawnEndRange = 25;
 
-        poSpawnStartRange = 25;
-        poSpawnEndRange = 45;
+        rookSpawnStartRange = 25;
+        rookSpawnEndRange = 45;
 
-        maSpawnStartRange = 45;
-        maSpawnEndRange = 75;
+        knightSpawnStartRange = 45;
+        knightSpawnEndRange = 75;
 
-        sangSpawnStartRange = 75;
-        sangSpawnEndRange = 90;
+        bishopSpawnStartRange = 75;
+        bishopSpawnEndRange = 90;
         break;
     }
   }
@@ -154,9 +154,9 @@ final class InGameOnTheRopes extends _$InGameOnTheRopes {
   }
 
   void checkOnTheRopes() {
-    final numOfRedPieces = inGameBoardStatus.getNumOfBlack();
+    final numOfBlackPieces = inGameBoardStatus.getNumOfBlack();
 
-    if (numOfRedPieces >= 30) {
+    if (numOfBlackPieces >= 30) {
       state = true;
       if (!_notifyOnce) {
         ref.read(inGameSystemNotificationProvider.notifier).notifyOnTheRopes();
@@ -167,6 +167,6 @@ final class InGameOnTheRopes extends _$InGameOnTheRopes {
       _notifyOnce = false;
     }
 
-    state = numOfRedPieces >= 30;
+    state = numOfBlackPieces >= 30;
   }
 }

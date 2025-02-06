@@ -121,8 +121,8 @@ final class InGameTurn extends _$InGameTurn {
     final blackSpawnPositionList = <PieceActionableEntity>[];
 
     /// 흑 기물 부활 자리 찾기
-    for (int i = 0; i < 7; i++) {
-      for (int j = 0; j < 4; j++) {
+    for (int i = 0; i < 8; i++) {
+      for (int j = 0; j < 3; j++) {
         final whitePlace = inGameBoardStatus.getStatus(i, j);
         if (whitePlace is PieceActionableEntity) {
           blackSpawnPositionList.add(whitePlace);
@@ -132,8 +132,8 @@ final class InGameTurn extends _$InGameTurn {
 
     /// 흑 진영에 부활할 자리가 없으면 백 진영 포함 나머지 구역 조사
     if (blackSpawnPositionList.isEmpty) {
-      for (int i = 0; i < 7; i++) {
-        for (int j = 5; j < 7; j++) {
+      for (int i = 0; i < 8; i++) {
+        for (int j = 5; j < 8; j++) {
           final whitePlace = inGameBoardStatus.getStatus(i, j);
           if (whitePlace is PieceActionableEntity) {
             blackSpawnPositionList.add(whitePlace);
@@ -155,23 +155,24 @@ final class InGameTurn extends _$InGameTurn {
     final blackPiecePlace = blackSpawnPositionList[blackSpawnPositionNumber];
 
     /// 기물 부활 확률
-    if (pieceTypeNumberRange >= inGameBlackStatusProvider.chaSpawnStartRange &&
-        pieceTypeNumberRange < inGameBlackStatusProvider.chaSpawnEndRange) {
+    if (pieceTypeNumberRange >=
+            inGameBlackStatusProvider.queenSpawnStartRange &&
+        pieceTypeNumberRange < inGameBlackStatusProvider.queenSpawnEndRange) {
       spawnBlackPiece = BlackQueenEntity(
           x: blackPiecePlace.targetX, y: blackPiecePlace.targetY);
     } else if (pieceTypeNumberRange >=
-            inGameBlackStatusProvider.poSpawnStartRange &&
-        pieceTypeNumberRange < inGameBlackStatusProvider.poSpawnEndRange) {
+            inGameBlackStatusProvider.rookSpawnStartRange &&
+        pieceTypeNumberRange < inGameBlackStatusProvider.rookSpawnEndRange) {
       spawnBlackPiece = BlackRookEntity(
           x: blackPiecePlace.targetX, y: blackPiecePlace.targetY);
     } else if (pieceTypeNumberRange >=
-            inGameBlackStatusProvider.maSpawnStartRange &&
-        pieceTypeNumberRange < inGameBlackStatusProvider.maSpawnEndRange) {
+            inGameBlackStatusProvider.knightSpawnStartRange &&
+        pieceTypeNumberRange < inGameBlackStatusProvider.knightSpawnEndRange) {
       spawnBlackPiece = BlackKnightEntity(
           x: blackPiecePlace.targetX, y: blackPiecePlace.targetY);
     } else if (pieceTypeNumberRange >=
-            inGameBlackStatusProvider.sangSpawnStartRange &&
-        pieceTypeNumberRange < inGameBlackStatusProvider.sangSpawnEndRange) {
+            inGameBlackStatusProvider.bishopSpawnStartRange &&
+        pieceTypeNumberRange < inGameBlackStatusProvider.bishopSpawnEndRange) {
       spawnBlackPiece = BlackBishopEntity(
           x: blackPiecePlace.targetX, y: blackPiecePlace.targetY);
     } else {
