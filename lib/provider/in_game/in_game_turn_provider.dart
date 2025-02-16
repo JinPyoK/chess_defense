@@ -180,7 +180,9 @@ final class InGameTurn extends _$InGameTurn {
           x: blackPiecePlace.targetX, y: blackPiecePlace.targetY);
     }
 
-    ref.read(inGamePieceSetProvider.notifier).spawnPiece(spawnBlackPiece);
+    ref
+        .read(inGamePieceSetProvider.notifier)
+        .spawnPiece(spawnBlackPiece, PieceSpawnType.spawn);
   }
 
   Future<PieceActionableEntity?> _blackAction() async {
@@ -250,6 +252,45 @@ final class InGameTurn extends _$InGameTurn {
 
     makePieceMoveSound();
 
+    /// 흑 폰 프로모션
+    if (piece is BlackPawnEntity && pieceActionable.targetY == 7) {
+      await Future.delayed(const Duration(milliseconds: 500), () {
+        /// 폰 제거
+        ref.read(inGamePieceSetProvider.notifier).removePiece(pieceActionable);
+
+        /// 1/4 확률
+        final randomNumber = Random().nextInt(4);
+
+        late PieceBaseEntity promotionPiece;
+
+        switch (randomNumber) {
+          case 0:
+            promotionPiece = BlackQueenEntity(
+                x: pieceActionable.targetX, y: pieceActionable.targetY);
+            break;
+          case 1:
+            promotionPiece = BlackRookEntity(
+                x: pieceActionable.targetX, y: pieceActionable.targetY);
+            break;
+          case 2:
+            promotionPiece = BlackKnightEntity(
+                x: pieceActionable.targetX, y: pieceActionable.targetY);
+            break;
+          case 3:
+            promotionPiece = BlackBishopEntity(
+                x: pieceActionable.targetX, y: pieceActionable.targetY);
+            break;
+        }
+
+        /// 폰 프로모션
+        ref
+            .read(inGamePieceSetProvider.notifier)
+            .spawnPiece(promotionPiece, PieceSpawnType.promotion);
+
+        lastTurnPiece = promotionPiece;
+      });
+    }
+
     return pieceActionable;
   }
 
@@ -265,7 +306,9 @@ final class InGameTurn extends _$InGameTurn {
       blackPiece.searchActionable(inGameBoardStatus);
       blackPiece.doesThisPieceCallCheck();
 
-      blackPiece.setStateThisPiece!(() {});
+      if (blackPiece.setStateThisPiece != null) {
+        blackPiece.setStateThisPiece!(() {});
+      }
 
       if (blackPiece.isTargetingKing) {
         targetKing = true;

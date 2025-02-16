@@ -134,7 +134,9 @@ class _InGameNavigatorState extends ConsumerState<InGameNavigatorBox> {
             );
         }
 
-        ref.read(inGamePieceSetProvider.notifier).spawnPiece(spawnPieceEntity);
+        ref
+            .read(inGamePieceSetProvider.notifier)
+            .spawnPiece(spawnPieceEntity, PieceSpawnType.spawn);
         break;
       case NavigatorType.execute:
         ref.read(inGameNavigatorProvider.notifier).clearNavigator();

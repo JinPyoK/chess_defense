@@ -129,6 +129,7 @@ class _InGamePieceState extends ConsumerState<InGamePiece> {
       bottom: boardPositionYValue[widget.pieceEntity.y],
       child: Stack(
         alignment: AlignmentDirectional.topCenter,
+        clipBehavior: Clip.none,
         children: [
           AnimatedScale(
             scale: _spawnScale,
@@ -151,8 +152,8 @@ class _InGamePieceState extends ConsumerState<InGamePiece> {
             ),
           ),
           if (_callJanggoon)
-            Transform.translate(
-              offset: Offset(0, -pieceIconSize / 2),
+            Positioned(
+              bottom: pieceIconSize / 1.2,
               child: const PieceCheckNotification(),
             ),
         ],
