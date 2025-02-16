@@ -11,6 +11,7 @@ final class BlackBishopEntity extends BlackPieceBaseEntity {
   BlackBishopEntity({
     required super.x,
     required super.y,
+    super.firstMove,
   }) : super(
           team: Team.black,
           pieceType: PieceType.bishop,

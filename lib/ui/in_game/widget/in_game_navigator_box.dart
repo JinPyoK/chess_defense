@@ -13,10 +13,13 @@ import 'package:chess_defense/provider/in_game/in_game_navigator_provider.dart';
 import 'package:chess_defense/provider/in_game/in_game_piece_set_provider.dart';
 import 'package:chess_defense/provider/in_game/in_game_turn_provider.dart';
 import 'package:chess_defense/ui/audio/controller/audio_play.dart';
+import 'package:chess_defense/ui/common/controller/screen_size.dart';
+import 'package:chess_defense/ui/common/controller/show_custom_dialog.dart';
 import 'package:chess_defense/ui/in_game/controller/in_game_control_value.dart';
 import 'package:chess_defense/ui/in_game/controller/in_game_selected_piece_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class InGameNavigatorBox extends ConsumerStatefulWidget {
   const InGameNavigatorBox({
@@ -38,12 +41,9 @@ class _InGameNavigatorState extends ConsumerState<InGameNavigatorBox> {
   double _navigatorOpacity = 0;
 
   /// 백, 즉 유저에게만 작용하는 함수
-  void _onNavigatorTaped() {
+  Future<void> _onNavigatorTaped() async {
     switch (widget.navigatorType) {
       case NavigatorType.pieceMove:
-
-        /// 네비게이터 삭제
-        ref.read(inGameNavigatorProvider.notifier).clearNavigator();
 
         /// 보드 상태 변경
         inGameBoardStatus.changeStatus(
@@ -90,15 +90,114 @@ class _InGameNavigatorState extends ConsumerState<InGameNavigatorBox> {
         selectedPieceEntity!.x = widget.pieceActionable.targetX;
         selectedPieceEntity!.y = widget.pieceActionable.targetY;
         selectedPieceEntity!.setStateThisPiece!(() {});
+
+        makePieceMoveSound();
+
+        /// 백 폰 프로모션
+        if (selectedPieceEntity is WhitePawnEntity &&
+            widget.pieceActionable.targetY == 0) {
+          await Future.delayed(const Duration(milliseconds: 500), () async {
+            /// 폰 제거
+            ref
+                .read(inGamePieceSetProvider.notifier)
+                .removePiece(widget.pieceActionable);
+
+            late PieceBaseEntity promotionPiece;
+
+            if (mounted) {
+              await showCustomDialog(
+                context,
+                defaultAction: false,
+                color: Colors.transparent,
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: 300 * wu,
+                      height: 350 * hu,
+                      child: GridView(
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2, // 2칸씩 배치
+                          childAspectRatio: 0.8,
+                          mainAxisSpacing: 30,
+                          crossAxisSpacing: 30,
+                        ),
+                        children: [
+                          _promotionButton(
+                            "Queen",
+                            FaIcon(
+                              FontAwesomeIcons.solidChessQueen,
+                              color: whiteColor,
+                            ),
+                            () {
+                              promotionPiece = WhiteQueenEntity(
+                                  x: widget.pieceActionable.targetX,
+                                  y: widget.pieceActionable.targetY);
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                          _promotionButton(
+                            "Rook",
+                            FaIcon(
+                              FontAwesomeIcons.solidChessRook,
+                              color: whiteColor,
+                            ),
+                            () {
+                              promotionPiece = WhiteRookEntity(
+                                  x: widget.pieceActionable.targetX,
+                                  y: widget.pieceActionable.targetY);
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                          _promotionButton(
+                            "Knight",
+                            FaIcon(
+                              FontAwesomeIcons.solidChessKnight,
+                              color: whiteColor,
+                            ),
+                            () {
+                              promotionPiece = WhiteKnightEntity(
+                                  x: widget.pieceActionable.targetX,
+                                  y: widget.pieceActionable.targetY);
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                          _promotionButton(
+                            "Bishop",
+                            FaIcon(
+                              FontAwesomeIcons.solidChessBishop,
+                              color: whiteColor,
+                            ),
+                            () {
+                              promotionPiece = WhiteBishopEntity(
+                                  x: widget.pieceActionable.targetX,
+                                  y: widget.pieceActionable.targetY);
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            }
+
+            /// 폰 프로모션
+            ref
+                .read(inGamePieceSetProvider.notifier)
+                .spawnPiece(promotionPiece, PieceSpawnType.promotion);
+
+            lastTurnPiece = promotionPiece;
+          });
+        }
         ref.read(inGameTurnProvider.notifier).changeTurn();
 
         selectedPieceEntity = null;
 
-        makePieceMoveSound();
         break;
       case NavigatorType.spawn:
-        ref.read(inGameNavigatorProvider.notifier).clearNavigator();
-
         late PieceBaseEntity spawnPieceEntity;
 
         switch (widget.spawnPieceType) {
@@ -139,13 +238,36 @@ class _InGameNavigatorState extends ConsumerState<InGameNavigatorBox> {
             .spawnPiece(spawnPieceEntity, PieceSpawnType.spawn);
         break;
       case NavigatorType.execute:
-        ref.read(inGameNavigatorProvider.notifier).clearNavigator();
         ref
             .read(inGamePieceSetProvider.notifier)
             .removePiece(widget.pieceActionable, true);
         ref.read(inGameTurnProvider.notifier).determineIfCheck();
         break;
     }
+    ref.read(inGameNavigatorProvider.notifier).clearNavigator();
+  }
+
+  ElevatedButton _promotionButton(
+      String label, FaIcon icon, VoidCallback onPressed) {
+    return ElevatedButton(
+      onPressed: onPressed,
+      child: FittedBox(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              label,
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                color: whiteColor,
+              ),
+            ),
+            icon,
+          ],
+        ),
+      ),
+    );
   }
 
   @override

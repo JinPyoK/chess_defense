@@ -52,6 +52,7 @@ abstract base class PieceBaseEntity extends PieceOrJustActionable {
     required this.pieceIcon,
     required this.x,
     required this.y,
+    this.firstMove = false,
   });
 
   PieceBaseEntity getNewPieceInstance() {
@@ -61,17 +62,41 @@ abstract base class PieceBaseEntity extends PieceOrJustActionable {
     if (team == Team.white) {
       switch (pieceType) {
         case PieceType.king:
-          pieceEntity = WhiteKingEntity(x: x, y: y);
+          pieceEntity = WhiteKingEntity(
+            x: x,
+            y: y,
+            firstMove: firstMove,
+          );
         case PieceType.queen:
-          pieceEntity = WhiteQueenEntity(x: x, y: y);
+          pieceEntity = WhiteQueenEntity(
+            x: x,
+            y: y,
+            firstMove: firstMove,
+          );
         case PieceType.rook:
-          pieceEntity = WhiteRookEntity(x: x, y: y);
+          pieceEntity = WhiteRookEntity(
+            x: x,
+            y: y,
+            firstMove: firstMove,
+          );
         case PieceType.knight:
-          pieceEntity = WhiteKnightEntity(x: x, y: y);
+          pieceEntity = WhiteKnightEntity(
+            x: x,
+            y: y,
+            firstMove: firstMove,
+          );
         case PieceType.bishop:
-          pieceEntity = WhiteBishopEntity(x: x, y: y);
+          pieceEntity = WhiteBishopEntity(
+            x: x,
+            y: y,
+            firstMove: firstMove,
+          );
         case PieceType.pawn:
-          pieceEntity = WhitePawnEntity(x: x, y: y);
+          pieceEntity = WhitePawnEntity(
+            x: x,
+            y: y,
+            firstMove: firstMove,
+          );
       }
     }
 
@@ -79,17 +104,41 @@ abstract base class PieceBaseEntity extends PieceOrJustActionable {
     else {
       switch (pieceType) {
         case PieceType.queen:
-          pieceEntity = BlackQueenEntity(x: x, y: y);
+          pieceEntity = BlackQueenEntity(
+            x: x,
+            y: y,
+            firstMove: firstMove,
+          );
         case PieceType.rook:
-          pieceEntity = BlackRookEntity(x: x, y: y);
+          pieceEntity = BlackRookEntity(
+            x: x,
+            y: y,
+            firstMove: firstMove,
+          );
         case PieceType.knight:
-          pieceEntity = BlackKnightEntity(x: x, y: y);
+          pieceEntity = BlackKnightEntity(
+            x: x,
+            y: y,
+            firstMove: firstMove,
+          );
         case PieceType.bishop:
-          pieceEntity = BlackBishopEntity(x: x, y: y);
+          pieceEntity = BlackBishopEntity(
+            x: x,
+            y: y,
+            firstMove: firstMove,
+          );
         case PieceType.pawn:
-          pieceEntity = BlackPawnEntity(x: x, y: y);
+          pieceEntity = BlackPawnEntity(
+            x: x,
+            y: y,
+            firstMove: firstMove,
+          );
         default:
-          pieceEntity = BlackPawnEntity(x: x, y: y);
+          pieceEntity = BlackPawnEntity(
+            x: x,
+            y: y,
+            firstMove: firstMove,
+          );
       }
     }
 
@@ -111,6 +160,7 @@ abstract base class WhitePieceBaseEntity extends PieceBaseEntity {
     required super.pieceType,
     required super.pieceIcon,
     required super.value,
+    super.firstMove,
   }) : super();
 }
 
@@ -137,5 +187,6 @@ abstract base class BlackPieceBaseEntity extends PieceBaseEntity {
     required super.pieceType,
     required super.pieceIcon,
     required super.value,
+    super.firstMove,
   }) : super();
 }

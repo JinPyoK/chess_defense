@@ -219,8 +219,9 @@ final class InGameTurn extends _$InGameTurn {
       lastTurnPiece!.setStateThisPiece!(() {});
     }
 
-    lastTurnPiece = piece;
     piece.justTurn = true;
+    piece.firstMove = true;
+    lastTurnPiece = piece;
 
     /// 보드 상태 변경
     inGameBoardStatus.changeStatus(

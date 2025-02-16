@@ -5,6 +5,7 @@ import 'package:chess_defense/domain/in_game/entity/piece_actionable_entity.dart
 import 'package:chess_defense/domain/in_game/entity/piece_base_entity.dart';
 import 'package:chess_defense/domain/in_game/entity/piece_enum.dart';
 import 'package:chess_defense/domain/in_game/entity/white_piece/white_king_entity.dart';
+import 'package:chess_defense/domain/in_game/entity/white_piece/white_pawn_entity.dart';
 import 'package:chess_defense/provider/in_game/in_game_black_status.dart';
 import 'package:chess_defense/provider/in_game/in_game_gold_provider.dart';
 import 'package:chess_defense/provider/in_game/in_game_move_provider.dart';
@@ -74,9 +75,9 @@ final class InGamePieceSet extends _$InGamePieceSet {
     // spawnPiece(WhitePawnEntity(x: 2, y: 6), true);
     // spawnPiece(WhitePawnEntity(x: 3, y: 6), true);
     // spawnPiece(WhitePawnEntity(x: 4, y: 6), true);
-    // spawnPiece(WhitePawnEntity(x: 5, y: 6), true);
-    // spawnPiece(WhitePawnEntity(x: 6, y: 6), true);
-    // spawnPiece(WhitePawnEntity(x: 7, y: 6), true);
+    spawnPiece(WhitePawnEntity(x: 5, y: 2), PieceSpawnType.init);
+    spawnPiece(WhitePawnEntity(x: 6, y: 2), PieceSpawnType.init);
+    spawnPiece(WhitePawnEntity(x: 7, y: 2), PieceSpawnType.init);
 
     /// 흑 기물 세팅
     // spawnPiece(BlackQueenEntity(x: 3, y: 0), true);
@@ -96,8 +97,8 @@ final class InGamePieceSet extends _$InGamePieceSet {
     // spawnPiece(BlackPawnEntity(x: 3, y: 1), true);
     // spawnPiece(BlackPawnEntity(x: 4, y: 1), true);
     // spawnPiece(BlackPawnEntity(x: 5, y: 1), true);
-    spawnPiece(BlackPawnEntity(x: 6, y: 5), PieceSpawnType.init);
-    spawnPiece(BlackPawnEntity(x: 7, y: 5), PieceSpawnType.init);
+    // spawnPiece(BlackPawnEntity(x: 6, y: 5), PieceSpawnType.init);
+    spawnPiece(BlackPawnEntity(x: 1, y: 0), PieceSpawnType.init);
 
     state = List.from(state);
     makeGameStartSound();

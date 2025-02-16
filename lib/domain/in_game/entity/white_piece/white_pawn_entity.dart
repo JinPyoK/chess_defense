@@ -11,6 +11,7 @@ final class WhitePawnEntity extends WhitePieceBaseEntity {
   WhitePawnEntity({
     required super.x,
     required super.y,
+    super.firstMove,
   }) : super(
           team: Team.white,
           pieceType: PieceType.pawn,

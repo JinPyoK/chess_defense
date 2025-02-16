@@ -11,6 +11,7 @@ final class WhiteRookEntity extends WhitePieceBaseEntity {
   WhiteRookEntity({
     required super.x,
     required super.y,
+    super.firstMove,
   }) : super(
           team: Team.white,
           pieceType: PieceType.rook,

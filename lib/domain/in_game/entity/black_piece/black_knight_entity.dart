@@ -11,6 +11,7 @@ final class BlackKnightEntity extends BlackPieceBaseEntity {
   BlackKnightEntity({
     required super.x,
     required super.y,
+    super.firstMove,
   }) : super(
           team: Team.black,
           pieceType: PieceType.knight,

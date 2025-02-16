@@ -11,6 +11,7 @@ final class BlackRookEntity extends BlackPieceBaseEntity {
   BlackRookEntity({
     required super.x,
     required super.y,
+    super.firstMove,
   }) : super(
           team: Team.black,
           pieceType: PieceType.rook,

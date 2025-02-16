@@ -88,6 +88,7 @@ final class InGameBoardStatus {
           inGameSaveDataList.add(status.pieceType.name);
           inGameSaveDataList.add(status.x.toString());
           inGameSaveDataList.add(status.y.toString());
+          inGameSaveDataList.add(status.firstMove.toString());
         }
       }
     }
@@ -99,29 +100,54 @@ final class InGameBoardStatus {
   void initStatusBoardWithSavedData(List<String> savedData) {
     initStatusBoard();
 
-    for (int i = 2; i < savedData.length; i += 4) {
+    for (int i = 2; i < savedData.length; i += 5) {
       late PieceBaseEntity pieceEntity;
 
       final team = Team.values.byName(savedData[i + 0]);
       final pieceType = PieceType.values.byName(savedData[i + 1]);
       final x = int.parse(savedData[i + 2]);
       final y = int.parse(savedData[i + 3]);
+      final firstMove = bool.parse(savedData[i + 4]);
 
       /// 백
       if (team == Team.white) {
         switch (pieceType) {
           case PieceType.king:
-            pieceEntity = WhiteKingEntity(x: x, y: y);
+            pieceEntity = WhiteKingEntity(
+              x: x,
+              y: y,
+              firstMove: firstMove,
+            );
           case PieceType.queen:
-            pieceEntity = WhiteQueenEntity(x: x, y: y);
+            pieceEntity = WhiteQueenEntity(
+              x: x,
+              y: y,
+              firstMove: firstMove,
+            );
           case PieceType.rook:
-            pieceEntity = WhiteRookEntity(x: x, y: y);
+            pieceEntity = WhiteRookEntity(
+              x: x,
+              y: y,
+              firstMove: firstMove,
+            );
           case PieceType.knight:
-            pieceEntity = WhiteKnightEntity(x: x, y: y);
+            pieceEntity = WhiteKnightEntity(
+              x: x,
+              y: y,
+              firstMove: firstMove,
+            );
           case PieceType.bishop:
-            pieceEntity = WhiteBishopEntity(x: x, y: y);
+            pieceEntity = WhiteBishopEntity(
+              x: x,
+              y: y,
+              firstMove: firstMove,
+            );
           case PieceType.pawn:
-            pieceEntity = WhitePawnEntity(x: x, y: y);
+            pieceEntity = WhitePawnEntity(
+              x: x,
+              y: y,
+              firstMove: firstMove,
+            );
         }
       }
 
@@ -129,17 +155,41 @@ final class InGameBoardStatus {
       else {
         switch (pieceType) {
           case PieceType.queen:
-            pieceEntity = BlackQueenEntity(x: x, y: y);
+            pieceEntity = BlackQueenEntity(
+              x: x,
+              y: y,
+              firstMove: firstMove,
+            );
           case PieceType.rook:
-            pieceEntity = BlackRookEntity(x: x, y: y);
+            pieceEntity = BlackRookEntity(
+              x: x,
+              y: y,
+              firstMove: firstMove,
+            );
           case PieceType.knight:
-            pieceEntity = BlackKnightEntity(x: x, y: y);
+            pieceEntity = BlackKnightEntity(
+              x: x,
+              y: y,
+              firstMove: firstMove,
+            );
           case PieceType.bishop:
-            pieceEntity = BlackBishopEntity(x: x, y: y);
+            pieceEntity = BlackBishopEntity(
+              x: x,
+              y: y,
+              firstMove: firstMove,
+            );
           case PieceType.pawn:
-            pieceEntity = BlackPawnEntity(x: x, y: y);
+            pieceEntity = BlackPawnEntity(
+              x: x,
+              y: y,
+              firstMove: firstMove,
+            );
           default:
-            pieceEntity = BlackPawnEntity(x: x, y: y);
+            pieceEntity = BlackPawnEntity(
+              x: x,
+              y: y,
+              firstMove: firstMove,
+            );
         }
       }
       changeStatus(pieceEntity.x, pieceEntity.y, pieceEntity);
@@ -158,6 +208,7 @@ final class InGameBoardStatus {
             'pieceType': status.pieceType.name,
             'x': status.x,
             'y': status.y,
+            'firstMove': status.firstMove,
           };
 
           boardStatusJsonList.add(refineData);
@@ -179,22 +230,47 @@ final class InGameBoardStatus {
       final pieceType = PieceType.values.byName(boardStatusJson['pieceType']);
       final x = boardStatusJson['x'];
       final y = boardStatusJson['y'];
+      final firstMove = boardStatusJson['firstMove'] as bool;
 
       /// 백
       if (team == Team.white) {
         switch (pieceType) {
           case PieceType.king:
-            pieceEntity = WhiteKingEntity(x: x, y: y);
+            pieceEntity = WhiteKingEntity(
+              x: x,
+              y: y,
+              firstMove: firstMove,
+            );
           case PieceType.queen:
-            pieceEntity = WhiteQueenEntity(x: x, y: y);
+            pieceEntity = WhiteQueenEntity(
+              x: x,
+              y: y,
+              firstMove: firstMove,
+            );
           case PieceType.rook:
-            pieceEntity = WhiteRookEntity(x: x, y: y);
+            pieceEntity = WhiteRookEntity(
+              x: x,
+              y: y,
+              firstMove: firstMove,
+            );
           case PieceType.knight:
-            pieceEntity = WhiteKnightEntity(x: x, y: y);
+            pieceEntity = WhiteKnightEntity(
+              x: x,
+              y: y,
+              firstMove: firstMove,
+            );
           case PieceType.bishop:
-            pieceEntity = WhiteBishopEntity(x: x, y: y);
+            pieceEntity = WhiteBishopEntity(
+              x: x,
+              y: y,
+              firstMove: firstMove,
+            );
           case PieceType.pawn:
-            pieceEntity = WhitePawnEntity(x: x, y: y);
+            pieceEntity = WhitePawnEntity(
+              x: x,
+              y: y,
+              firstMove: firstMove,
+            );
         }
       }
 
@@ -202,17 +278,41 @@ final class InGameBoardStatus {
       else {
         switch (pieceType) {
           case PieceType.queen:
-            pieceEntity = BlackQueenEntity(x: x, y: y);
+            pieceEntity = BlackQueenEntity(
+              x: x,
+              y: y,
+              firstMove: firstMove,
+            );
           case PieceType.rook:
-            pieceEntity = BlackRookEntity(x: x, y: y);
+            pieceEntity = BlackRookEntity(
+              x: x,
+              y: y,
+              firstMove: firstMove,
+            );
           case PieceType.knight:
-            pieceEntity = BlackKnightEntity(x: x, y: y);
+            pieceEntity = BlackKnightEntity(
+              x: x,
+              y: y,
+              firstMove: firstMove,
+            );
           case PieceType.bishop:
-            pieceEntity = BlackBishopEntity(x: x, y: y);
+            pieceEntity = BlackBishopEntity(
+              x: x,
+              y: y,
+              firstMove: firstMove,
+            );
           case PieceType.pawn:
-            pieceEntity = BlackPawnEntity(x: x, y: y);
+            pieceEntity = BlackPawnEntity(
+              x: x,
+              y: y,
+              firstMove: firstMove,
+            );
           default:
-            pieceEntity = BlackPawnEntity(x: x, y: y);
+            pieceEntity = BlackPawnEntity(
+              x: x,
+              y: y,
+              firstMove: firstMove,
+            );
         }
       }
 

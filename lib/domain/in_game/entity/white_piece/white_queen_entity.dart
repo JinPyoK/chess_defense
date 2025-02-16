@@ -11,6 +11,7 @@ final class WhiteQueenEntity extends WhitePieceBaseEntity {
   WhiteQueenEntity({
     required super.x,
     required super.y,
+    super.firstMove,
   }) : super(
           team: Team.white,
           pieceType: PieceType.queen,

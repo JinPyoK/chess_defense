@@ -1,15 +1,15 @@
 import 'package:chess_defense/core/constant/color.dart';
 import 'package:flutter/material.dart';
 
-void showCustomDialog(
+Future<void> showCustomDialog(
   BuildContext context,
   Widget customChild, {
   Color color = whiteColor,
   bool defaultAction = true,
   Color actionButtonColor = woodColor,
   Color barrierColor = const Color(0x80000000),
-}) {
-  showGeneralDialog(
+}) async {
+  await showGeneralDialog(
     context: context,
     barrierColor: barrierColor,
     pageBuilder: (context, a1, a2) => Container(),

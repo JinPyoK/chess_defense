@@ -11,6 +11,7 @@ final class BlackPawnEntity extends BlackPieceBaseEntity {
   BlackPawnEntity({
     required super.x,
     required super.y,
+    super.firstMove,
   }) : super(
           team: Team.black,
           pieceType: PieceType.pawn,
