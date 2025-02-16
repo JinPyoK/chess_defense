@@ -126,10 +126,7 @@ class _InGameNavigatorState extends ConsumerState<InGameNavigatorBox> {
                         children: [
                           _promotionButton(
                             "Queen",
-                            FaIcon(
-                              FontAwesomeIcons.solidChessQueen,
-                              color: whiteColor,
-                            ),
+                            FontAwesomeIcons.solidChessQueen,
                             () {
                               promotionPiece = WhiteQueenEntity(
                                   x: widget.pieceActionable.targetX,
@@ -139,10 +136,7 @@ class _InGameNavigatorState extends ConsumerState<InGameNavigatorBox> {
                           ),
                           _promotionButton(
                             "Rook",
-                            FaIcon(
-                              FontAwesomeIcons.solidChessRook,
-                              color: whiteColor,
-                            ),
+                            FontAwesomeIcons.solidChessRook,
                             () {
                               promotionPiece = WhiteRookEntity(
                                   x: widget.pieceActionable.targetX,
@@ -152,10 +146,7 @@ class _InGameNavigatorState extends ConsumerState<InGameNavigatorBox> {
                           ),
                           _promotionButton(
                             "Knight",
-                            FaIcon(
-                              FontAwesomeIcons.solidChessKnight,
-                              color: whiteColor,
-                            ),
+                            FontAwesomeIcons.solidChessKnight,
                             () {
                               promotionPiece = WhiteKnightEntity(
                                   x: widget.pieceActionable.targetX,
@@ -165,10 +156,7 @@ class _InGameNavigatorState extends ConsumerState<InGameNavigatorBox> {
                           ),
                           _promotionButton(
                             "Bishop",
-                            FaIcon(
-                              FontAwesomeIcons.solidChessBishop,
-                              color: whiteColor,
-                            ),
+                            FontAwesomeIcons.solidChessBishop,
                             () {
                               promotionPiece = WhiteBishopEntity(
                                   x: widget.pieceActionable.targetX,
@@ -248,24 +236,27 @@ class _InGameNavigatorState extends ConsumerState<InGameNavigatorBox> {
   }
 
   ElevatedButton _promotionButton(
-      String label, FaIcon icon, VoidCallback onPressed) {
+      String label, IconData iconData, VoidCallback onPressed) {
     return ElevatedButton(
       onPressed: onPressed,
-      child: FittedBox(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              label,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                color: whiteColor,
-              ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 15 * wu,
+              fontWeight: FontWeight.bold,
+              color: whiteColor,
             ),
-            icon,
-          ],
-        ),
+          ),
+          FaIcon(
+            iconData,
+            color: whiteColor,
+            size: 25 * wu,
+          ),
+        ],
       ),
     );
   }

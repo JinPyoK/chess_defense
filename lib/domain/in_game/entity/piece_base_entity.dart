@@ -173,7 +173,7 @@ abstract base class BlackPieceBaseEntity extends PieceBaseEntity {
     isTargetingKing = false;
 
     for (PieceActionableEntity actionable in pieceActionable) {
-      if (actionable.targetValue == 1000) {
+      if (actionable.targetValue >= 1000) {
         isTargetingKing = true;
         break;
       }

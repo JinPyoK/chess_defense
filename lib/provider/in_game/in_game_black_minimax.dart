@@ -52,7 +52,7 @@ List<int?> _minimax(List<dynamic> params) {
           _minimaxResult.add(node);
 
           /// 첫 수(nodeDepth == 0)에 왕을 취할 수 있다면 함수 종료
-          if (node.targetValue == 1000) {
+          if (node.targetValue >= 1000) {
             break;
           }
         } else {
@@ -159,7 +159,7 @@ List<int?> _minimax(List<dynamic> params) {
     /// 어떤 미니맥스 노드를 선택할지 탐색
     for (MinimaxNode resultNode in _minimaxResult) {
       /// 왕을 취할 수 있는 기물이 있다면 탐색 종료
-      if (resultNode.targetValue == 1000) {
+      if (resultNode.targetValue >= 1000) {
         selectedNodeList.clear();
         selectedNodeList.add(resultNode);
         break;

@@ -40,11 +40,14 @@ final class BlackPawnEntity extends BlackPieceBaseEntity {
       final status = statusBoard.getStatus(x, y + 1);
 
       if (status is PieceActionableEntity) {
+        /// 프로모션 가치 더해주기
+        final promotionValue = status.targetY == 7 ? _promotionVal : 0;
+
         pieceActionable.add(
           PieceActionableEntity(
             targetX: status.targetX,
             targetY: status.targetY,
-            targetValue: 0,
+            targetValue: promotionValue,
           ),
         );
       }
@@ -59,11 +62,14 @@ final class BlackPawnEntity extends BlackPieceBaseEntity {
           final status = statusBoard.getStatus(x, y + 2);
 
           if (status is PieceActionableEntity) {
+            /// 프로모션 가치 더해주기
+            final promotionValue = status.targetY == 7 ? _promotionVal : 0;
+
             pieceActionable.add(
               PieceActionableEntity(
                 targetX: status.targetX,
                 targetY: status.targetY,
-                targetValue: 0,
+                targetValue: promotionValue,
               ),
             );
           }
@@ -78,11 +84,14 @@ final class BlackPawnEntity extends BlackPieceBaseEntity {
       final status = statusBoard.getStatus(x - 1, y + 1);
 
       if (status is WhitePieceBaseEntity) {
+        /// 프로모션 가치 더해주기
+        final promotionValue = status.y == 7 ? _promotionVal : 0;
+
         pieceActionable.add(
           PieceActionableEntity(
             targetX: status.x,
             targetY: status.y,
-            targetValue: status.value,
+            targetValue: status.value + promotionValue,
           ),
         );
       }
@@ -93,14 +102,19 @@ final class BlackPawnEntity extends BlackPieceBaseEntity {
       final status = statusBoard.getStatus(x + 1, y + 1);
 
       if (status is WhitePieceBaseEntity) {
+        /// 프로모션 가치 더해주기
+        final promotionValue = status.y == 7 ? _promotionVal : 0;
+
         pieceActionable.add(
           PieceActionableEntity(
             targetX: status.x,
             targetY: status.y,
-            targetValue: status.value,
+            targetValue: status.value + promotionValue,
           ),
         );
       }
     }
   }
 }
+
+const _promotionVal = 100;

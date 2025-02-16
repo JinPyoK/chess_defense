@@ -70,7 +70,7 @@ final class InGameTurn extends _$InGameTurn {
 
       /// 만약 흑이 백의 왕을 먹었다면 게임 종료
       if (targetPieceActionable != null) {
-        if (targetPieceActionable.targetValue == 1000) {
+        if (targetPieceActionable.targetValue >= 1000) {
           if (globalContext!.mounted) {
             Future.delayed(const Duration(seconds: 1), () {
               showCustomDialog(
