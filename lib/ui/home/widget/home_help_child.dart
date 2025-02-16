@@ -11,7 +11,7 @@ class HomeHelpChild extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Image.asset(imageAppIconPath),
+        Center(child: Image.asset(imageAppIconPath)),
         const SizedBox(height: 30),
         _renderTitle('1. Chess Defense'),
         _renderDescription(
