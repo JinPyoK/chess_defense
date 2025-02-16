@@ -39,105 +39,110 @@ class _InGameNavigatorState extends ConsumerState<InGameNavigatorBox> {
 
   /// 백, 즉 유저에게만 작용하는 함수
   void _onNavigatorTaped() {
-    if (widget.navigatorType == NavigatorType.pieceMove) {
-      /// 네비게이터 삭제
-      ref.read(inGameNavigatorProvider.notifier).clearNavigator();
+    switch (widget.navigatorType) {
+      case NavigatorType.pieceMove:
 
-      /// 보드 상태 변경
-      inGameBoardStatus.changeStatus(
-        selectedPieceEntity!.x,
-        selectedPieceEntity!.y,
-        PieceActionableEntity(
-          targetX: selectedPieceEntity!.x,
-          targetY: selectedPieceEntity!.y,
-          targetValue: 0,
-        ),
-      );
+        /// 네비게이터 삭제
+        ref.read(inGameNavigatorProvider.notifier).clearNavigator();
 
-      /// 움직인 자리에 흑 기물이 있다면 제거하기
-      final status = inGameBoardStatus.getStatus(
-          widget.pieceActionable.targetX, widget.pieceActionable.targetY);
-      if (status is PieceBaseEntity) {
-        if (status.team == Team.black) {
-          ref
-              .read(inGamePieceSetProvider.notifier)
-              .removePiece(widget.pieceActionable);
+        /// 보드 상태 변경
+        inGameBoardStatus.changeStatus(
+          selectedPieceEntity!.x,
+          selectedPieceEntity!.y,
+          PieceActionableEntity(
+            targetX: selectedPieceEntity!.x,
+            targetY: selectedPieceEntity!.y,
+            targetValue: 0,
+          ),
+        );
+
+        /// 움직인 자리에 흑 기물이 있다면 제거하기
+        final status = inGameBoardStatus.getStatus(
+            widget.pieceActionable.targetX, widget.pieceActionable.targetY);
+        if (status is PieceBaseEntity) {
+          if (status.team == Team.black) {
+            ref
+                .read(inGamePieceSetProvider.notifier)
+                .removePiece(widget.pieceActionable);
+          }
         }
-      }
 
-      inGameBoardStatus.changeStatus(widget.pieceActionable.targetX,
-          widget.pieceActionable.targetY, selectedPieceEntity!);
+        inGameBoardStatus.changeStatus(widget.pieceActionable.targetX,
+            widget.pieceActionable.targetY, selectedPieceEntity!);
 
-      /// 최근 탭한 기물 setState
-      if (selectedPieceEntity != null) {
-        selectedPieceEntity!.justTapped = false;
+        /// 최근 탭한 기물 setState
+        if (selectedPieceEntity != null) {
+          selectedPieceEntity!.justTapped = false;
+          selectedPieceEntity!.setStateThisPiece!(() {});
+        }
+
+        /// 최근 기물 착수 ui 구현 위해서
+        if (lastTurnPiece != null) {
+          lastTurnPiece!.justTurn = false;
+          lastTurnPiece!.setStateThisPiece!(() {});
+        }
+
+        lastTurnPiece = selectedPieceEntity;
+        lastTurnPiece!.justTurn = true;
+        lastTurnPiece!.firstMove = true;
+
+        /// 기물 착수
+        selectedPieceEntity!.x = widget.pieceActionable.targetX;
+        selectedPieceEntity!.y = widget.pieceActionable.targetY;
         selectedPieceEntity!.setStateThisPiece!(() {});
-      }
+        ref.read(inGameTurnProvider.notifier).changeTurn();
 
-      /// 최근 기물 착수 ui 구현 위해서
-      if (lastTurnPiece != null) {
-        lastTurnPiece!.justTurn = false;
-        lastTurnPiece!.setStateThisPiece!(() {});
-      }
+        selectedPieceEntity = null;
 
-      lastTurnPiece = selectedPieceEntity;
-      lastTurnPiece!.justTurn = true;
-      lastTurnPiece!.firstMove = true;
+        makePieceMoveSound();
+        break;
+      case NavigatorType.spawn:
+        ref.read(inGameNavigatorProvider.notifier).clearNavigator();
 
-      /// 기물 착수
-      selectedPieceEntity!.x = widget.pieceActionable.targetX;
-      selectedPieceEntity!.y = widget.pieceActionable.targetY;
-      selectedPieceEntity!.setStateThisPiece!(() {});
-      ref.read(inGameTurnProvider.notifier).changeTurn();
+        late PieceBaseEntity spawnPieceEntity;
 
-      selectedPieceEntity = null;
+        switch (widget.spawnPieceType) {
+          case PieceType.queen:
+            spawnPieceEntity = WhiteQueenEntity(
+              x: widget.pieceActionable.targetX,
+              y: widget.pieceActionable.targetY,
+            );
+          case PieceType.rook:
+            spawnPieceEntity = WhiteRookEntity(
+              x: widget.pieceActionable.targetX,
+              y: widget.pieceActionable.targetY,
+            );
+          case PieceType.knight:
+            spawnPieceEntity = WhiteKnightEntity(
+              x: widget.pieceActionable.targetX,
+              y: widget.pieceActionable.targetY,
+            );
+          case PieceType.bishop:
+            spawnPieceEntity = WhiteBishopEntity(
+              x: widget.pieceActionable.targetX,
+              y: widget.pieceActionable.targetY,
+            );
+          case PieceType.pawn:
+            spawnPieceEntity = WhitePawnEntity(
+              x: widget.pieceActionable.targetX,
+              y: widget.pieceActionable.targetY,
+            );
+          default:
+            spawnPieceEntity = WhitePawnEntity(
+              x: widget.pieceActionable.targetX,
+              y: widget.pieceActionable.targetY,
+            );
+        }
 
-      makePieceMoveSound();
-    } else if (widget.navigatorType == NavigatorType.spawn) {
-      ref.read(inGameNavigatorProvider.notifier).clearNavigator();
-
-      late PieceBaseEntity spawnPieceEntity;
-
-      switch (widget.spawnPieceType) {
-        case PieceType.queen:
-          spawnPieceEntity = WhiteQueenEntity(
-            x: widget.pieceActionable.targetX,
-            y: widget.pieceActionable.targetY,
-          );
-        case PieceType.rook:
-          spawnPieceEntity = WhiteRookEntity(
-            x: widget.pieceActionable.targetX,
-            y: widget.pieceActionable.targetY,
-          );
-        case PieceType.knight:
-          spawnPieceEntity = WhiteKnightEntity(
-            x: widget.pieceActionable.targetX,
-            y: widget.pieceActionable.targetY,
-          );
-        case PieceType.bishop:
-          spawnPieceEntity = WhiteBishopEntity(
-            x: widget.pieceActionable.targetX,
-            y: widget.pieceActionable.targetY,
-          );
-        case PieceType.pawn:
-          spawnPieceEntity = WhitePawnEntity(
-            x: widget.pieceActionable.targetX,
-            y: widget.pieceActionable.targetY,
-          );
-        default:
-          spawnPieceEntity = WhitePawnEntity(
-            x: widget.pieceActionable.targetX,
-            y: widget.pieceActionable.targetY,
-          );
-      }
-
-      ref.read(inGamePieceSetProvider.notifier).spawnPiece(spawnPieceEntity);
-    } else if (widget.navigatorType == NavigatorType.execute) {
-      ref.read(inGameNavigatorProvider.notifier).clearNavigator();
-      ref
-          .read(inGamePieceSetProvider.notifier)
-          .removePiece(widget.pieceActionable, true);
-      ref.read(inGameTurnProvider.notifier).determineIfCheck();
+        ref.read(inGamePieceSetProvider.notifier).spawnPiece(spawnPieceEntity);
+        break;
+      case NavigatorType.execute:
+        ref.read(inGameNavigatorProvider.notifier).clearNavigator();
+        ref
+            .read(inGamePieceSetProvider.notifier)
+            .removePiece(widget.pieceActionable, true);
+        ref.read(inGameTurnProvider.notifier).determineIfCheck();
+        break;
     }
   }
 
