@@ -1,11 +1,19 @@
 import 'package:chess_defense/data/in_game/repository/in_game_saved_data_repository.dart';
+import 'package:chess_defense/domain/in_game/entity/black_piece/black_bishop_entity.dart';
 import 'package:chess_defense/domain/in_game/entity/black_piece/black_knight_entity.dart';
+import 'package:chess_defense/domain/in_game/entity/black_piece/black_pawn_entity.dart';
+import 'package:chess_defense/domain/in_game/entity/black_piece/black_queen_entity.dart';
+import 'package:chess_defense/domain/in_game/entity/black_piece/black_rook_entity.dart';
 import 'package:chess_defense/domain/in_game/entity/in_game_board_status.dart';
 import 'package:chess_defense/domain/in_game/entity/piece_actionable_entity.dart';
 import 'package:chess_defense/domain/in_game/entity/piece_base_entity.dart';
 import 'package:chess_defense/domain/in_game/entity/piece_enum.dart';
+import 'package:chess_defense/domain/in_game/entity/white_piece/white_bishop_entity.dart';
 import 'package:chess_defense/domain/in_game/entity/white_piece/white_king_entity.dart';
+import 'package:chess_defense/domain/in_game/entity/white_piece/white_knight_entity.dart';
 import 'package:chess_defense/domain/in_game/entity/white_piece/white_pawn_entity.dart';
+import 'package:chess_defense/domain/in_game/entity/white_piece/white_queen_entity.dart';
+import 'package:chess_defense/domain/in_game/entity/white_piece/white_rook_entity.dart';
 import 'package:chess_defense/provider/in_game/in_game_black_status.dart';
 import 'package:chess_defense/provider/in_game/in_game_gold_provider.dart';
 import 'package:chess_defense/provider/in_game/in_game_move_provider.dart';
@@ -59,46 +67,46 @@ final class InGamePieceSet extends _$InGamePieceSet {
     /// 백 기물 세팅
     spawnPiece(WhiteKingEntity(x: 4, y: 7), PieceSpawnType.init);
 
-    // spawnPiece(WhiteQueenEntity(x: 3, y: 7), PieceSpawnType.init);
+    spawnPiece(WhiteQueenEntity(x: 3, y: 7), PieceSpawnType.init);
 
-    // spawnPiece(WhiteRookEntity(x: 0, y: 7), PieceSpawnType.init);
-    // spawnPiece(WhiteRookEntity(x: 7, y: 7), PieceSpawnType.init);
-    //
-    // spawnPiece(WhiteKnightEntity(x: 1, y: 7), PieceSpawnType.init);
-    // spawnPiece(WhiteKnightEntity(x: 6, y: 7), PieceSpawnType.init);
-    //
-    // spawnPiece(WhiteBishopEntity(x: 2, y: 7), PieceSpawnType.init);
-    // spawnPiece(WhiteBishopEntity(x: 5, y: 7), PieceSpawnType.init);
-    //
-    // spawnPiece(WhitePawnEntity(x: 0, y: 6), PieceSpawnType.init);
-    // spawnPiece(WhitePawnEntity(x: 1, y: 6), PieceSpawnType.init);
-    // spawnPiece(WhitePawnEntity(x: 2, y: 6), PieceSpawnType.init);
-    // spawnPiece(WhitePawnEntity(x: 3, y: 6), PieceSpawnType.init);
-    // spawnPiece(WhitePawnEntity(x: 4, y: 6), PieceSpawnType.init);
-    spawnPiece(WhitePawnEntity(x: 5, y: 2), PieceSpawnType.init);
-    spawnPiece(WhitePawnEntity(x: 6, y: 2), PieceSpawnType.init);
-    spawnPiece(WhitePawnEntity(x: 7, y: 2), PieceSpawnType.init);
+    spawnPiece(WhiteRookEntity(x: 0, y: 7), PieceSpawnType.init);
+    spawnPiece(WhiteRookEntity(x: 7, y: 7), PieceSpawnType.init);
+
+    spawnPiece(WhiteKnightEntity(x: 1, y: 7), PieceSpawnType.init);
+    spawnPiece(WhiteKnightEntity(x: 6, y: 7), PieceSpawnType.init);
+
+    spawnPiece(WhiteBishopEntity(x: 2, y: 7), PieceSpawnType.init);
+    spawnPiece(WhiteBishopEntity(x: 5, y: 7), PieceSpawnType.init);
+
+    spawnPiece(WhitePawnEntity(x: 0, y: 6), PieceSpawnType.init);
+    spawnPiece(WhitePawnEntity(x: 1, y: 6), PieceSpawnType.init);
+    spawnPiece(WhitePawnEntity(x: 2, y: 6), PieceSpawnType.init);
+    spawnPiece(WhitePawnEntity(x: 3, y: 6), PieceSpawnType.init);
+    spawnPiece(WhitePawnEntity(x: 4, y: 6), PieceSpawnType.init);
+    spawnPiece(WhitePawnEntity(x: 5, y: 6), PieceSpawnType.init);
+    spawnPiece(WhitePawnEntity(x: 6, y: 6), PieceSpawnType.init);
+    spawnPiece(WhitePawnEntity(x: 7, y: 1), PieceSpawnType.init);
 
     /// 흑 기물 세팅
-    // spawnPiece(BlackQueenEntity(x: 3, y: 0), PieceSpawnType.init);
-    //
-    // spawnPiece(BlackRookEntity(x: 0, y: 0), PieceSpawnType.init);
-    // spawnPiece(BlackRookEntity(x: 7, y: 0), PieceSpawnType.init);
-    //
-    // spawnPiece(BlackKnightEntity(x: 1, y: 0), PieceSpawnType.init);
+    spawnPiece(BlackQueenEntity(x: 3, y: 0), PieceSpawnType.init);
+
+    spawnPiece(BlackRookEntity(x: 0, y: 0), PieceSpawnType.init);
+    spawnPiece(BlackRookEntity(x: 7, y: 0), PieceSpawnType.init);
+
+    spawnPiece(BlackKnightEntity(x: 1, y: 0), PieceSpawnType.init);
     spawnPiece(BlackKnightEntity(x: 6, y: 0), PieceSpawnType.init);
-    //
-    // spawnPiece(BlackBishopEntity(x: 2, y: 0), PieceSpawnType.init);
-    // spawnPiece(BlackBishopEntity(x: 5, y: 0), PieceSpawnType.init);
-    //
-    // spawnPiece(BlackPawnEntity(x: 0, y: 1), PieceSpawnType.init);
-    // spawnPiece(BlackPawnEntity(x: 1, y: 1), PieceSpawnType.init);
-    // spawnPiece(BlackPawnEntity(x: 2, y: 1), PieceSpawnType.init);
-    // spawnPiece(BlackPawnEntity(x: 3, y: 1), PieceSpawnType.init);
-    // spawnPiece(BlackPawnEntity(x: 4, y: 1), PieceSpawnType.init);
-    // spawnPiece(BlackPawnEntity(x: 5, y: 1), PieceSpawnType.init);
-    // spawnPiece(BlackPawnEntity(x: 5, y: 6), PieceSpawnType.init);
-    // spawnPiece(BlackPawnEntity(x: 1, y: 0), PieceSpawnType.init);
+
+    spawnPiece(BlackBishopEntity(x: 2, y: 0), PieceSpawnType.init);
+    spawnPiece(BlackBishopEntity(x: 5, y: 0), PieceSpawnType.init);
+
+    spawnPiece(BlackPawnEntity(x: 0, y: 1), PieceSpawnType.init);
+    spawnPiece(BlackPawnEntity(x: 1, y: 1), PieceSpawnType.init);
+    spawnPiece(BlackPawnEntity(x: 2, y: 1), PieceSpawnType.init);
+    spawnPiece(BlackPawnEntity(x: 3, y: 1), PieceSpawnType.init);
+    spawnPiece(BlackPawnEntity(x: 4, y: 1), PieceSpawnType.init);
+    spawnPiece(BlackPawnEntity(x: 5, y: 1), PieceSpawnType.init);
+    spawnPiece(BlackPawnEntity(x: 6, y: 1), PieceSpawnType.init);
+    spawnPiece(BlackPawnEntity(x: 7, y: 1), PieceSpawnType.init);
 
     state = List.from(state);
     makeGameStartSound();

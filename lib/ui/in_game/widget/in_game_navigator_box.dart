@@ -110,11 +110,19 @@ class _InGameNavigatorState extends ConsumerState<InGameNavigatorBox> {
                 defaultAction: false,
                 color: Colors.transparent,
                 Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
+                    Text(
+                      "Promotion",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: whiteColor,
+                        fontSize: 26 * hu,
+                      ),
+                    ),
                     SizedBox(
                       width: 300 * wu,
-                      height: 350 * hu,
+                      height: 500 * hu,
                       child: GridView(
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
@@ -235,7 +243,7 @@ class _InGameNavigatorState extends ConsumerState<InGameNavigatorBox> {
     ref.read(inGameNavigatorProvider.notifier).clearNavigator();
   }
 
-  ElevatedButton _promotionButton(
+  Widget _promotionButton(
       String label, IconData iconData, VoidCallback onPressed) {
     return ElevatedButton(
       onPressed: onPressed,
