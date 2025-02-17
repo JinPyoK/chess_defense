@@ -4,6 +4,7 @@ import 'package:chess_defense/domain/in_game/entity/navigator_type_enum.dart';
 import 'package:chess_defense/domain/in_game/entity/piece_actionable_entity.dart';
 import 'package:chess_defense/domain/in_game/entity/piece_base_entity.dart';
 import 'package:chess_defense/domain/in_game/entity/piece_enum.dart';
+import 'package:chess_defense/domain/in_game/entity/special_moves_constant_value.dart';
 import 'package:chess_defense/domain/in_game/entity/white_piece/white_bishop_entity.dart';
 import 'package:chess_defense/domain/in_game/entity/white_piece/white_knight_entity.dart';
 import 'package:chess_defense/domain/in_game/entity/white_piece/white_pawn_entity.dart';
@@ -56,19 +57,188 @@ class _InGameNavigatorState extends ConsumerState<InGameNavigatorBox> {
           ),
         );
 
-        /// 움직인 자리에 흑 기물이 있다면 제거하기
-        final status = inGameBoardStatus.getStatus(
-            widget.pieceActionable.targetX, widget.pieceActionable.targetY);
-        if (status is PieceBaseEntity) {
-          if (status.team == Team.black) {
-            ref
-                .read(inGamePieceSetProvider.notifier)
-                .removePiece(widget.pieceActionable, PieceRemoveType.captured);
+        /// 캐슬링
+        if (widget.pieceActionable.targetValue == castlingVal) {
+          /// selectedPiece는 king이다.
+
+          /// 왼쪽 룩과 캐슬링
+          if (widget.pieceActionable.targetX == 0) {
+            final rook = inGameBoardStatus.getStatus(0, 7);
+            final leftRook = rook as WhiteRookEntity;
+
+            /// 상태 변경
+            inGameBoardStatus.changeStatus(2, 7, selectedPieceEntity!);
+            inGameBoardStatus.changeStatus(3, 7, leftRook);
+
+            /// 기물 착수
+            selectedPieceEntity!.x = 2;
+            selectedPieceEntity!.y = 7;
+            selectedPieceEntity!.setStateThisPiece!(() {});
+
+            leftRook.x = 3;
+            leftRook.y = 7;
+            leftRook.firstMove = true;
+            leftRook.setStateThisPiece!(() {});
+
+            /// 왼쪽룩 자리 비우기
+            inGameBoardStatus.changeStatus(
+              0,
+              7,
+              PieceActionableEntity(
+                targetX: 0,
+                targetY: 7,
+                targetValue: 0,
+              ),
+            );
+          }
+
+          /// 오른쪽 룩과 캐슬링
+          else if (widget.pieceActionable.targetX == 7) {
+            final rook = inGameBoardStatus.getStatus(7, 7);
+            final rightRook = rook as WhiteRookEntity;
+
+            /// 상태 변경
+            inGameBoardStatus.changeStatus(6, 7, selectedPieceEntity!);
+            inGameBoardStatus.changeStatus(5, 7, rightRook);
+
+            /// 기물 착수
+            selectedPieceEntity!.x = 6;
+            selectedPieceEntity!.y = 7;
+            selectedPieceEntity!.setStateThisPiece!(() {});
+
+            rightRook.x = 5;
+            rightRook.y = 7;
+            rightRook.firstMove = true;
+            rightRook.setStateThisPiece!(() {});
+
+            /// 오른쪽룩 자리 비우기
+            inGameBoardStatus.changeStatus(
+              7,
+              7,
+              PieceActionableEntity(
+                targetX: 7,
+                targetY: 7,
+                targetValue: 0,
+              ),
+            );
+          }
+          makePieceMoveSound();
+        } else {
+          /// 움직인 자리에 흑 기물이 있다면 제거하기
+          final status = inGameBoardStatus.getStatus(
+              widget.pieceActionable.targetX, widget.pieceActionable.targetY);
+          if (status is PieceBaseEntity) {
+            if (status.team == Team.black) {
+              ref.read(inGamePieceSetProvider.notifier).removePiece(
+                  widget.pieceActionable, PieceRemoveType.captured);
+            }
+          }
+
+          inGameBoardStatus.changeStatus(widget.pieceActionable.targetX,
+              widget.pieceActionable.targetY, selectedPieceEntity!);
+
+          /// 기물 착수
+          selectedPieceEntity!.x = widget.pieceActionable.targetX;
+          selectedPieceEntity!.y = widget.pieceActionable.targetY;
+          selectedPieceEntity!.setStateThisPiece!(() {});
+
+          makePieceMoveSound();
+
+          /// 백 폰 프로모션
+          if (selectedPieceEntity is WhitePawnEntity &&
+              widget.pieceActionable.targetY == 0) {
+            await Future.delayed(const Duration(milliseconds: 500), () async {
+              /// 폰 제거
+              ref.read(inGamePieceSetProvider.notifier).removePiece(
+                  widget.pieceActionable, PieceRemoveType.promotion);
+
+              late PieceBaseEntity promotionPiece;
+
+              if (mounted) {
+                await showCustomDialog(
+                  context,
+                  defaultAction: false,
+                  color: Colors.transparent,
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text(
+                        "Promotion",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: whiteColor,
+                          fontSize: 26 * hu,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 300 * wu,
+                        height: 500 * hu,
+                        child: GridView(
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2, // 2칸씩 배치
+                            childAspectRatio: 0.8,
+                            mainAxisSpacing: 30,
+                            crossAxisSpacing: 30,
+                          ),
+                          children: [
+                            _promotionButton(
+                              "Queen",
+                              FontAwesomeIcons.solidChessQueen,
+                              () {
+                                promotionPiece = WhiteQueenEntity(
+                                    x: widget.pieceActionable.targetX,
+                                    y: widget.pieceActionable.targetY);
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                            _promotionButton(
+                              "Rook",
+                              FontAwesomeIcons.solidChessRook,
+                              () {
+                                promotionPiece = WhiteRookEntity(
+                                    x: widget.pieceActionable.targetX,
+                                    y: widget.pieceActionable.targetY);
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                            _promotionButton(
+                              "Knight",
+                              FontAwesomeIcons.solidChessKnight,
+                              () {
+                                promotionPiece = WhiteKnightEntity(
+                                    x: widget.pieceActionable.targetX,
+                                    y: widget.pieceActionable.targetY);
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                            _promotionButton(
+                              "Bishop",
+                              FontAwesomeIcons.solidChessBishop,
+                              () {
+                                promotionPiece = WhiteBishopEntity(
+                                    x: widget.pieceActionable.targetX,
+                                    y: widget.pieceActionable.targetY);
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              }
+
+              /// 폰 프로모션
+              ref
+                  .read(inGamePieceSetProvider.notifier)
+                  .spawnPiece(promotionPiece, PieceSpawnType.promotion);
+
+              lastTurnPiece = promotionPiece;
+            });
           }
         }
-
-        inGameBoardStatus.changeStatus(widget.pieceActionable.targetX,
-            widget.pieceActionable.targetY, selectedPieceEntity!);
 
         /// 최근 탭한 기물 setState
         if (selectedPieceEntity != null) {
@@ -86,108 +256,6 @@ class _InGameNavigatorState extends ConsumerState<InGameNavigatorBox> {
         lastTurnPiece!.justTurn = true;
         lastTurnPiece!.firstMove = true;
 
-        /// 기물 착수
-        selectedPieceEntity!.x = widget.pieceActionable.targetX;
-        selectedPieceEntity!.y = widget.pieceActionable.targetY;
-        selectedPieceEntity!.setStateThisPiece!(() {});
-
-        makePieceMoveSound();
-
-        /// 백 폰 프로모션
-        if (selectedPieceEntity is WhitePawnEntity &&
-            widget.pieceActionable.targetY == 0) {
-          await Future.delayed(const Duration(milliseconds: 500), () async {
-            /// 폰 제거
-            ref
-                .read(inGamePieceSetProvider.notifier)
-                .removePiece(widget.pieceActionable, PieceRemoveType.promotion);
-
-            late PieceBaseEntity promotionPiece;
-
-            if (mounted) {
-              await showCustomDialog(
-                context,
-                defaultAction: false,
-                color: Colors.transparent,
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Text(
-                      "Promotion",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: whiteColor,
-                        fontSize: 26 * hu,
-                      ),
-                    ),
-                    SizedBox(
-                      width: 300 * wu,
-                      height: 500 * hu,
-                      child: GridView(
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2, // 2칸씩 배치
-                          childAspectRatio: 0.8,
-                          mainAxisSpacing: 30,
-                          crossAxisSpacing: 30,
-                        ),
-                        children: [
-                          _promotionButton(
-                            "Queen",
-                            FontAwesomeIcons.solidChessQueen,
-                            () {
-                              promotionPiece = WhiteQueenEntity(
-                                  x: widget.pieceActionable.targetX,
-                                  y: widget.pieceActionable.targetY);
-                              Navigator.of(context).pop();
-                            },
-                          ),
-                          _promotionButton(
-                            "Rook",
-                            FontAwesomeIcons.solidChessRook,
-                            () {
-                              promotionPiece = WhiteRookEntity(
-                                  x: widget.pieceActionable.targetX,
-                                  y: widget.pieceActionable.targetY);
-                              Navigator.of(context).pop();
-                            },
-                          ),
-                          _promotionButton(
-                            "Knight",
-                            FontAwesomeIcons.solidChessKnight,
-                            () {
-                              promotionPiece = WhiteKnightEntity(
-                                  x: widget.pieceActionable.targetX,
-                                  y: widget.pieceActionable.targetY);
-                              Navigator.of(context).pop();
-                            },
-                          ),
-                          _promotionButton(
-                            "Bishop",
-                            FontAwesomeIcons.solidChessBishop,
-                            () {
-                              promotionPiece = WhiteBishopEntity(
-                                  x: widget.pieceActionable.targetX,
-                                  y: widget.pieceActionable.targetY);
-                              Navigator.of(context).pop();
-                            },
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            }
-
-            /// 폰 프로모션
-            ref
-                .read(inGamePieceSetProvider.notifier)
-                .spawnPiece(promotionPiece, PieceSpawnType.promotion);
-
-            lastTurnPiece = promotionPiece;
-          });
-        }
         ref.read(inGameTurnProvider.notifier).changeTurn();
 
         selectedPieceEntity = null;

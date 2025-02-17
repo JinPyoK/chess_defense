@@ -3,6 +3,7 @@ import 'package:chess_defense/domain/in_game/entity/in_game_board_status.dart';
 import 'package:chess_defense/domain/in_game/entity/piece_actionable_entity.dart';
 import 'package:chess_defense/domain/in_game/entity/piece_base_entity.dart';
 import 'package:chess_defense/domain/in_game/entity/piece_enum.dart';
+import 'package:chess_defense/domain/in_game/entity/special_moves_constant_value.dart';
 import 'package:chess_defense/ui/in_game/controller/in_game_control_value.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -41,7 +42,7 @@ final class WhitePawnEntity extends WhitePieceBaseEntity {
 
       if (status is PieceActionableEntity) {
         /// 프로모션 가치 더해주기
-        final promotionValue = status.targetY == 0 ? _promotionVal : 0;
+        final promotionValue = status.targetY == 0 ? promotionVal : 0;
 
         pieceActionable.add(
           PieceActionableEntity(
@@ -63,7 +64,7 @@ final class WhitePawnEntity extends WhitePieceBaseEntity {
 
           if (status is PieceActionableEntity) {
             /// 프로모션 가치 더해주기
-            final promotionValue = status.targetY == 0 ? _promotionVal : 0;
+            final promotionValue = status.targetY == 0 ? promotionVal : 0;
 
             pieceActionable.add(
               PieceActionableEntity(
@@ -85,7 +86,7 @@ final class WhitePawnEntity extends WhitePieceBaseEntity {
 
       if (status is BlackPieceBaseEntity) {
         /// 프로모션 가치 더해주기
-        final promotionValue = status.y == 0 ? _promotionVal : 0;
+        final promotionValue = status.y == 0 ? promotionVal : 0;
 
         pieceActionable.add(
           PieceActionableEntity(
@@ -103,7 +104,7 @@ final class WhitePawnEntity extends WhitePieceBaseEntity {
 
       if (status is BlackPieceBaseEntity) {
         /// 프로모션 가치 더해주기
-        final promotionValue = status.y == 0 ? _promotionVal : 0;
+        final promotionValue = status.y == 0 ? promotionVal : 0;
 
         pieceActionable.add(
           PieceActionableEntity(
@@ -116,5 +117,3 @@ final class WhitePawnEntity extends WhitePieceBaseEntity {
     }
   }
 }
-
-const _promotionVal = 100;

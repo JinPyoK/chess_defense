@@ -35,7 +35,7 @@ final class InGameBoardStatus {
   void changeStatus(int x, int y, PieceOrJustActionable pieceModel) =>
       boardStatus[x][y] = pieceModel;
 
-  /// 흑 행마 조사 (미니맥스, 체크)
+  /// 흑 기물 조사 (미니맥스, 체크)
   List<PieceBaseEntity> getBlackAll() {
     final blackList = <PieceBaseEntity>[];
 
@@ -60,7 +60,7 @@ final class InGameBoardStatus {
     return blackList.length;
   }
 
-  /// 백 행마 조사 (미니맥스)
+  /// 백 기물 조사 (미니맥스)
   List<PieceBaseEntity> getWhiteAll() {
     final whiteList = <PieceBaseEntity>[];
 
@@ -75,6 +75,24 @@ final class InGameBoardStatus {
     }
 
     return whiteList;
+  }
+
+  /// 흑의 모든 행마 조사 (캐슬링 조건: 왕이 움직이는 자리에 흑이 공격할 수 있는지 조사)
+  List<PieceActionableEntity> getBlackActionableAll() {
+    final blackActionableList = <PieceActionableEntity>[];
+
+    for (List<PieceOrJustActionable> pieceList in boardStatus) {
+      for (PieceOrJustActionable piece in pieceList) {
+        if (piece is PieceBaseEntity) {
+          if (piece.team == Team.black) {
+            piece.searchActionable(inGameBoardStatus);
+            blackActionableList.addAll(piece.pieceActionable);
+          }
+        }
+      }
+    }
+
+    return blackActionableList;
   }
 
   /// 게임 저장 데이터 수집
