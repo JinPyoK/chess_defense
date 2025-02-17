@@ -87,11 +87,11 @@ final class WhiteKingEntity extends WhitePieceBaseEntity {
 
       /// 캐슬링 조건 2: 룩이 한번도 움직이지 않았음
       if (leftRook is WhiteRookEntity && leftRook.firstMove == false) {
+        /// 캐슬링 조건 3: 룩과 킹 사이에 아무것도 없음
         final place1 = statusBoard.getStatus(1, 7);
         final place2 = statusBoard.getStatus(2, 7);
         final place3 = statusBoard.getStatus(3, 7);
 
-        /// 캐슬링 조건 3: 룩과 킹 사이에 아무것도 없음
         if (place1 is PieceActionableEntity &&
             place2 is PieceActionableEntity &&
             place3 is PieceActionableEntity) {
@@ -134,10 +134,10 @@ final class WhiteKingEntity extends WhitePieceBaseEntity {
 
       /// 캐슬링 조건 2: 룩이 한번도 움직이지 않았음
       if (rightRook is WhiteRookEntity && rightRook.firstMove == false) {
+        /// 캐슬링 조건 3: 룩과 킹 사이에 아무것도 없음
         final place1 = statusBoard.getStatus(5, 7);
         final place2 = statusBoard.getStatus(6, 7);
 
-        /// 캐슬링 조건 3: 룩과 킹 사이에 아무것도 없음
         if (place1 is PieceActionableEntity &&
             place2 is PieceActionableEntity) {
           /// 캐슬링 조건 4: 킹이 움직이는 자리에 흑이 공격할 수 없음
