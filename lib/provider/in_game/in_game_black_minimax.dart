@@ -41,6 +41,9 @@ List<int?> _minimax(List<dynamic> params) {
           continue;
         }
 
+        /// 행마를 진행했으므로 firstMove = true
+        piece.firstMove = true;
+
         /// 노드를 생성한 후 트리에 추가
         final node = MinimaxNode(nodeDepth: nodeDepth);
         _minimaxNodeTree.addNode(node);
