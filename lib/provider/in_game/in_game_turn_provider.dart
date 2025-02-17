@@ -10,6 +10,7 @@ import 'package:chess_defense/domain/in_game/entity/minimax_node_tree.dart';
 import 'package:chess_defense/domain/in_game/entity/piece_actionable_entity.dart';
 import 'package:chess_defense/domain/in_game/entity/piece_base_entity.dart';
 import 'package:chess_defense/domain/in_game/entity/piece_enum.dart';
+import 'package:chess_defense/domain/in_game/entity/special_moves_constant_value.dart';
 import 'package:chess_defense/provider/in_game/in_game_black_status.dart';
 import 'package:chess_defense/provider/in_game/in_game_move_provider.dart';
 import 'package:chess_defense/provider/in_game/in_game_piece_set_provider.dart';

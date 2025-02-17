@@ -36,6 +36,11 @@ List<int?> _minimax(List<dynamic> params) {
       allPiecesHaveEmptyActionable = false;
 
       for (PieceActionableEntity pieceActionable in piece.pieceActionable) {
+        /// 캐슬링 행마는 미니맥스에서 제외
+        if (pieceActionable.targetValue == castlingVal) {
+          continue;
+        }
+
         /// 노드를 생성한 후 트리에 추가
         final node = MinimaxNode(nodeDepth: nodeDepth);
         _minimaxNodeTree.addNode(node);
