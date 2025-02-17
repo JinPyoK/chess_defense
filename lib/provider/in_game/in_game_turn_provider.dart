@@ -239,7 +239,9 @@ final class InGameTurn extends _$InGameTurn {
         pieceActionable.targetX, pieceActionable.targetY);
     if (status is PieceBaseEntity) {
       if (status.team == Team.white) {
-        ref.read(inGamePieceSetProvider.notifier).removePiece(pieceActionable);
+        ref
+            .read(inGamePieceSetProvider.notifier)
+            .removePiece(pieceActionable, PieceRemoveType.captured);
       }
     }
 
@@ -257,7 +259,9 @@ final class InGameTurn extends _$InGameTurn {
     if (piece is BlackPawnEntity && pieceActionable.targetY == 7) {
       await Future.delayed(const Duration(milliseconds: 500), () {
         /// 폰 제거
-        ref.read(inGamePieceSetProvider.notifier).removePiece(pieceActionable);
+        ref
+            .read(inGamePieceSetProvider.notifier)
+            .removePiece(pieceActionable, PieceRemoveType.promotion);
 
         /// 1/4 확률
         final randomNumber = Random().nextInt(4);

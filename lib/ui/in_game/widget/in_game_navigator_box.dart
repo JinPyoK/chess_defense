@@ -63,7 +63,7 @@ class _InGameNavigatorState extends ConsumerState<InGameNavigatorBox> {
           if (status.team == Team.black) {
             ref
                 .read(inGamePieceSetProvider.notifier)
-                .removePiece(widget.pieceActionable);
+                .removePiece(widget.pieceActionable, PieceRemoveType.captured);
           }
         }
 
@@ -100,7 +100,7 @@ class _InGameNavigatorState extends ConsumerState<InGameNavigatorBox> {
             /// 폰 제거
             ref
                 .read(inGamePieceSetProvider.notifier)
-                .removePiece(widget.pieceActionable);
+                .removePiece(widget.pieceActionable, PieceRemoveType.promotion);
 
             late PieceBaseEntity promotionPiece;
 
@@ -233,10 +233,10 @@ class _InGameNavigatorState extends ConsumerState<InGameNavigatorBox> {
             .read(inGamePieceSetProvider.notifier)
             .spawnPiece(spawnPieceEntity, PieceSpawnType.spawn);
         break;
-      case NavigatorType.execute:
+      case NavigatorType.execution:
         ref
             .read(inGamePieceSetProvider.notifier)
-            .removePiece(widget.pieceActionable, true);
+            .removePiece(widget.pieceActionable, PieceRemoveType.execution);
         ref.read(inGameTurnProvider.notifier).determineIfCheck();
         break;
     }

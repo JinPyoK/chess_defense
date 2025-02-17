@@ -67,7 +67,7 @@ final class InGameNavigator extends _$InGameNavigator {
               InGameNavigatorBox(
                 pieceActionable: PieceActionableEntity(
                     targetX: i, targetY: j, targetValue: 0),
-                navigatorType: NavigatorType.execute,
+                navigatorType: NavigatorType.execution,
               ),
             );
           }

@@ -54,12 +54,12 @@ final class InGamePieceSet extends _$InGamePieceSet {
     lastTurnPiece = null;
 
     _numOfPiece = {
-      PieceType.king: 1,
-      PieceType.queen: 1,
-      PieceType.rook: 2,
-      PieceType.knight: 2,
-      PieceType.bishop: 2,
-      PieceType.pawn: 8,
+      PieceType.king: 0,
+      PieceType.queen: 0,
+      PieceType.rook: 0,
+      PieceType.knight: 0,
+      PieceType.bishop: 0,
+      PieceType.pawn: 0,
     };
 
     ref.read(inGameOnTheRopesProvider.notifier).initOnTheRopes();
@@ -85,7 +85,7 @@ final class InGamePieceSet extends _$InGamePieceSet {
     spawnPiece(WhitePawnEntity(x: 4, y: 6), PieceSpawnType.init);
     spawnPiece(WhitePawnEntity(x: 5, y: 6), PieceSpawnType.init);
     spawnPiece(WhitePawnEntity(x: 6, y: 6), PieceSpawnType.init);
-    spawnPiece(WhitePawnEntity(x: 7, y: 1), PieceSpawnType.init);
+    spawnPiece(WhitePawnEntity(x: 7, y: 6), PieceSpawnType.init);
 
     /// 흑 기물 세팅
     spawnPiece(BlackQueenEntity(x: 3, y: 0), PieceSpawnType.init);
@@ -141,7 +141,7 @@ final class InGamePieceSet extends _$InGamePieceSet {
     selectedPieceEntity = null;
     lastTurnPiece = null;
 
-    Map<PieceType, int> numOfPieceInit = {
+    _numOfPiece = {
       PieceType.king: 0,
       PieceType.queen: 0,
       PieceType.rook: 0,
@@ -150,18 +150,12 @@ final class InGamePieceSet extends _$InGamePieceSet {
       PieceType.pawn: 0,
     };
 
-    _numOfPiece = numOfPieceInit;
-
     final statusBoard = inGameBoardStatus.boardStatus;
 
     for (List<PieceOrJustActionable> statusList in statusBoard) {
       for (PieceOrJustActionable status in statusList) {
         if (status is PieceBaseEntity) {
           spawnPiece(status, PieceSpawnType.init);
-
-          if (status.team == Team.white) {
-            _numOfPiece[status.pieceType] = _numOfPiece[status.pieceType]! + 1;
-          }
         }
       }
     }
@@ -233,10 +227,6 @@ final class InGamePieceSet extends _$InGamePieceSet {
               .read(inGameGoldProvider.notifier)
               .setInGameGold(gold - pieceEntity.value);
 
-          /// 기물 수 증가
-          _numOfPiece[pieceEntity.pieceType] =
-              _numOfPiece[pieceEntity.pieceType]! + 1;
-
           /// 골드 노티피케이션
           ref
               .read(getGoldNotificationWidgetProvider.notifier)
@@ -246,14 +236,14 @@ final class InGamePieceSet extends _$InGamePieceSet {
         makePieceSpawnSound(pieceEntity.pieceType);
         break;
       case PieceSpawnType.promotion:
-        if (pieceEntity.team == Team.white) {
-          /// 기물 수 증가
-          _numOfPiece[pieceEntity.pieceType] =
-              _numOfPiece[pieceEntity.pieceType]! + 1;
-        }
-
         makePieceSpawnSound(pieceEntity.pieceType);
         break;
+    }
+
+    if (pieceEntity.team == Team.white) {
+      /// 기물 수 증가
+      _numOfPiece[pieceEntity.pieceType] =
+          _numOfPiece[pieceEntity.pieceType]! + 1;
     }
 
     /// 상태 변경
@@ -264,66 +254,70 @@ final class InGamePieceSet extends _$InGamePieceSet {
   }
 
   /// 기물 제거
-  void removePiece(PieceActionableEntity pieceActionable,
-      [bool isExecute = false]) {
+  void removePiece(
+      PieceActionableEntity pieceActionable, PieceRemoveType removeType) {
     final gold = ref.read(inGameGoldProvider);
     final targetPieceModel = inGameBoardStatus.getStatus(
         pieceActionable.targetX, pieceActionable.targetY);
 
-    if (isExecute) {
-      if (gold < 300) {
-        ref
-            .read(inGameSystemNotificationProvider.notifier)
-            .notifySystemError(0);
-        return;
-      }
+    switch (removeType) {
+      case PieceRemoveType.captured:
 
-      /// 골드 차감
-      ref.read(inGameGoldProvider.notifier).setInGameGold(gold - 300);
+        /// 처형이 아닌 단순 기물 공격, 백이 흑 기물을 취함
+        if (targetPieceModel is PieceBaseEntity) {
+          if (targetPieceModel.team == Team.black) {
+            /// 골드 증액
+            ref
+                .read(inGameGoldProvider.notifier)
+                .setInGameGold(gold + targetPieceModel.value);
 
-      /// 골드 노티피케이션
-      ref
-          .read(getGoldNotificationWidgetProvider.notifier)
-          .showGoldNotification(false, 300);
+            /// 골드 노티피케이션
+            ref
+                .read(getGoldNotificationWidgetProvider.notifier)
+                .showGoldNotification(true, targetPieceModel.value);
 
-      /// 처형 기물이 방금 움직인 기물
-      if (targetPieceModel == lastTurnPiece) {
-        lastTurnPiece = null;
-      }
-
-      /// 처형 기물이 방금 탭한 기물
-      if (targetPieceModel == selectedPieceEntity) {
-        selectedPieceEntity = null;
-      }
-
-      makeExecuteOrCheckSound();
-    } else {
-      /// 처형이 아닌 단순 기물 공격, 백이 흑 기물을 취함
-      if (targetPieceModel is PieceBaseEntity) {
-        if (targetPieceModel.team == Team.black) {
-          /// 골드 증액
-          ref
-              .read(inGameGoldProvider.notifier)
-              .setInGameGold(gold + targetPieceModel.value);
-
-          /// 골드 노티피케이션
-          ref
-              .read(getGoldNotificationWidgetProvider.notifier)
-              .showGoldNotification(true, targetPieceModel.value);
-
-          makePieceKilledSound(Team.black);
-        } else {
-          makePieceKilledSound(Team.white);
+            makePieceKilledSound(Team.black);
+          } else {
+            makePieceKilledSound(Team.white);
+          }
         }
-      }
+        break;
+      case PieceRemoveType.execution:
+        if (gold < 300) {
+          ref
+              .read(inGameSystemNotificationProvider.notifier)
+              .notifySystemError(0);
+          return;
+        }
+
+        /// 골드 차감
+        ref.read(inGameGoldProvider.notifier).setInGameGold(gold - 300);
+
+        /// 골드 노티피케이션
+        ref
+            .read(getGoldNotificationWidgetProvider.notifier)
+            .showGoldNotification(false, 300);
+
+        /// 처형 기물이 방금 움직인 기물
+        if (targetPieceModel == lastTurnPiece) {
+          lastTurnPiece = null;
+        }
+
+        /// 처형 기물이 방금 탭한 기물
+        if (targetPieceModel == selectedPieceEntity) {
+          selectedPieceEntity = null;
+        }
+
+        makeExecuteOrCheckSound();
+        break;
+      case PieceRemoveType.promotion:
+        break;
     }
 
     /// 제거되는 대상이 백 기물이면 기물 수 차감
-    if (targetPieceModel is PieceBaseEntity) {
-      if (targetPieceModel.team == Team.white) {
-        _numOfPiece[targetPieceModel.pieceType] =
-            _numOfPiece[targetPieceModel.pieceType]! - 1;
-      }
+    if (targetPieceModel is WhitePieceBaseEntity) {
+      _numOfPiece[targetPieceModel.pieceType] =
+          _numOfPiece[targetPieceModel.pieceType]! - 1;
     }
 
     inGameBoardStatus.changeStatus(
