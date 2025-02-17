@@ -55,26 +55,26 @@ class _InGamePieceState extends ConsumerState<InGamePiece> {
     if (widget.pieceEntity.justTapped) {
       return [
         whiteColor,
-        inGameBlackColor,
+        Colors.green,
       ];
     }
 
     if (widget.pieceEntity.team == Team.black) {
       if (onTheRopes) {
         return [
-          whiteColor,
+          blackColor,
           redColor,
         ];
       } else {
         if (widget.pieceEntity.justTurn) {
           return [
-            whiteColor,
+            blackColor,
             redColor,
           ];
         } else {
           return [
-            whiteColor,
-            whiteColor,
+            blackColor,
+            blackColor,
           ];
         }
       }
@@ -148,6 +148,7 @@ class _InGamePieceState extends ConsumerState<InGamePiece> {
                     return RadialGradient(colors: _justTurnPieceColor())
                         .createShader(rect);
                   },
+                  blendMode: BlendMode.srcIn,
                   child: widget.pieceEntity.pieceIcon,
                 ),
               ),

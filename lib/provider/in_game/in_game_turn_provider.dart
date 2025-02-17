@@ -50,7 +50,7 @@ final class InGameTurn extends _$InGameTurn {
 
       ref.read(inGameOnTheRopesProvider.notifier).checkOnTheRopes();
 
-      /// 흑 기물의 수가 50을 넘으면 게임 종료
+      /// 흑 기물의 수가 40을 넘으면 게임 종료
       if (inGameBoardStatus.getNumOfBlack() > 40) {
         if (globalContext!.mounted) {
           Future.delayed(const Duration(seconds: 1), () {
