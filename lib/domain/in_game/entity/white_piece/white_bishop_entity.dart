@@ -12,21 +12,22 @@ final class WhiteBishopEntity extends WhitePieceBaseEntity {
     required super.x,
     required super.y,
     super.firstMove,
+    super.doubleMove,
   }) : super(
-          team: Team.white,
-          pieceType: PieceType.bishop,
-          value: 30,
-          pieceIcon: SizedBox(
-            width: pieceIconSize,
-            height: pieceIconSize,
-            child: FittedBox(
-              child: FaIcon(
-                FontAwesomeIcons.solidChessBishop,
-                color: whiteColor,
-              ),
-            ),
-          ),
-        );
+         team: Team.white,
+         pieceType: PieceType.bishop,
+         value: 30,
+         pieceIcon: SizedBox(
+           width: pieceIconSize,
+           height: pieceIconSize,
+           child: FittedBox(
+             child: FaIcon(
+               FontAwesomeIcons.solidChessBishop,
+               color: whiteColor,
+             ),
+           ),
+         ),
+       );
 
   @override
   void searchActionable(InGameBoardStatus statusBoard) {

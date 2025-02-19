@@ -12,21 +12,22 @@ final class WhiteKnightEntity extends WhitePieceBaseEntity {
     required super.x,
     required super.y,
     super.firstMove,
+    super.doubleMove,
   }) : super(
-          team: Team.white,
-          pieceType: PieceType.knight,
-          value: 30,
-          pieceIcon: SizedBox(
-            width: pieceIconSize,
-            height: pieceIconSize,
-            child: FittedBox(
-              child: FaIcon(
-                FontAwesomeIcons.solidChessKnight,
-                color: whiteColor,
-              ),
-            ),
-          ),
-        );
+         team: Team.white,
+         pieceType: PieceType.knight,
+         value: 30,
+         pieceIcon: SizedBox(
+           width: pieceIconSize,
+           height: pieceIconSize,
+           child: FittedBox(
+             child: FaIcon(
+               FontAwesomeIcons.solidChessKnight,
+               color: whiteColor,
+             ),
+           ),
+         ),
+       );
 
   @override
   void searchActionable(InGameBoardStatus statusBoard) {

@@ -3,7 +3,6 @@ import 'package:chess_defense/domain/in_game/entity/in_game_board_status.dart';
 import 'package:chess_defense/domain/in_game/entity/piece_actionable_entity.dart';
 import 'package:chess_defense/domain/in_game/entity/piece_base_entity.dart';
 import 'package:chess_defense/domain/in_game/entity/piece_enum.dart';
-import 'package:chess_defense/domain/in_game/entity/special_moves_constant_value.dart';
 import 'package:chess_defense/domain/in_game/entity/white_piece/find_white_piece.dart';
 import 'package:chess_defense/domain/in_game/entity/white_piece/white_rook_entity.dart';
 import 'package:chess_defense/ui/in_game/controller/in_game_control_value.dart';
@@ -15,21 +14,19 @@ final class WhiteKingEntity extends WhitePieceBaseEntity {
     required super.x,
     required super.y,
     super.firstMove,
+    super.doubleMove,
   }) : super(
-          team: Team.white,
-          pieceType: PieceType.king,
-          value: 1000,
-          pieceIcon: SizedBox(
-            width: pieceIconSize,
-            height: pieceIconSize,
-            child: FittedBox(
-              child: FaIcon(
-                FontAwesomeIcons.solidChessKing,
-                color: whiteColor,
-              ),
-            ),
-          ),
-        );
+         team: Team.white,
+         pieceType: PieceType.king,
+         value: 1000,
+         pieceIcon: SizedBox(
+           width: pieceIconSize,
+           height: pieceIconSize,
+           child: FittedBox(
+             child: FaIcon(FontAwesomeIcons.solidChessKing, color: whiteColor),
+           ),
+         ),
+       );
 
   @override
   void searchActionable(InGameBoardStatus statusBoard) {
@@ -102,27 +99,23 @@ final class WhiteKingEntity extends WhitePieceBaseEntity {
           bool place2 = true;
           bool place3 = true;
 
-          for (PieceActionableEntity pieceActionable in blackActionableList) {
-            if (pieceActionable.targetX == 2 && pieceActionable.targetY == 7) {
+          for (PieceActionableEntity pa in blackActionableList) {
+            if (pa.targetX == 2 && pa.targetY == 7) {
               place1 = false;
-            }
-
-            if (pieceActionable.targetX == 3 && pieceActionable.targetY == 7) {
+            } else if (pa.targetX == 3 && pa.targetY == 7) {
               place2 = false;
-            }
-
-            if (pieceActionable.targetX == 4 && pieceActionable.targetY == 7) {
+            } else if (pa.targetX == 4 && pa.targetY == 7) {
               place3 = false;
             }
           }
 
-          /// 아무것도 없다면 castlingVal(70)과 함께 액셔너블 추가
           if (place1 && place2 && place3) {
             pieceActionable.add(
               PieceActionableEntity(
                 targetX: 0,
                 targetY: 7,
-                targetValue: castlingVal,
+                targetValue: 0,
+                actionType: PieceActionType.castling,
               ),
             );
           }
@@ -147,27 +140,23 @@ final class WhiteKingEntity extends WhitePieceBaseEntity {
           bool place2 = true;
           bool place3 = true;
 
-          for (PieceActionableEntity pieceActionable in blackActionableList) {
-            if (pieceActionable.targetX == 4 && pieceActionable.targetY == 7) {
+          for (PieceActionableEntity pa in blackActionableList) {
+            if (pa.targetX == 4 && pa.targetY == 7) {
               place1 = false;
-            }
-
-            if (pieceActionable.targetX == 5 && pieceActionable.targetY == 7) {
+            } else if (pa.targetX == 5 && pa.targetY == 7) {
               place2 = false;
-            }
-
-            if (pieceActionable.targetX == 6 && pieceActionable.targetY == 7) {
+            } else if (pa.targetX == 6 && pa.targetY == 7) {
               place3 = false;
             }
           }
 
-          /// 아무것도 없다면 castlingVal(70)과 함께 액셔너블 추가
           if (place1 && place2 && place3) {
             pieceActionable.add(
               PieceActionableEntity(
                 targetX: 7,
                 targetY: 7,
-                targetValue: castlingVal,
+                targetValue: 0,
+                actionType: PieceActionType.castling,
               ),
             );
           }

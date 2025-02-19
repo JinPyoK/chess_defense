@@ -9,7 +9,10 @@ Future<void> compareStoreVersionAndShowDialog(BuildContext context) async {
     return;
   } else {
     if (context.mounted) {
-      showCustomDialog(context, const Center(child: Text("새로운 버전이 출시되었습니다!")));
+      showCustomDialog(
+        context,
+        const Center(child: Text("A new version has been released!")),
+      );
     }
   }
 }

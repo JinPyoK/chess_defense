@@ -6,7 +6,7 @@ final _minimaxResult = <MinimaxNode>[];
 
 /// 백 미니맥스 알고리즘 params: List[treeDepth, boardStatusFromJsonList(), nodeDepth]
 /// return List[선정 기물 모델x, y, 액셔너블x, y, 타겟밸류]
-List<int?> _minimax(List<dynamic> params) {
+List<dynamic> _minimax(List<dynamic> params) {
   /// 트리의 최종 깊이
   final treeDepth = params[0] as int;
 
@@ -17,13 +17,19 @@ List<int?> _minimax(List<dynamic> params) {
   final nodeDepth = params[2] as int;
 
   /// Json을 다시 역직렬화 하여 상태 보드 만들기
-  final minimaxStatusBoard = InGameBoardStatus()
-    ..boardStatusFromJsonList(statusJsonList);
+  final minimaxStatusBoard =
+      InGameBoardStatus()..boardStatusFromJsonList(statusJsonList);
 
   /// 노드가 max이면 백, min이면 흑 기물들 조사
-  final pieceList = (nodeDepth + 1) % 2 == 1
-      ? minimaxStatusBoard.getBlackAll()
-      : minimaxStatusBoard.getWhiteAll();
+  late List<PieceBaseEntity> pieceList;
+
+  if ((nodeDepth + 1) % 2 == 1) {
+    pieceList = minimaxStatusBoard.getBlackAll();
+    minimaxStatusBoard.initBlackDoubleMove();
+  } else {
+    pieceList = minimaxStatusBoard.getWhiteAll();
+    minimaxStatusBoard.initWhiteDoubleMove();
+  }
 
   bool allPiecesHaveEmptyActionable = true;
 
@@ -37,12 +43,9 @@ List<int?> _minimax(List<dynamic> params) {
 
       for (PieceActionableEntity pieceActionable in piece.pieceActionable) {
         /// 캐슬링 행마는 미니맥스에서 제외
-        if (pieceActionable.targetValue == castlingVal) {
+        if (pieceActionable.actionType == PieceActionType.castling) {
           continue;
         }
-
-        /// 행마를 진행했으므로 firstMove = true
-        piece.firstMove = true;
 
         /// 노드를 생성한 후 트리에 추가
         final node = MinimaxNode(nodeDepth: nodeDepth);
@@ -55,6 +58,7 @@ List<int?> _minimax(List<dynamic> params) {
         node.targetY = pieceActionable.targetY;
         node.targetValue = pieceActionable.targetValue;
         node.evaluationValue = node.targetValue;
+        node.actionType = pieceActionable.actionType;
 
         if (nodeDepth == 0) {
           _minimaxResult.add(node);
@@ -67,9 +71,10 @@ List<int?> _minimax(List<dynamic> params) {
           final parentNode = _minimaxNodeTree.getParentNode(nodeDepth);
 
           /// 부모 노드의 평가값 +- 현재 노드의 평가값
-          node.evaluationValue = (node.nodeType == MinimaxNodeType.min)
-              ? parentNode!.evaluationValue + node.evaluationValue
-              : parentNode!.evaluationValue - node.evaluationValue;
+          node.evaluationValue =
+              (node.nodeType == MinimaxNodeType.min)
+                  ? parentNode!.evaluationValue + node.evaluationValue
+                  : parentNode!.evaluationValue - node.evaluationValue;
         }
 
         /// 트리의 마지막 -> 값을 정해야 하는 구간
@@ -77,12 +82,11 @@ List<int?> _minimax(List<dynamic> params) {
           node.minimaxValue = node.evaluationValue;
           _computeParentChild(node);
         }
-
         /// 트리 순회 중
         else {
           /// 기물 행마에 대한 각각의 새로운 상태 보드 생성
-          final statusBoardAboutPieceActionable = InGameBoardStatus()
-            ..boardStatusFromJsonList(statusJsonList);
+          final statusBoardAboutPieceActionable =
+              InGameBoardStatus()..boardStatusFromJsonList(statusJsonList);
 
           /// 상태 변경
           statusBoardAboutPieceActionable.changeStatus(
@@ -100,6 +104,14 @@ List<int?> _minimax(List<dynamic> params) {
           newPiece.x = pieceActionable.targetX;
           newPiece.y = pieceActionable.targetY;
 
+          /// 행마를 진행했으므로 firstMove = true
+          newPiece.firstMove = true;
+
+          /// 폰을 두칸 전진하는 행마
+          if (pieceActionable.actionType == PieceActionType.doubleMove) {
+            newPiece.doubleMove = true;
+          }
+
           statusBoardAboutPieceActionable.changeStatus(
             pieceActionable.targetX,
             pieceActionable.targetY,
@@ -115,7 +127,8 @@ List<int?> _minimax(List<dynamic> params) {
           _computeParentChild(node);
           if (node.nodeDepth > 1) {
             if (_alphaBetaPruning(
-                _minimaxNodeTree.getParentNode(node.nodeDepth)!)) {
+              _minimaxNodeTree.getParentNode(node.nodeDepth)!,
+            )) {
               return [];
             }
           }
@@ -144,7 +157,7 @@ List<int?> _minimax(List<dynamic> params) {
       _minimax([
         treeDepth,
         minimaxStatusBoard.boardStatusToJsonList(),
-        nodeDepth + 1
+        nodeDepth + 1,
       ]);
 
       _computeParentChild(node);
@@ -177,7 +190,6 @@ List<int?> _minimax(List<dynamic> params) {
       if (resultNode.minimaxValue == minimaxResultValue) {
         selectedNodeList.add(resultNode);
       }
-
       /// 미니맥스 밸류가 더 큰값이 있다면 리스트 비우고 탐색 재개
       else if (resultNode.minimaxValue! > minimaxResultValue) {
         selectedNodeList.clear();
@@ -190,7 +202,6 @@ List<int?> _minimax(List<dynamic> params) {
     if (selectedNodeList.isEmpty) {
       return [];
     }
-
     /// 랜덤으로 반환
     else {
       final randomNumber = Random().nextInt(selectedNodeList.length);
@@ -202,6 +213,7 @@ List<int?> _minimax(List<dynamic> params) {
         selectedNode.targetX,
         selectedNode.targetY,
         selectedNode.targetValue,
+        selectedNode.actionType.name,
       ];
     }
   }
@@ -217,7 +229,6 @@ void _computeParentChild(MinimaxNode node) {
     if (parentNode.minimaxValue == null) {
       parentNode.minimaxValue = node.minimaxValue;
     }
-
     /// 부모 노드의 미니맥스 밸류가 존재
     else {
       /// 0이 아닌 수가 하나라도 있을 경우 기물 변화에 대한 정보가 있기 때문에 그 수를 올려보내야 한다.
@@ -227,7 +238,6 @@ void _computeParentChild(MinimaxNode node) {
       if (parentNode.minimaxValue == 0 && node.minimaxValue != 0) {
         parentNode.minimaxValue = node.minimaxValue;
       }
-
       /// 부모 노드의 미니맥스 밸류와 자식 노드의 미니맥스 밸류가 모두 0이 아닐 시에만 비교한다.
       else if (parentNode.minimaxValue != 0 && node.minimaxValue != 0) {
         /// 부모 노드가 max 노드
@@ -236,7 +246,6 @@ void _computeParentChild(MinimaxNode node) {
             parentNode.minimaxValue = node.minimaxValue;
           }
         }
-
         /// 부모 노드가 min 노드
         else {
           if (parentNode.minimaxValue! > node.minimaxValue!) {
@@ -269,7 +278,6 @@ bool _alphaBetaPruning(MinimaxNode node) {
           return true;
         }
       }
-
       /// 베타 가지치기
       /// MAX노드의 현재 값이 부모 노드(즉, MIN노드)의 값보다 크거나 같다면,
       /// 부모 노드의 값을 줄일 가능성이 전혀 없기 때문에 마찬가지 이유로 자식 노드를 더 이상 탐색해볼 필요가 없다.

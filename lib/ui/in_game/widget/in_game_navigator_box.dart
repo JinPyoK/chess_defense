@@ -4,7 +4,6 @@ import 'package:chess_defense/domain/in_game/entity/navigator_type_enum.dart';
 import 'package:chess_defense/domain/in_game/entity/piece_actionable_entity.dart';
 import 'package:chess_defense/domain/in_game/entity/piece_base_entity.dart';
 import 'package:chess_defense/domain/in_game/entity/piece_enum.dart';
-import 'package:chess_defense/domain/in_game/entity/special_moves_constant_value.dart';
 import 'package:chess_defense/domain/in_game/entity/white_piece/white_bishop_entity.dart';
 import 'package:chess_defense/domain/in_game/entity/white_piece/white_knight_entity.dart';
 import 'package:chess_defense/domain/in_game/entity/white_piece/white_pawn_entity.dart';
@@ -58,7 +57,7 @@ class _InGameNavigatorState extends ConsumerState<InGameNavigatorBox> {
         );
 
         /// 캐슬링
-        if (widget.pieceActionable.targetValue == castlingVal) {
+        if (widget.pieceActionable.actionType == PieceActionType.castling) {
           /// selectedPiece는 king이다.
 
           /// 왼쪽 룩과 캐슬링
@@ -84,14 +83,9 @@ class _InGameNavigatorState extends ConsumerState<InGameNavigatorBox> {
             inGameBoardStatus.changeStatus(
               0,
               7,
-              PieceActionableEntity(
-                targetX: 0,
-                targetY: 7,
-                targetValue: 0,
-              ),
+              PieceActionableEntity(targetX: 0, targetY: 7, targetValue: 0),
             );
           }
-
           /// 오른쪽 룩과 캐슬링
           else if (widget.pieceActionable.targetX == 7) {
             final rook = inGameBoardStatus.getStatus(7, 7);
@@ -115,42 +109,82 @@ class _InGameNavigatorState extends ConsumerState<InGameNavigatorBox> {
             inGameBoardStatus.changeStatus(
               7,
               7,
-              PieceActionableEntity(
-                targetX: 7,
-                targetY: 7,
-                targetValue: 0,
-              ),
+              PieceActionableEntity(targetX: 7, targetY: 7, targetValue: 0),
             );
           }
-          makePieceMoveSound();
-        } else {
+        }
+        /// 앙파상
+        else if (widget.pieceActionable.actionType ==
+            PieceActionType.enPassant) {
+          /// 상태 변경
+          inGameBoardStatus.changeStatus(
+            widget.pieceActionable.targetX,
+            widget.pieceActionable.targetY,
+            selectedPieceEntity!,
+          );
+
+          /// 흑의 폰 제거
+          ref
+              .read(inGamePieceSetProvider.notifier)
+              .removePiece(
+                PieceActionableEntity(
+                  targetX: widget.pieceActionable.targetX,
+                  targetY: widget.pieceActionable.targetY + 1,
+                  targetValue: widget.pieceActionable.targetValue,
+                ),
+                PieceRemoveType.captured,
+              );
+
+          /// 기물 착수
+          selectedPieceEntity!.x = widget.pieceActionable.targetX;
+          selectedPieceEntity!.y = widget.pieceActionable.targetY;
+          selectedPieceEntity!.setStateThisPiece!(() {});
+        }
+        /// 단순 행마
+        else {
           /// 움직인 자리에 흑 기물이 있다면 제거하기
           final status = inGameBoardStatus.getStatus(
-              widget.pieceActionable.targetX, widget.pieceActionable.targetY);
+            widget.pieceActionable.targetX,
+            widget.pieceActionable.targetY,
+          );
           if (status is PieceBaseEntity) {
             if (status.team == Team.black) {
-              ref.read(inGamePieceSetProvider.notifier).removePiece(
-                  widget.pieceActionable, PieceRemoveType.captured);
+              ref
+                  .read(inGamePieceSetProvider.notifier)
+                  .removePiece(
+                    widget.pieceActionable,
+                    PieceRemoveType.captured,
+                  );
             }
           }
 
-          inGameBoardStatus.changeStatus(widget.pieceActionable.targetX,
-              widget.pieceActionable.targetY, selectedPieceEntity!);
+          inGameBoardStatus.changeStatus(
+            widget.pieceActionable.targetX,
+            widget.pieceActionable.targetY,
+            selectedPieceEntity!,
+          );
 
           /// 기물 착수
           selectedPieceEntity!.x = widget.pieceActionable.targetX;
           selectedPieceEntity!.y = widget.pieceActionable.targetY;
           selectedPieceEntity!.setStateThisPiece!(() {});
 
-          makePieceMoveSound();
+          /// 폰이 두칸 전진 했을 경우
+          if (widget.pieceActionable.actionType == PieceActionType.doubleMove) {
+            selectedPieceEntity!.doubleMove = true;
+          }
 
           /// 백 폰 프로모션
           if (selectedPieceEntity is WhitePawnEntity &&
               widget.pieceActionable.targetY == 0) {
             await Future.delayed(const Duration(milliseconds: 500), () async {
               /// 폰 제거
-              ref.read(inGamePieceSetProvider.notifier).removePiece(
-                  widget.pieceActionable, PieceRemoveType.promotion);
+              ref
+                  .read(inGamePieceSetProvider.notifier)
+                  .removePiece(
+                    widget.pieceActionable,
+                    PieceRemoveType.promotion,
+                  );
 
               late PieceBaseEntity promotionPiece;
 
@@ -176,19 +210,20 @@ class _InGameNavigatorState extends ConsumerState<InGameNavigatorBox> {
                         child: GridView(
                           gridDelegate:
                               const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2, // 2칸씩 배치
-                            childAspectRatio: 0.8,
-                            mainAxisSpacing: 30,
-                            crossAxisSpacing: 30,
-                          ),
+                                crossAxisCount: 2, // 2칸씩 배치
+                                childAspectRatio: 0.8,
+                                mainAxisSpacing: 30,
+                                crossAxisSpacing: 30,
+                              ),
                           children: [
                             _promotionButton(
                               "Queen",
                               FontAwesomeIcons.solidChessQueen,
                               () {
                                 promotionPiece = WhiteQueenEntity(
-                                    x: widget.pieceActionable.targetX,
-                                    y: widget.pieceActionable.targetY);
+                                  x: widget.pieceActionable.targetX,
+                                  y: widget.pieceActionable.targetY,
+                                );
                                 Navigator.of(context).pop();
                               },
                             ),
@@ -197,8 +232,9 @@ class _InGameNavigatorState extends ConsumerState<InGameNavigatorBox> {
                               FontAwesomeIcons.solidChessRook,
                               () {
                                 promotionPiece = WhiteRookEntity(
-                                    x: widget.pieceActionable.targetX,
-                                    y: widget.pieceActionable.targetY);
+                                  x: widget.pieceActionable.targetX,
+                                  y: widget.pieceActionable.targetY,
+                                );
                                 Navigator.of(context).pop();
                               },
                             ),
@@ -207,8 +243,9 @@ class _InGameNavigatorState extends ConsumerState<InGameNavigatorBox> {
                               FontAwesomeIcons.solidChessKnight,
                               () {
                                 promotionPiece = WhiteKnightEntity(
-                                    x: widget.pieceActionable.targetX,
-                                    y: widget.pieceActionable.targetY);
+                                  x: widget.pieceActionable.targetX,
+                                  y: widget.pieceActionable.targetY,
+                                );
                                 Navigator.of(context).pop();
                               },
                             ),
@@ -217,8 +254,9 @@ class _InGameNavigatorState extends ConsumerState<InGameNavigatorBox> {
                               FontAwesomeIcons.solidChessBishop,
                               () {
                                 promotionPiece = WhiteBishopEntity(
-                                    x: widget.pieceActionable.targetX,
-                                    y: widget.pieceActionable.targetY);
+                                  x: widget.pieceActionable.targetX,
+                                  y: widget.pieceActionable.targetY,
+                                );
                                 Navigator.of(context).pop();
                               },
                             ),
@@ -243,13 +281,17 @@ class _InGameNavigatorState extends ConsumerState<InGameNavigatorBox> {
         /// 최근 탭한 기물 setState
         if (selectedPieceEntity != null) {
           selectedPieceEntity!.justTapped = false;
-          selectedPieceEntity!.setStateThisPiece!(() {});
+          if (selectedPieceEntity!.setStateThisPiece != null) {
+            selectedPieceEntity!.setStateThisPiece!(() {});
+          }
         }
 
         /// 최근 기물 착수 ui 구현 위해서
         if (lastTurnPiece != null) {
           lastTurnPiece!.justTurn = false;
-          lastTurnPiece!.setStateThisPiece!(() {});
+          if (lastTurnPiece!.setStateThisPiece != null) {
+            lastTurnPiece!.setStateThisPiece!(() {});
+          }
         }
 
         lastTurnPiece = selectedPieceEntity;
@@ -259,6 +301,8 @@ class _InGameNavigatorState extends ConsumerState<InGameNavigatorBox> {
         ref.read(inGameTurnProvider.notifier).changeTurn();
 
         selectedPieceEntity = null;
+
+        makePieceMoveSound();
 
         break;
       case NavigatorType.spawn:
@@ -312,7 +356,10 @@ class _InGameNavigatorState extends ConsumerState<InGameNavigatorBox> {
   }
 
   Widget _promotionButton(
-      String label, IconData iconData, VoidCallback onPressed) {
+    String label,
+    IconData iconData,
+    VoidCallback onPressed,
+  ) {
     return ElevatedButton(
       onPressed: onPressed,
       child: Column(
@@ -327,11 +374,7 @@ class _InGameNavigatorState extends ConsumerState<InGameNavigatorBox> {
               color: whiteColor,
             ),
           ),
-          FaIcon(
-            iconData,
-            color: whiteColor,
-            size: 25 * wu,
-          ),
+          FaIcon(iconData, color: whiteColor, size: 25 * wu),
         ],
       ),
     );
@@ -349,9 +392,11 @@ class _InGameNavigatorState extends ConsumerState<InGameNavigatorBox> {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      left: boardPositionXValue[widget.pieceActionable.targetX]! +
+      left:
+          boardPositionXValue[widget.pieceActionable.targetX]! +
           pieceIconSize / 5,
-      bottom: boardPositionYValue[widget.pieceActionable.targetY]! +
+      bottom:
+          boardPositionYValue[widget.pieceActionable.targetY]! +
           pieceIconSize / 5,
       child: AnimatedOpacity(
         opacity: _navigatorOpacity,
@@ -362,9 +407,10 @@ class _InGameNavigatorState extends ConsumerState<InGameNavigatorBox> {
             decoration: BoxDecoration(
               border: Border.all(
                 width: 3,
-                color: widget.navigatorType == NavigatorType.spawn
-                    ? Colors.lightGreenAccent
-                    : redColor,
+                color:
+                    widget.navigatorType == NavigatorType.spawn
+                        ? Colors.lightGreenAccent
+                        : redColor,
               ),
               borderRadius: BorderRadius.circular(8),
               color: Colors.transparent,

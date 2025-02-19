@@ -190,7 +190,6 @@ final class InGamePieceSet extends _$InGamePieceSet {
               return;
             }
           }
-
           /// 퀸은 최대 1개
           else if (pieceEntity.pieceType == PieceType.queen) {
             if (_numOfPiece[pieceEntity.pieceType]! >= 1) {
@@ -200,7 +199,6 @@ final class InGamePieceSet extends _$InGamePieceSet {
               return;
             }
           }
-
           /// 룩, 나이트, 비숍은 최대 2개
           else {
             if (_numOfPiece[pieceEntity.pieceType]! >= 2) {
@@ -255,10 +253,14 @@ final class InGamePieceSet extends _$InGamePieceSet {
 
   /// 기물 제거
   void removePiece(
-      PieceActionableEntity pieceActionable, PieceRemoveType removeType) {
+    PieceActionableEntity pieceActionable,
+    PieceRemoveType removeType,
+  ) {
     final gold = ref.read(inGameGoldProvider);
     final targetPieceModel = inGameBoardStatus.getStatus(
-        pieceActionable.targetX, pieceActionable.targetY);
+      pieceActionable.targetX,
+      pieceActionable.targetY,
+    );
 
     switch (removeType) {
       case PieceRemoveType.captured:

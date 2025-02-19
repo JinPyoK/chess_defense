@@ -12,21 +12,22 @@ final class BlackKnightEntity extends BlackPieceBaseEntity {
     required super.x,
     required super.y,
     super.firstMove,
+    super.doubleMove,
   }) : super(
-          team: Team.black,
-          pieceType: PieceType.knight,
-          value: 3,
-          pieceIcon: SizedBox(
-            width: pieceIconSize,
-            height: pieceIconSize,
-            child: FittedBox(
-              child: FaIcon(
-                FontAwesomeIcons.solidChessKnight,
-                color: blackColor,
-              ),
-            ),
-          ),
-        );
+         team: Team.black,
+         pieceType: PieceType.knight,
+         value: 3,
+         pieceIcon: SizedBox(
+           width: pieceIconSize,
+           height: pieceIconSize,
+           child: FittedBox(
+             child: FaIcon(
+               FontAwesomeIcons.solidChessKnight,
+               color: blackColor,
+             ),
+           ),
+         ),
+       );
 
   @override
   void searchActionable(InGameBoardStatus statusBoard) {

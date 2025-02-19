@@ -10,7 +10,6 @@ import 'package:chess_defense/domain/in_game/entity/minimax_node_tree.dart';
 import 'package:chess_defense/domain/in_game/entity/piece_actionable_entity.dart';
 import 'package:chess_defense/domain/in_game/entity/piece_base_entity.dart';
 import 'package:chess_defense/domain/in_game/entity/piece_enum.dart';
-import 'package:chess_defense/domain/in_game/entity/special_moves_constant_value.dart';
 import 'package:chess_defense/provider/in_game/in_game_black_status.dart';
 import 'package:chess_defense/provider/in_game/in_game_move_provider.dart';
 import 'package:chess_defense/provider/in_game/in_game_piece_set_provider.dart';
@@ -39,20 +38,23 @@ final class InGameTurn extends _$InGameTurn {
 
     state = !state;
 
-    /// 흑 착수
+    /// 흑 차례
     if (state == false) {
       /// 시스템 노티피케이션 리스트 비워주기
       ref
           .read(inGameSystemNotificationProvider.notifier)
           .clearNotificationList();
 
+      /// 흑 차례일때 모든 흑 기물의 doubleMove = false로 초기화
+      inGameBoardStatus.initBlackDoubleMove();
+
       /// 흑 기물 부활
       _blackSpawn();
 
       ref.read(inGameOnTheRopesProvider.notifier).checkOnTheRopes();
 
-      /// 흑 기물의 수가 40을 넘으면 게임 종료
-      if (inGameBoardStatus.getNumOfBlack() > 40) {
+      /// 흑 기물의 수가 40 이상이 되면 게임 종료
+      if (inGameBoardStatus.getNumOfBlack() >= 40) {
         if (globalContext!.mounted) {
           Future.delayed(const Duration(seconds: 1), () {
             showCustomDialog(
@@ -90,6 +92,11 @@ final class InGameTurn extends _$InGameTurn {
       determineIfCheck();
 
       changeTurn();
+    }
+    /// 백 차례
+    else {
+      /// 백 차례일때 모든 백 기물의 doubleMove = false로 초기화
+      inGameBoardStatus.initWhiteDoubleMove();
     }
   }
 
@@ -131,10 +138,10 @@ final class InGameTurn extends _$InGameTurn {
       }
     }
 
-    /// 흑 진영에 부활할 자리가 없으면 백 진영 포함 나머지 구역 조사
+    /// 흑 진영에 부활할 자리가 없으면 나머지 두 라인 자리 조사
     if (blackSpawnPositionList.isEmpty) {
       for (int i = 0; i < 8; i++) {
-        for (int j = 3; j < 6; j++) {
+        for (int j = 3; j < 5; j++) {
           final whitePlace = inGameBoardStatus.getStatus(i, j);
           if (whitePlace is PieceActionableEntity) {
             blackSpawnPositionList.add(whitePlace);
@@ -149,8 +156,9 @@ final class InGameTurn extends _$InGameTurn {
     }
 
     final pieceTypeNumberRange = Random().nextInt(100);
-    final blackSpawnPositionNumber =
-        Random().nextInt(blackSpawnPositionList.length);
+    final blackSpawnPositionNumber = Random().nextInt(
+      blackSpawnPositionList.length,
+    );
 
     late PieceBaseEntity spawnBlackPiece;
     final blackPiecePlace = blackSpawnPositionList[blackSpawnPositionNumber];
@@ -160,25 +168,35 @@ final class InGameTurn extends _$InGameTurn {
             inGameBlackStatusProvider.queenSpawnStartRange &&
         pieceTypeNumberRange < inGameBlackStatusProvider.queenSpawnEndRange) {
       spawnBlackPiece = BlackQueenEntity(
-          x: blackPiecePlace.targetX, y: blackPiecePlace.targetY);
+        x: blackPiecePlace.targetX,
+        y: blackPiecePlace.targetY,
+      );
     } else if (pieceTypeNumberRange >=
             inGameBlackStatusProvider.rookSpawnStartRange &&
         pieceTypeNumberRange < inGameBlackStatusProvider.rookSpawnEndRange) {
       spawnBlackPiece = BlackRookEntity(
-          x: blackPiecePlace.targetX, y: blackPiecePlace.targetY);
+        x: blackPiecePlace.targetX,
+        y: blackPiecePlace.targetY,
+      );
     } else if (pieceTypeNumberRange >=
             inGameBlackStatusProvider.knightSpawnStartRange &&
         pieceTypeNumberRange < inGameBlackStatusProvider.knightSpawnEndRange) {
       spawnBlackPiece = BlackKnightEntity(
-          x: blackPiecePlace.targetX, y: blackPiecePlace.targetY);
+        x: blackPiecePlace.targetX,
+        y: blackPiecePlace.targetY,
+      );
     } else if (pieceTypeNumberRange >=
             inGameBlackStatusProvider.bishopSpawnStartRange &&
         pieceTypeNumberRange < inGameBlackStatusProvider.bishopSpawnEndRange) {
       spawnBlackPiece = BlackBishopEntity(
-          x: blackPiecePlace.targetX, y: blackPiecePlace.targetY);
+        x: blackPiecePlace.targetX,
+        y: blackPiecePlace.targetY,
+      );
     } else {
       spawnBlackPiece = BlackPawnEntity(
-          x: blackPiecePlace.targetX, y: blackPiecePlace.targetY);
+        x: blackPiecePlace.targetX,
+        y: blackPiecePlace.targetY,
+      );
     }
 
     ref
@@ -187,18 +205,20 @@ final class InGameTurn extends _$InGameTurn {
   }
 
   Future<PieceActionableEntity?> _blackAction() async {
-    final minimaxResult =
-        await _minimaxIsolate(inGameBlackStatusProvider.minimaxTreeDepth);
+    final minimaxResult = await _minimaxIsolate(
+      inGameBlackStatusProvider.minimaxTreeDepth,
+    );
 
     if (minimaxResult.isEmpty) {
       return null;
     }
 
-    final pieceX = minimaxResult[0];
-    final pieceY = minimaxResult[1];
-    final targetX = minimaxResult[2];
-    final targetY = minimaxResult[3];
-    final targetValue = minimaxResult[4];
+    final pieceX = minimaxResult[0] as int?;
+    final pieceY = minimaxResult[1] as int?;
+    final targetX = minimaxResult[2] as int?;
+    final targetY = minimaxResult[3] as int?;
+    final targetValue = minimaxResult[4] as int?;
+    final actionType = minimaxResult[5] as String?;
 
     if (pieceX == null ||
         pieceY == null ||
@@ -212,7 +232,10 @@ final class InGameTurn extends _$InGameTurn {
         inGameBoardStatus.getStatus(pieceX, pieceY) as PieceBaseEntity;
 
     final pieceActionable = PieceActionableEntity(
-        targetX: targetX, targetY: targetY, targetValue: targetValue);
+      targetX: targetX,
+      targetY: targetY,
+      targetValue: targetValue,
+    );
 
     /// 기물 착수 ui 구현 위해서
     if (lastTurnPiece != null) {
@@ -222,22 +245,29 @@ final class InGameTurn extends _$InGameTurn {
 
     piece.justTurn = true;
     piece.firstMove = true;
+
+    if (actionType != null) {
+      final at = PieceActionType.values.byName(actionType);
+
+      if (at == PieceActionType.doubleMove) {
+        piece.doubleMove = true;
+      }
+    }
+
     lastTurnPiece = piece;
 
     /// 보드 상태 변경
     inGameBoardStatus.changeStatus(
       piece.x,
       piece.y,
-      PieceActionableEntity(
-        targetX: piece.x,
-        targetY: piece.y,
-        targetValue: 0,
-      ),
+      PieceActionableEntity(targetX: piece.x, targetY: piece.y, targetValue: 0),
     );
 
     /// 움직인 자리에 백 기물이 있다면 제거하기
     final status = inGameBoardStatus.getStatus(
-        pieceActionable.targetX, pieceActionable.targetY);
+      pieceActionable.targetX,
+      pieceActionable.targetY,
+    );
     if (status is PieceBaseEntity) {
       if (status.team == Team.white) {
         ref
@@ -246,8 +276,29 @@ final class InGameTurn extends _$InGameTurn {
       }
     }
 
+    /// 앙파상을 했다면 백 기물 제거하기
+    if (actionType != null) {
+      final at = PieceActionType.values.byName(actionType);
+
+      if (at == PieceActionType.enPassant) {
+        ref
+            .read(inGamePieceSetProvider.notifier)
+            .removePiece(
+              PieceActionableEntity(
+                targetX: pieceActionable.targetX,
+                targetY: pieceActionable.targetY - 1,
+                targetValue: pieceActionable.targetValue,
+              ),
+              PieceRemoveType.captured,
+            );
+      }
+    }
+
     inGameBoardStatus.changeStatus(
-        pieceActionable.targetX, pieceActionable.targetY, piece);
+      pieceActionable.targetX,
+      pieceActionable.targetY,
+      piece,
+    );
 
     /// 기물 착수
     piece.x = pieceActionable.targetX;
@@ -272,19 +323,27 @@ final class InGameTurn extends _$InGameTurn {
         switch (randomNumber) {
           case 0:
             promotionPiece = BlackQueenEntity(
-                x: pieceActionable.targetX, y: pieceActionable.targetY);
+              x: pieceActionable.targetX,
+              y: pieceActionable.targetY,
+            );
             break;
           case 1:
             promotionPiece = BlackRookEntity(
-                x: pieceActionable.targetX, y: pieceActionable.targetY);
+              x: pieceActionable.targetX,
+              y: pieceActionable.targetY,
+            );
             break;
           case 2:
             promotionPiece = BlackKnightEntity(
-                x: pieceActionable.targetX, y: pieceActionable.targetY);
+              x: pieceActionable.targetX,
+              y: pieceActionable.targetY,
+            );
             break;
           case 3:
             promotionPiece = BlackBishopEntity(
-                x: pieceActionable.targetX, y: pieceActionable.targetY);
+              x: pieceActionable.targetX,
+              y: pieceActionable.targetY,
+            );
             break;
         }
 
@@ -326,8 +385,11 @@ final class InGameTurn extends _$InGameTurn {
     }
   }
 
-  Future<List<int?>> _minimaxIsolate(int treeDepth) async {
-    return await compute(
-        _minimax, [treeDepth, inGameBoardStatus.boardStatusToJsonList(), 0]);
+  Future<List<dynamic>> _minimaxIsolate(int treeDepth) async {
+    return await compute(_minimax, [
+      treeDepth,
+      inGameBoardStatus.boardStatusToJsonList(),
+      0,
+    ]);
   }
 }

@@ -1,4 +1,5 @@
 import 'package:chess_defense/core/constant/color.dart';
+import 'package:chess_defense/domain/in_game/entity/black_piece/black_pawn_entity.dart';
 import 'package:chess_defense/domain/in_game/entity/in_game_board_status.dart';
 import 'package:chess_defense/domain/in_game/entity/piece_actionable_entity.dart';
 import 'package:chess_defense/domain/in_game/entity/piece_base_entity.dart';
@@ -13,21 +14,19 @@ final class WhitePawnEntity extends WhitePieceBaseEntity {
     required super.x,
     required super.y,
     super.firstMove,
+    super.doubleMove,
   }) : super(
-          team: Team.white,
-          pieceType: PieceType.pawn,
-          value: 10,
-          pieceIcon: SizedBox(
-            width: pieceIconSize,
-            height: pieceIconSize,
-            child: FittedBox(
-              child: FaIcon(
-                FontAwesomeIcons.solidChessPawn,
-                color: whiteColor,
-              ),
-            ),
-          ),
-        );
+         team: Team.white,
+         pieceType: PieceType.pawn,
+         value: 10,
+         pieceIcon: SizedBox(
+           width: pieceIconSize,
+           height: pieceIconSize,
+           child: FittedBox(
+             child: FaIcon(FontAwesomeIcons.solidChessPawn, color: whiteColor),
+           ),
+         ),
+       );
 
   @override
   void searchActionable(InGameBoardStatus statusBoard) {
@@ -63,14 +62,12 @@ final class WhitePawnEntity extends WhitePieceBaseEntity {
           final status = statusBoard.getStatus(x, y - 2);
 
           if (status is PieceActionableEntity) {
-            /// 프로모션 가치 더해주기
-            final promotionValue = status.targetY == 0 ? promotionVal : 0;
-
             pieceActionable.add(
               PieceActionableEntity(
                 targetX: status.targetX,
                 targetY: status.targetY,
-                targetValue: promotionValue,
+                targetValue: 0,
+                actionType: PieceActionType.doubleMove,
               ),
             );
           }
@@ -111,6 +108,48 @@ final class WhitePawnEntity extends WhitePieceBaseEntity {
             targetX: status.x,
             targetY: status.y,
             targetValue: status.value + promotionValue,
+          ),
+        );
+      }
+    }
+
+    /// 앙파상
+
+    /// 왼쪽
+    if (x > 0 && y > 0) {
+      final leftSide = statusBoard.getStatus(x - 1, y);
+      final leftBehind = statusBoard.getStatus(x - 1, y - 1);
+
+      /// 왼쪽 흑의 폰이 방금 double move를 했고 그 뒤에 아무것도 없어야 함
+      if (leftSide is BlackPawnEntity &&
+          leftSide.doubleMove &&
+          leftBehind is PieceActionableEntity) {
+        pieceActionable.add(
+          PieceActionableEntity(
+            targetX: leftBehind.targetX,
+            targetY: leftBehind.targetY,
+            targetValue: leftSide.value,
+            actionType: PieceActionType.enPassant,
+          ),
+        );
+      }
+    }
+
+    /// 오른쪽
+    if (x < 7 && y > 0) {
+      final rightSide = statusBoard.getStatus(x + 1, y);
+      final rightBehind = statusBoard.getStatus(x + 1, y - 1);
+
+      /// 오른쪽 흑의 폰이 방금 double move를 했고 그 뒤에 아무것도 없어야 함
+      if (rightSide is BlackPawnEntity &&
+          rightSide.doubleMove &&
+          rightBehind is PieceActionableEntity) {
+        pieceActionable.add(
+          PieceActionableEntity(
+            targetX: rightBehind.targetX,
+            targetY: rightBehind.targetY,
+            targetValue: rightSide.value,
+            actionType: PieceActionType.enPassant,
           ),
         );
       }

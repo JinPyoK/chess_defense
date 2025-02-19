@@ -38,6 +38,9 @@ abstract base class PieceBaseEntity extends PieceOrJustActionable {
   /// 기물이 방금 처음 움직였는지 -> 체스에는 first move로 인한 규칙이 있음 -> pawn 2칸 전진, 캐슬링
   bool firstMove = false;
 
+  /// 폰 기물만 해당하는 속성. 그런데 이걸 PieceBaseEntity에 정의하는 이유는 게임 저장 시 데이터 인덱스를 맞춰주기 위함.
+  bool doubleMove = false;
+
   /// 기물의 현재 좌표
   int x;
   int y;
@@ -53,6 +56,7 @@ abstract base class PieceBaseEntity extends PieceOrJustActionable {
     required this.x,
     required this.y,
     this.firstMove = false,
+    this.doubleMove = false,
   });
 
   PieceBaseEntity getNewPieceInstance() {
@@ -66,40 +70,45 @@ abstract base class PieceBaseEntity extends PieceOrJustActionable {
             x: x,
             y: y,
             firstMove: firstMove,
+            doubleMove: doubleMove,
           );
         case PieceType.queen:
           pieceEntity = WhiteQueenEntity(
             x: x,
             y: y,
             firstMove: firstMove,
+            doubleMove: doubleMove,
           );
         case PieceType.rook:
           pieceEntity = WhiteRookEntity(
             x: x,
             y: y,
             firstMove: firstMove,
+            doubleMove: doubleMove,
           );
         case PieceType.knight:
           pieceEntity = WhiteKnightEntity(
             x: x,
             y: y,
             firstMove: firstMove,
+            doubleMove: doubleMove,
           );
         case PieceType.bishop:
           pieceEntity = WhiteBishopEntity(
             x: x,
             y: y,
             firstMove: firstMove,
+            doubleMove: doubleMove,
           );
         case PieceType.pawn:
           pieceEntity = WhitePawnEntity(
             x: x,
             y: y,
             firstMove: firstMove,
+            doubleMove: doubleMove,
           );
       }
     }
-
     /// 흑
     else {
       switch (pieceType) {
@@ -108,36 +117,42 @@ abstract base class PieceBaseEntity extends PieceOrJustActionable {
             x: x,
             y: y,
             firstMove: firstMove,
+            doubleMove: doubleMove,
           );
         case PieceType.rook:
           pieceEntity = BlackRookEntity(
             x: x,
             y: y,
             firstMove: firstMove,
+            doubleMove: doubleMove,
           );
         case PieceType.knight:
           pieceEntity = BlackKnightEntity(
             x: x,
             y: y,
             firstMove: firstMove,
+            doubleMove: doubleMove,
           );
         case PieceType.bishop:
           pieceEntity = BlackBishopEntity(
             x: x,
             y: y,
             firstMove: firstMove,
+            doubleMove: doubleMove,
           );
         case PieceType.pawn:
           pieceEntity = BlackPawnEntity(
             x: x,
             y: y,
             firstMove: firstMove,
+            doubleMove: doubleMove,
           );
         default:
           pieceEntity = BlackPawnEntity(
             x: x,
             y: y,
             firstMove: firstMove,
+            doubleMove: doubleMove,
           );
       }
     }
@@ -161,6 +176,7 @@ abstract base class WhitePieceBaseEntity extends PieceBaseEntity {
     required super.pieceIcon,
     required super.value,
     super.firstMove,
+    super.doubleMove,
   }) : super();
 }
 
@@ -188,5 +204,6 @@ abstract base class BlackPieceBaseEntity extends PieceBaseEntity {
     required super.pieceIcon,
     required super.value,
     super.firstMove,
+    super.doubleMove,
   }) : super();
 }

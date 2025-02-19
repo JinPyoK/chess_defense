@@ -1,3 +1,5 @@
+import 'package:chess_defense/domain/in_game/entity/piece_enum.dart';
+
 /// 흑 미니맥스 트리
 /// 미니맥스 도중에는 백 기물이 부활하지 않음
 ///
@@ -63,15 +65,12 @@ final class MinimaxNode {
   int? targetY;
   int targetValue = 0;
 
-  MinimaxNode({
-    required this.nodeDepth,
-  }) {
+  PieceActionType actionType = PieceActionType.move;
+
+  MinimaxNode({required this.nodeDepth}) {
     nodeType =
         (nodeDepth + 1) % 2 == 1 ? MinimaxNodeType.min : MinimaxNodeType.max;
   }
 }
 
-enum MinimaxNodeType {
-  min,
-  max,
-}
+enum MinimaxNodeType { min, max }

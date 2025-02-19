@@ -12,21 +12,19 @@ final class BlackRookEntity extends BlackPieceBaseEntity {
     required super.x,
     required super.y,
     super.firstMove,
+    super.doubleMove,
   }) : super(
-          team: Team.black,
-          pieceType: PieceType.rook,
-          value: 5,
-          pieceIcon: SizedBox(
-            width: pieceIconSize,
-            height: pieceIconSize,
-            child: FittedBox(
-              child: FaIcon(
-                FontAwesomeIcons.solidChessRook,
-                color: blackColor,
-              ),
-            ),
-          ),
-        );
+         team: Team.black,
+         pieceType: PieceType.rook,
+         value: 5,
+         pieceIcon: SizedBox(
+           width: pieceIconSize,
+           height: pieceIconSize,
+           child: FittedBox(
+             child: FaIcon(FontAwesomeIcons.solidChessRook, color: blackColor),
+           ),
+         ),
+       );
 
   @override
   void searchActionable(InGameBoardStatus statusBoard) {

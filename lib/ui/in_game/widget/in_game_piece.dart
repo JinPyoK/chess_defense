@@ -53,42 +53,24 @@ class _InGamePieceState extends ConsumerState<InGamePiece> {
     final onTheRopes = ref.watch(inGameOnTheRopesProvider);
 
     if (widget.pieceEntity.justTapped) {
-      return [
-        whiteColor,
-        Colors.green,
-      ];
+      return [whiteColor, Colors.green];
     }
 
     if (widget.pieceEntity.team == Team.black) {
       if (onTheRopes) {
-        return [
-          blackColor,
-          redColor,
-        ];
+        return [blackColor, redColor];
       } else {
         if (widget.pieceEntity.justTurn) {
-          return [
-            blackColor,
-            redColor,
-          ];
+          return [blackColor, redColor];
         } else {
-          return [
-            blackColor,
-            blackColor,
-          ];
+          return [blackColor, blackColor];
         }
       }
     } else {
       if (widget.pieceEntity.justTurn) {
-        return [
-          whiteColor,
-          Colors.blueAccent,
-        ];
+        return [whiteColor, Colors.blueAccent];
       } else {
-        return [
-          whiteColor,
-          whiteColor,
-        ];
+        return [whiteColor, whiteColor];
       }
     }
   }
@@ -145,8 +127,9 @@ class _InGamePieceState extends ConsumerState<InGamePiece> {
                 onTap: _onPieceTaped,
                 child: ShaderMask(
                   shaderCallback: (rect) {
-                    return RadialGradient(colors: _justTurnPieceColor())
-                        .createShader(rect);
+                    return RadialGradient(
+                      colors: _justTurnPieceColor(),
+                    ).createShader(rect);
                   },
                   blendMode: BlendMode.srcIn,
                   child: widget.pieceEntity.pieceIcon,

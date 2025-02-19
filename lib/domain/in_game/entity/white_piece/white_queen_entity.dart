@@ -12,21 +12,19 @@ final class WhiteQueenEntity extends WhitePieceBaseEntity {
     required super.x,
     required super.y,
     super.firstMove,
+    super.doubleMove,
   }) : super(
-          team: Team.white,
-          pieceType: PieceType.queen,
-          value: 90,
-          pieceIcon: SizedBox(
-            width: pieceIconSize,
-            height: pieceIconSize,
-            child: FittedBox(
-              child: FaIcon(
-                FontAwesomeIcons.solidChessQueen,
-                color: whiteColor,
-              ),
-            ),
-          ),
-        );
+         team: Team.white,
+         pieceType: PieceType.queen,
+         value: 90,
+         pieceIcon: SizedBox(
+           width: pieceIconSize,
+           height: pieceIconSize,
+           child: FittedBox(
+             child: FaIcon(FontAwesomeIcons.solidChessQueen, color: whiteColor),
+           ),
+         ),
+       );
 
   @override
   void searchActionable(InGameBoardStatus statusBoard) {

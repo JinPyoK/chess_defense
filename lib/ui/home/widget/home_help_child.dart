@@ -15,47 +15,64 @@ class HomeHelpChild extends StatelessWidget {
         const SizedBox(height: 30),
         _renderTitle('1. Chess Defense'),
         _renderDescription(
-            'Chess Defense is a game where you must survive as long as possible against the endlessly resurrecting black pieces that attack the white pieces.'),
+          'Chess Defense is a game where you must survive as long as possible against the endlessly resurrecting black pieces that attack the white pieces.',
+        ),
         _renderTitle('2. Game Start'),
         _renderDescription(
-            'Players play as White and can start the game with a minimum of 0 Gold and a maximum of 3,000 Gold.'),
+          'Players play as White and can start the game with a minimum of 0 Gold and a maximum of 3,000 Gold.',
+        ),
         _renderTitle('3. Match'),
         _renderDescription(
-            'Every 20 moves, Black becomes stronger, progressing through a total of 5 stages. As Black gets stronger, its algorithm deepens, and its resurrection frequency increases.'),
+          'Every 20 moves, Black becomes stronger, progressing through a total of 5 stages. As Black gets stronger, its algorithm deepens, and its resurrection frequency increases.',
+        ),
         _renderDescription(
-            'Black pieces can resurrect in positions where they can immediately capture the White King, so be careful.'),
+          'Black pieces can resurrect in positions where they can immediately capture the White King, so be careful.',
+        ),
         _renderDescription(
-            'Do not force close the app during a match. All progress will be lost.'),
+          'Do not force close the app during a match. All progress will be lost.',
+        ),
         _renderTitle('4. Gold'),
         _renderDescription('Gold is required to resurrect or execute pieces.'),
         _renderDescription(
-            'You earn a small amount of Gold by capturing Black\'s pieces during the match.'),
+          'You earn a small amount of Gold by capturing Black\'s pieces during the match.',
+        ),
         _renderDescription(
-            'After the game ends, all remaining Gold is refunded.'),
+          'After the game ends, all remaining Gold is refunded.',
+        ),
         _renderDescription(
-            'However, please note that if you delete the app, all accumulated Gold will be lost.'),
+          'However, please note that if you delete the app, all accumulated Gold will be lost.',
+        ),
         _renderDescription(
-            'You can earn 1,000 Gold as a reward by watching ads in the Ad tab below.'),
+          'You can earn 1,000 Gold as a reward by watching ads in the Ad tab below.',
+        ),
         _renderTitle('5. Piece Resurrection'),
         _renderDescription(
-            'The number of White pieces that can be resurrected cannot exceed the maximum limit, and Gold is consumed accordingly.'),
+          'The number of White pieces that can be resurrected cannot exceed the maximum limit, and Gold is consumed accordingly.',
+        ),
         _renderDescription(
-            'Pawn (Max 8) → 10 Gold\nBishop (Max 2) → 30 Gold\nKnight (Max 2) → 30 Gold\nRook (Max 2) → 50 Gold\nQueen (Max 1) → 90 Gold'),
+          'Pawn (Max 8) → 10 Gold\nBishop (Max 2) → 30 Gold\nKnight (Max 2) → 30 Gold\nRook (Max 2) → 50 Gold\nQueen (Max 1) → 90 Gold',
+        ),
         _renderTitle('6. Piece Execution'),
         _renderDescription(
-            'You can instantly execute any Black or White piece except for the King. This action costs 300 Gold.'),
+          'You can instantly execute any Black or White piece except for the King. This action costs 300 Gold.',
+        ),
         _renderTitle('7. Game Over'),
         _renderDescription(
-            'The game ends when the White King is captured by a Black piece or when the total number of Black pieces exceeds 40.'),
+          'The game ends when the White King is captured by a Black piece or when the total number of Black pieces reaches 40.',
+        ),
         _renderDescription(
-            'You can temporarily save and exit the game during a match and resume it later.'),
+          'You can temporarily save and exit the game during a match and resume it later.',
+        ),
         _renderDescription(
-            'However, just like Gold, saved games will be lost if you delete the app.'),
+          'However, just like Gold, saved games will be lost if you delete the app.',
+        ),
         _renderTitle('8. Ranking'),
         _renderDescription(
-            'When the game ends, you can register your final move count in the Ranking.'),
+          'When the game ends, you can register your final move count in the Ranking.',
+        ),
         _renderDescription(
-            'The ranking records up to the Top 100 players and can be viewed in the Ranking tab below.'),
+          'The ranking records up to the Top 100 players and can be viewed in the Ranking tab below.',
+        ),
         _renderTitle('9. Privacy Policy & Terms of Use'),
         const LaunchUrlTextButton(
           url:
@@ -69,24 +86,23 @@ class HomeHelpChild extends StatelessWidget {
         ),
         _renderTitle('10. License'),
         _renderDescription(
-            'The app icon and the top image in the Help section were generated using AI.'),
+          'The app icon and the top image in the Help section were generated using AI.',
+        ),
         _renderDescription('Sound Effects: Pixabay'),
         _renderDescription(
-            'Gold, Trophy, and Piece Icons: Font Awesome Free Icons'),
+          'Gold, Trophy, and Piece Icons: Font Awesome Free Icons',
+        ),
       ],
     );
   }
 }
 
 Padding _renderTitle(String title) => Padding(
-      padding: EdgeInsets.only(bottom: 5 * hu),
-      child: Text(
-        title,
-        style: const TextStyle(fontWeight: FontWeight.bold),
-      ),
-    );
+  padding: EdgeInsets.only(bottom: 5 * hu),
+  child: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
+);
 
 Padding _renderDescription(String description) => Padding(
-      padding: EdgeInsets.only(bottom: 10 * hu),
-      child: Text(description),
-    );
+  padding: EdgeInsets.only(bottom: 10 * hu),
+  child: Text(description),
+);

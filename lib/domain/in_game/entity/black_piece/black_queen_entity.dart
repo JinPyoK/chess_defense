@@ -12,21 +12,19 @@ final class BlackQueenEntity extends BlackPieceBaseEntity {
     required super.x,
     required super.y,
     super.firstMove,
+    super.doubleMove,
   }) : super(
-          team: Team.black,
-          pieceType: PieceType.queen,
-          value: 9,
-          pieceIcon: SizedBox(
-            width: pieceIconSize,
-            height: pieceIconSize,
-            child: FittedBox(
-              child: FaIcon(
-                FontAwesomeIcons.solidChessQueen,
-                color: blackColor,
-              ),
-            ),
-          ),
-        );
+         team: Team.black,
+         pieceType: PieceType.queen,
+         value: 9,
+         pieceIcon: SizedBox(
+           width: pieceIconSize,
+           height: pieceIconSize,
+           child: FittedBox(
+             child: FaIcon(FontAwesomeIcons.solidChessQueen, color: blackColor),
+           ),
+         ),
+       );
 
   @override
   void searchActionable(InGameBoardStatus statusBoard) {

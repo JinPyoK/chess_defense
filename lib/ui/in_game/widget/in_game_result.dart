@@ -16,10 +16,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class InGameResult extends ConsumerStatefulWidget {
-  const InGameResult({
-    super.key,
-    required this.reason,
-  });
+  const InGameResult({super.key, required this.reason});
 
   final int reason;
 
@@ -41,7 +38,9 @@ class _InGameResultState extends ConsumerState<InGameResult> {
     if (nickName == '') {
       if (context.mounted) {
         showCustomSnackBar(
-            context, "Please enter at least one character for the nickname");
+          context,
+          "Please enter at least one character for the nickname",
+        );
       }
       return true;
     }
@@ -49,7 +48,9 @@ class _InGameResultState extends ConsumerState<InGameResult> {
     if (await hasBadWords(nickName)) {
       if (mounted) {
         showCustomSnackBar(
-            context, "Profanity and consecutive numbers are not allowed");
+          context,
+          "Profanity and consecutive numbers are not allowed",
+        );
       }
       return true;
     }
@@ -83,11 +84,8 @@ class _InGameResultState extends ConsumerState<InGameResult> {
           Text(
             widget.reason == 0
                 ? "The King has been captured."
-                : "The number of Black pieces has exceeded 40.",
-            style: TextStyle(
-              color: blackColor,
-              fontSize: 10 * hu,
-            ),
+                : "The number of Black pieces has reached 40.",
+            style: TextStyle(color: blackColor, fontSize: 10 * hu),
           ),
           SizedBox(height: 20 * hu),
           Row(
@@ -126,58 +124,60 @@ class _InGameResultState extends ConsumerState<InGameResult> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               ElevatedButton(
-                onPressed: _canRankRegister
-                    ? () async {
-                        try {
-                          if (!_nicknameChecking) {
-                            _nicknameChecking = true;
-                            setState(() {});
+                onPressed:
+                    _canRankRegister
+                        ? () async {
+                          try {
+                            if (!_nicknameChecking) {
+                              _nicknameChecking = true;
+                              setState(() {});
 
-                            final nickName = _textController.text;
+                              final nickName = _textController.text;
 
-                            if (await _nickNameHasBadWords(nickName)) {
+                              if (await _nickNameHasBadWords(nickName)) {
+                                _nicknameChecking = false;
+                                setState(() {});
+                                return;
+                              }
+
+                              await ref
+                                  .read(rankingProvider.notifier)
+                                  .registerRank(
+                                    rankModel: RankModel.autoId(
+                                      move: moveResult,
+                                      nickName: nickName,
+                                    ),
+                                  );
+
+                              _canRankRegister = false;
                               _nicknameChecking = false;
                               setState(() {});
-                              return;
-                            }
-
-                            await ref
-                                .read(rankingProvider.notifier)
-                                .registerRank(
-                                  rankModel: RankModel.autoId(
-                                    move: moveResult,
-                                    nickName: nickName,
-                                  ),
+                              if (context.mounted) {
+                                showCustomSnackBar(
+                                  context,
+                                  "Your rank has been registered",
                                 );
-
-                            _canRankRegister = false;
-                            _nicknameChecking = false;
-                            setState(() {});
+                              }
+                            }
+                          } catch (_) {
                             if (context.mounted) {
                               showCustomSnackBar(
-                                  context, "Your rank has been registered");
+                                context,
+                                "Failed to register rank. Please try again",
+                              );
                             }
                           }
-                        } catch (_) {
-                          if (context.mounted) {
-                            showCustomSnackBar(context,
-                                "Failed to register rank. Please try again");
-                          }
                         }
-                      }
-                    : null,
-                child: _nicknameChecking
-                    ? const Center(
-                        child: CircularProgressIndicator(
-                          color: whiteColor,
-                        ),
-                      )
-                    : const Text("Register Rank"),
+                        : null,
+                child:
+                    _nicknameChecking
+                        ? const Center(
+                          child: CircularProgressIndicator(color: whiteColor),
+                        )
+                        : const Text("Register Rank"),
               ),
               ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: redColor,
-                ),
+                style: ElevatedButton.styleFrom(backgroundColor: redColor),
                 onPressed: () async {
                   final inGameGold = ref.read(inGameGoldProvider);
 
