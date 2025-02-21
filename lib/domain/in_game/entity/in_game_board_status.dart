@@ -76,15 +76,13 @@ final class InGameBoardStatus {
   }
 
   /// 흑의 모든 행마 조사 (캐슬링 조건: 왕이 움직이는 자리에 흑이 공격할 수 있는지 조사)
-  List<PieceActionableEntity> getBlackActionableAll(
-    InGameBoardStatus statusBoard,
-  ) {
+  List<PieceActionableEntity> getBlackActionableAll() {
     final blackActionableList = <PieceActionableEntity>[];
 
     for (List<PieceOrJustActionable> pieceList in boardStatus) {
       for (PieceOrJustActionable piece in pieceList) {
         if (piece is BlackPieceBaseEntity) {
-          piece.searchActionable(statusBoard);
+          piece.searchActionable(this);
           blackActionableList.addAll(piece.pieceActionable);
         }
       }

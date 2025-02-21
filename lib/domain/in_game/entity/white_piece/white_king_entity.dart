@@ -93,9 +93,7 @@ final class WhiteKingEntity extends WhitePieceBaseEntity {
             place2 is PieceActionableEntity &&
             place3 is PieceActionableEntity) {
           /// 캐슬링 조건 4: 킹이 움직이는 자리에 흑이 공격할 수 없음
-          final blackActionableList = statusBoard.getBlackActionableAll(
-            statusBoard,
-          );
+          final blackActionableList = statusBoard.getBlackActionableAll();
 
           bool place1 = true;
           bool place2 = true;
@@ -136,9 +134,7 @@ final class WhiteKingEntity extends WhitePieceBaseEntity {
         if (place1 is PieceActionableEntity &&
             place2 is PieceActionableEntity) {
           /// 캐슬링 조건 4: 킹이 움직이는 자리에 흑이 공격할 수 없음
-          final blackActionableList = statusBoard.getBlackActionableAll(
-            statusBoard,
-          );
+          final blackActionableList = statusBoard.getBlackActionableAll();
 
           bool place1 = true;
           bool place2 = true;
