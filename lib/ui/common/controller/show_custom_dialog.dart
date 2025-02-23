@@ -28,11 +28,12 @@ Future<void> showCustomDialog(
             if (defaultAction)
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                    backgroundColor: actionButtonColor),
+                  backgroundColor: actionButtonColor,
+                ),
                 onPressed: () {
                   Navigator.of(context, rootNavigator: true).pop();
                 },
-                child: Text(actionButtonColor == woodColor ? '확인' : '취소'),
+                child: Text(actionButtonColor == woodColor ? 'OK' : 'Cancel'),
               ),
           ],
         ),
