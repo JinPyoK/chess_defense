@@ -112,10 +112,36 @@ List<dynamic> _minimax(List<dynamic> params) {
             newPiece.doubleMove = true;
           }
 
-          statusBoardAboutPieceActionable.changeStatus(
-            pieceActionable.targetX,
-            pieceActionable.targetY,
-            newPiece,
+          /// 앙파상의 경우 상태 다르게 변경
+          if (pieceActionable.actionType == PieceActionType.enPassant) {
+            /// 백이 앙파상을 시전하는 경우 타겟Y 보다 한칸 아래에 있는 폰을 잡는다.
+            if (piece.team == Team.white) {
+              statusBoardAboutPieceActionable.changeStatus(
+                pieceActionable.targetX,
+                pieceActionable.targetY + 1,
+                newPiece,
+              );
+            }
+            /// 흑이 앙파상을 시전하는 경우 타겟Y 보다 한칸 위에 있는 폰을 잡는다.
+            else {
+              statusBoardAboutPieceActionable.changeStatus(
+                pieceActionable.targetX,
+                pieceActionable.targetY - 1,
+                newPiece,
+              );
+            }
+          }
+          /// 앙파상이 아닌 경우 단순 상태 변경
+          else {
+            statusBoardAboutPieceActionable.changeStatus(
+              pieceActionable.targetX,
+              pieceActionable.targetY,
+              newPiece,
+            );
+          }
+
+          debugPrint(
+            statusBoardAboutPieceActionable.boardStatusToJsonList().toString(),
           );
 
           /// 상태 변경 후 미니맥스 진행

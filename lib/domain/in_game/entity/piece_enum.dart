@@ -6,4 +6,4 @@ enum PieceSpawnType { init, spawn, promotion }
 
 enum PieceRemoveType { captured, execution, promotion }
 
-enum PieceActionType { move, doubleMove, promotion, castling, enPassant }
+enum PieceActionType { move, doubleMove, castling, enPassant }
