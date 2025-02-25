@@ -76,13 +76,8 @@ class HomeHelpChild extends StatelessWidget {
         _renderTitle('9. Privacy Policy & Terms of Use'),
         const LaunchUrlTextButton(
           url:
-              'https://doc-hosting.flycricket.io/chess-defense-privacy-policy/3b274c15-7779-417c-9970-b494f18487b8/privacy',
-          text: "Privacy Policy",
-        ),
-        const LaunchUrlTextButton(
-          url:
-              'https://doc-hosting.flycricket.io/chess-defense-terms-of-use/eb87f9ab-d2be-46f2-89de-c3b6874c5b6f/terms',
-          text: "Terms of Use",
+              'https://power-goal-234.notion.site/Chess-Defense-1a5edbcd9b1680feac0bf5f2b6d3be5e',
+          text: "Privacy Policy & Terms of Use",
         ),
         _renderTitle('10. License'),
         _renderDescription(
