@@ -33,18 +33,12 @@ class _InGameFooterState extends ConsumerState<InGameFooter> {
 
     switch (piece) {
       case PieceType.queen:
-        pieceIcon = FaIcon(
-          FontAwesomeIcons.solidChessQueen,
-          color: whiteColor,
-        );
+        pieceIcon = FaIcon(FontAwesomeIcons.solidChessQueen, color: whiteColor);
         label = 'Queen';
         gold = 90;
         break;
       case PieceType.rook:
-        pieceIcon = FaIcon(
-          FontAwesomeIcons.solidChessRook,
-          color: whiteColor,
-        );
+        pieceIcon = FaIcon(FontAwesomeIcons.solidChessRook, color: whiteColor);
         label = 'Rook';
         gold = 50;
         break;
@@ -65,18 +59,12 @@ class _InGameFooterState extends ConsumerState<InGameFooter> {
         gold = 30;
         break;
       case PieceType.pawn:
-        pieceIcon = FaIcon(
-          FontAwesomeIcons.solidChessPawn,
-          color: whiteColor,
-        );
+        pieceIcon = FaIcon(FontAwesomeIcons.solidChessPawn, color: whiteColor);
         label = 'Pawn';
         gold = 10;
         break;
       default:
-        pieceIcon = FaIcon(
-          FontAwesomeIcons.solidChessPawn,
-          color: whiteColor,
-        );
+        pieceIcon = FaIcon(FontAwesomeIcons.solidChessPawn, color: whiteColor);
         label = 'Pawn';
         gold = 10;
         break;
@@ -99,8 +87,10 @@ class _InGameFooterState extends ConsumerState<InGameFooter> {
           const SizedBox(width: 10),
           Text(
             label,
-            style:
-                const TextStyle(color: whiteColor, fontWeight: FontWeight.bold),
+            style: const TextStyle(
+              color: whiteColor,
+              fontWeight: FontWeight.bold,
+            ),
           ),
           const SizedBox(width: 10),
           GoldWidget(gold: gold, goldTextColor: whiteColor),
@@ -115,17 +105,11 @@ class _InGameFooterState extends ConsumerState<InGameFooter> {
 
     switch (piece) {
       case PieceType.queen:
-        pieceIcon = FaIcon(
-          FontAwesomeIcons.solidChessQueen,
-          color: whiteColor,
-        );
+        pieceIcon = FaIcon(FontAwesomeIcons.solidChessQueen, color: whiteColor);
         label = 'Queen';
         break;
       case PieceType.rook:
-        pieceIcon = FaIcon(
-          FontAwesomeIcons.solidChessRook,
-          color: whiteColor,
-        );
+        pieceIcon = FaIcon(FontAwesomeIcons.solidChessRook, color: whiteColor);
         label = 'Rook';
         break;
       case PieceType.knight:
@@ -143,17 +127,11 @@ class _InGameFooterState extends ConsumerState<InGameFooter> {
         label = 'Bishop';
         break;
       case PieceType.pawn:
-        pieceIcon = FaIcon(
-          FontAwesomeIcons.solidChessPawn,
-          color: whiteColor,
-        );
+        pieceIcon = FaIcon(FontAwesomeIcons.solidChessPawn, color: whiteColor);
         label = 'Pawn';
         break;
       default:
-        pieceIcon = FaIcon(
-          FontAwesomeIcons.solidChessPawn,
-          color: whiteColor,
-        );
+        pieceIcon = FaIcon(FontAwesomeIcons.solidChessPawn, color: whiteColor);
         label = 'Pawn';
         break;
     }
@@ -163,13 +141,14 @@ class _InGameFooterState extends ConsumerState<InGameFooter> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: GestureDetector(
-        onTap: isMyTurn
-            ? () {
-                ref
-                    .read(inGameNavigatorProvider.notifier)
-                    .showSpawnNavigator(_selectedPiece);
-              }
-            : null,
+        onTap:
+            isMyTurn
+                ? () {
+                  ref
+                      .read(inGameNavigatorProvider.notifier)
+                      .showSpawnNavigator(_selectedPiece);
+                }
+                : null,
         child: SizedBox(
           height: 50 * hu,
           child: InputDecorator(
@@ -195,7 +174,7 @@ class _InGameFooterState extends ConsumerState<InGameFooter> {
                     color: whiteColor,
                     fontWeight: FontWeight.bold,
                   ),
-                )
+                ),
               ],
             ),
           ),
@@ -224,11 +203,12 @@ class _InGameFooterState extends ConsumerState<InGameFooter> {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: redColor,
-                        ),
-                        onPressed: isMyTurn
-                            ? () {
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: redColor,
+                      ),
+                      onPressed:
+                          isMyTurn
+                              ? () {
                                 showCustomDialog(
                                   context,
                                   Column(
@@ -245,68 +225,77 @@ class _InGameFooterState extends ConsumerState<InGameFooter> {
                                       ),
                                       const SizedBox(height: 30),
                                       ElevatedButton(
-                                          onPressed: () async {
-                                            final tempList = <String>[];
+                                        onPressed: () async {
+                                          final tempList = <String>[];
 
-                                            final move =
-                                                ref.read(inGameMoveProvider);
-                                            final inGameGold =
-                                                ref.read(inGameGoldProvider);
-                                            final inGameSaveDataList =
-                                                inGameBoardStatus
-                                                    .refinePieceEntityForSave();
+                                          final move = ref.read(
+                                            inGameMoveProvider,
+                                          );
+                                          final inGameGold = ref.read(
+                                            inGameGoldProvider,
+                                          );
+                                          final inGameSaveDataList =
+                                              inGameBoardStatus
+                                                  .refinePieceEntityForSave();
 
-                                            tempList.add(move.toString());
-                                            tempList.add(inGameGold.toString());
+                                          tempList.add(move.toString());
+                                          tempList.add(inGameGold.toString());
 
-                                            final saveDataList = [
-                                              ...tempList,
-                                              ...inGameSaveDataList
-                                            ];
+                                          final saveDataList = [
+                                            ...tempList,
+                                            ...inGameSaveDataList,
+                                          ];
 
-                                            await InGameSavedDataRepository()
-                                                .saveInGameData(
-                                                    inGameData: saveDataList);
+                                          await InGameSavedDataRepository()
+                                              .saveInGameData(
+                                                inGameData: saveDataList,
+                                              );
 
-                                            if (context.mounted) {
-                                              Navigator.pop(context);
-                                              Navigator.pop(context);
-                                            }
-                                          },
-                                          child: const Text("Save and Exit")),
+                                          if (context.mounted) {
+                                            Navigator.pop(context);
+                                            Navigator.pop(context);
+                                          }
+                                        },
+                                        child: const Text("Save and Exit"),
+                                      ),
                                       const SizedBox(height: 15),
                                       ElevatedButton(
-                                          style: ElevatedButton.styleFrom(
-                                            backgroundColor: Colors.redAccent,
-                                          ),
-                                          onPressed: () async {
-                                            final inGameGold =
-                                                ref.read(inGameGoldProvider);
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: Colors.redAccent,
+                                        ),
+                                        onPressed: () async {
+                                          final inGameGold = ref.read(
+                                            inGameGoldProvider,
+                                          );
 
-                                            myGolds += inGameGold;
+                                          myGolds += inGameGold;
 
-                                            await GoldRepository()
-                                                .setGolds(golds: myGolds);
+                                          await GoldRepository().setGolds(
+                                            golds: myGolds,
+                                          );
 
-                                            await InGameSavedDataRepository()
-                                                .removeInGameData();
+                                          await InGameSavedDataRepository()
+                                              .removeInGameData();
 
-                                            if (context.mounted) {
-                                              Navigator.pop(context);
-                                              Navigator.pop(context);
-                                            }
+                                          if (context.mounted) {
+                                            Navigator.pop(context);
+                                            Navigator.pop(context);
+                                          }
 
-                                            setStateGold!(() {});
-                                          },
-                                          child: const Text(
-                                              "Exit Without Saving")),
+                                          setStateGold!(() {});
+                                        },
+                                        child: const Text(
+                                          "Exit Without Saving",
+                                        ),
+                                      ),
                                     ],
                                   ),
                                   actionButtonColor: Colors.grey,
                                 );
                               }
-                            : null,
-                        child: const Text("Exit")),
+                              : null,
+                      child: const Text("Exit"),
+                    ),
                   ),
                 ),
               ],
@@ -315,56 +304,64 @@ class _InGameFooterState extends ConsumerState<InGameFooter> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Expanded(
-                    child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: ElevatedButton(
-                      onPressed: isMyTurn
-                          ? () {
-                              showCustomDialog(
-                                context,
-                                SingleChildScrollView(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.stretch,
-                                    children: [
-                                      _renderSpawnButton(PieceType.queen),
-                                      const SizedBox(height: 10),
-                                      _renderSpawnButton(PieceType.rook),
-                                      const SizedBox(height: 10),
-                                      _renderSpawnButton(PieceType.knight),
-                                      const SizedBox(height: 10),
-                                      _renderSpawnButton(PieceType.bishop),
-                                      const SizedBox(height: 10),
-                                      _renderSpawnButton(PieceType.pawn),
-                                    ],
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: ElevatedButton(
+                      onPressed:
+                          isMyTurn
+                              ? () {
+                                showCustomDialog(
+                                  context,
+                                  SingleChildScrollView(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.stretch,
+                                      children: [
+                                        _renderSpawnButton(PieceType.queen),
+                                        const SizedBox(height: 10),
+                                        _renderSpawnButton(PieceType.rook),
+                                        const SizedBox(height: 10),
+                                        _renderSpawnButton(PieceType.knight),
+                                        const SizedBox(height: 10),
+                                        _renderSpawnButton(PieceType.bishop),
+                                        const SizedBox(height: 10),
+                                        _renderSpawnButton(PieceType.pawn),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                                color: Colors.transparent,
-                                actionButtonColor: Colors.grey,
-                              );
-                            }
-                          : null,
-                      child: const Text("Resurrection List")),
-                )),
+                                  color: Colors.transparent,
+                                  actionButtonColor: Colors.grey,
+                                );
+                              }
+                              : null,
+                      child: const FittedBox(child: Text("Resurrection List")),
+                    ),
+                  ),
+                ),
                 Expanded(
-                    child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: ElevatedButton(
-                      onPressed: isMyTurn
-                          ? () {
-                              ref
-                                  .read(inGameNavigatorProvider.notifier)
-                                  .showExecuteNavigator();
-                            }
-                          : null,
-                      child: const Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Text("Execution"),
-                          GoldWidget(gold: 300, goldTextColor: whiteColor),
-                        ],
-                      )),
-                )),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: ElevatedButton(
+                      onPressed:
+                          isMyTurn
+                              ? () {
+                                ref
+                                    .read(inGameNavigatorProvider.notifier)
+                                    .showExecuteNavigator();
+                              }
+                              : null,
+                      child: const FittedBox(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Text("Execution"),
+                            GoldWidget(gold: 300, goldTextColor: whiteColor),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
             // Dummy containers for spaceBetween in row

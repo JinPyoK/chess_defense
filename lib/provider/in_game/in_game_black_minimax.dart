@@ -140,10 +140,6 @@ List<dynamic> _minimax(List<dynamic> params) {
             );
           }
 
-          debugPrint(
-            statusBoardAboutPieceActionable.boardStatusToJsonList().toString(),
-          );
-
           /// 상태 변경 후 미니맥스 진행
           _minimax([
             treeDepth,
