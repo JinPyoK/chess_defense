@@ -24,12 +24,6 @@ class _AdRewardState extends State<AdReward> {
     _loadAd();
   }
 
-  @override
-  void dispose() {
-    _rewardedAd?.dispose();
-    super.dispose();
-  }
-
   void _loadAd() {
     RewardedAd.load(
       adUnitId: widget.adUnitId,
@@ -38,35 +32,35 @@ class _AdRewardState extends State<AdReward> {
         /// Called when an ad is successfully received.
         onAdLoaded: (ad) {
           ad.fullScreenContentCallback = FullScreenContentCallback(
+            /// Called when the ad showed the full screen content.
+            onAdShowedFullScreenContent: (ad) {},
 
-              /// Called when the ad showed the full screen content.
-              onAdShowedFullScreenContent: (ad) {},
+            /// Called when an impression occurs on the ad.
+            onAdImpression: (ad) {},
 
-              /// Called when an impression occurs on the ad.
-              onAdImpression: (ad) {},
+            /// Called when the ad failed to show full screen content.
+            onAdFailedToShowFullScreenContent: (ad, err) {
+              /// Dispose the ad here to free resources.
+              _rewardedAd = null;
 
-              /// Called when the ad failed to show full screen content.
-              onAdFailedToShowFullScreenContent: (ad, err) {
-                /// Dispose the ad here to free resources.
-                _rewardedAd = null;
+              _loadAd();
 
-                _loadAd();
+              ad.dispose();
+            },
 
-                ad.dispose();
-              },
+            /// Called when the ad dismissed full screen content.
+            onAdDismissedFullScreenContent: (ad) {
+              /// Dispose the ad here to free resources.
+              _rewardedAd = null;
 
-              /// Called when the ad dismissed full screen content.
-              onAdDismissedFullScreenContent: (ad) {
-                /// Dispose the ad here to free resources.
-                _rewardedAd = null;
+              _loadAd();
 
-                _loadAd();
+              ad.dispose();
+            },
 
-                ad.dispose();
-              },
-
-              /// Called when a click is recorded for an ad.
-              onAdClicked: (ad) {});
+            /// Called when a click is recorded for an ad.
+            onAdClicked: (ad) {},
+          );
 
           // Keep a reference to the ad so you can show it later.
           _rewardedAd = ad;
@@ -84,9 +78,7 @@ class _AdRewardState extends State<AdReward> {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 10 * wu),
       child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          minimumSize: Size(100 * wu, 40 * hu),
-        ),
+        style: ElevatedButton.styleFrom(minimumSize: Size(100 * wu, 40 * hu)),
         onPressed: () {
           if (_rewardedAd == null) {
             showCustomSnackBar(context, "Please try again later");
