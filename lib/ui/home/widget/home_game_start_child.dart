@@ -36,8 +36,10 @@ class _HomeGameStartChildState extends ConsumerState<HomeGameStartChild> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text("Starting Gold (Max 3000 Gold)",
-            style: TextStyle(fontWeight: FontWeight.bold)),
+        const Text(
+          "Starting Gold (Max 3000 Gold)",
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
         SizedBox(height: 20 * hu),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -54,11 +56,7 @@ class _HomeGameStartChildState extends ConsumerState<HomeGameStartChild> {
               ),
             ),
             SizedBox(width: 10 * wu),
-            FaIcon(
-              FontAwesomeIcons.coins,
-              color: Colors.amber,
-              size: 30 * hu,
-            ),
+            FaIcon(FontAwesomeIcons.coins, color: Colors.amber, size: 30 * hu),
           ],
         ),
         SizedBox(height: 15 * hu),
@@ -67,80 +65,96 @@ class _HomeGameStartChildState extends ConsumerState<HomeGameStartChild> {
             child: Row(
               children: [
                 OutlinedButton(
-                    onPressed: () {
-                      _startGold = 0;
-                      setState(() {});
-                    },
-                    child: const Text("Min")),
+                  onPressed: () {
+                    _startGold = 0;
+                    setState(() {});
+                  },
+                  child: const Text("Min"),
+                ),
                 const SizedBox(width: 10),
                 OutlinedButton(
-                    onPressed: () {
-                      _startGold <= 100 ? _startGold = 0 : _startGold -= 100;
-                      setState(() {});
-                    },
-                    child: const Text("-100")),
+                  onPressed: () {
+                    _startGold <= 100 ? _startGold = 0 : _startGold -= 100;
+                    setState(() {});
+                  },
+                  child: const Text("-100"),
+                ),
                 const SizedBox(width: 10),
                 OutlinedButton(
-                    onPressed: () {
-                      if (_startGold + 100 >= myGolds) {
-                        _startGold = myGolds;
-                      } else {
-                        _startGold >= 2900
-                            ? _startGold = 3000
-                            : _startGold += 100;
-                      }
+                  onPressed: () {
+                    if (_startGold + 100 >= myGolds) {
+                      _startGold = myGolds;
+                    } else {
+                      _startGold >= 2900
+                          ? _startGold = 3000
+                          : _startGold += 100;
+                    }
 
-                      setState(() {});
-                    },
-                    child: const Text("+100")),
+                    setState(() {});
+                  },
+                  child: const Text("+100"),
+                ),
                 const SizedBox(width: 10),
                 OutlinedButton(
-                    onPressed: () {
-                      myGolds <= 3000
-                          ? _startGold = myGolds
-                          : _startGold = 3000;
+                  onPressed: () {
+                    myGolds <= 3000 ? _startGold = myGolds : _startGold = 3000;
 
-                      setState(() {});
-                    },
-                    child: const Text("Max")),
+                    setState(() {});
+                  },
+                  child: const Text("Max"),
+                ),
               ],
             ),
           ),
         ),
         SizedBox(height: 30 * hu),
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            OutlinedButton(
-                onPressed: () {
-                  Navigator.of(context, rootNavigator: true).pop();
-                },
-                child: const Text("Cancel")),
-            ElevatedButton(
-                onPressed: () async {
-                  myGolds -= _startGold;
-
-                  await GoldRepository().setGolds(golds: myGolds);
-
-                  setStateGold!(() {});
-
-                  ref
-                      .read(inGameGoldProvider.notifier)
-                      .setInGameGold(_startGold);
-
-                  if (context.mounted) {
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: OutlinedButton(
+                  onPressed: () {
                     Navigator.of(context, rootNavigator: true).pop();
+                  },
+                  child: const FittedBox(child: Text("Cancel")),
+                ),
+              ),
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: ElevatedButton(
+                  onPressed: () async {
+                    myGolds -= _startGold;
 
-                    Navigator.push(
+                    await GoldRepository().setGolds(golds: myGolds);
+
+                    setStateGold!(() {});
+
+                    ref
+                        .read(inGameGoldProvider.notifier)
+                        .setInGameGold(_startGold);
+
+                    if (context.mounted) {
+                      Navigator.of(context, rootNavigator: true).pop();
+
+                      Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (_) =>
-                                const InGameScreen(gameHadSaved: false)));
-                  }
-                },
-                child: const Text("Game Start")),
+                          builder:
+                              (_) => const InGameScreen(gameHadSaved: false),
+                        ),
+                      );
+                    }
+                  },
+                  child: const FittedBox(child: Text("Game Start")),
+                ),
+              ),
+            ),
           ],
-        )
+        ),
       ],
     );
   }

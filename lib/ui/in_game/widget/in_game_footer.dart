@@ -294,7 +294,7 @@ class _InGameFooterState extends ConsumerState<InGameFooter> {
                                 );
                               }
                               : null,
-                      child: const Text("Exit"),
+                      child: const FittedBox(child: Text("Exit")),
                     ),
                   ),
                 ),
@@ -350,12 +350,16 @@ class _InGameFooterState extends ConsumerState<InGameFooter> {
                                     .showExecuteNavigator();
                               }
                               : null,
-                      child: const FittedBox(
+                      child: FittedBox(
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text("Execution"),
-                            GoldWidget(gold: 300, goldTextColor: whiteColor),
+                            const Text("Execution"),
+                            SizedBox(width: 10 * wu),
+                            const GoldWidget(
+                              gold: 300,
+                              goldTextColor: whiteColor,
+                            ),
                           ],
                         ),
                       ),

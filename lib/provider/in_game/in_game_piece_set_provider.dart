@@ -186,7 +186,7 @@ final class InGamePieceSet extends _$InGamePieceSet {
             if (_numOfPiece[pieceEntity.pieceType]! >= 8) {
               ref
                   .read(inGameSystemNotificationProvider.notifier)
-                  .notifySystemError(1);
+                  .notifySystemError("Maximum number of pieces reached");
               return;
             }
           }
@@ -195,7 +195,7 @@ final class InGamePieceSet extends _$InGamePieceSet {
             if (_numOfPiece[pieceEntity.pieceType]! >= 1) {
               ref
                   .read(inGameSystemNotificationProvider.notifier)
-                  .notifySystemError(1);
+                  .notifySystemError("Maximum number of pieces reached");
               return;
             }
           }
@@ -204,7 +204,7 @@ final class InGamePieceSet extends _$InGamePieceSet {
             if (_numOfPiece[pieceEntity.pieceType]! >= 2) {
               ref
                   .read(inGameSystemNotificationProvider.notifier)
-                  .notifySystemError(1);
+                  .notifySystemError("Maximum number of pieces reached");
               return;
             }
           }
@@ -214,7 +214,7 @@ final class InGamePieceSet extends _$InGamePieceSet {
           if (gold < pieceEntity.value) {
             ref
                 .read(inGameSystemNotificationProvider.notifier)
-                .notifySystemError(0);
+                .notifySystemError("Not enough Gold");
             return;
           }
 
@@ -288,7 +288,7 @@ final class InGamePieceSet extends _$InGamePieceSet {
         if (gold < 300) {
           ref
               .read(inGameSystemNotificationProvider.notifier)
-              .notifySystemError(0);
+              .notifySystemError("Not enough Gold");
           return;
         }
 

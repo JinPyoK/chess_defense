@@ -16,10 +16,7 @@ final class InGameSystemNotification extends _$InGameSystemNotification {
   }
 
   void notifyCheck() {
-    state = <Widget>[
-      ...state,
-      CheckSystemNotification(key: GlobalKey()),
-    ];
+    state = <Widget>[...state, CheckSystemNotification(key: GlobalKey())];
     makeExecuteOrCheckSound();
   }
 
@@ -31,7 +28,7 @@ final class InGameSystemNotification extends _$InGameSystemNotification {
     makeGameStartSound();
   }
 
-  void notifySystemError(int errorMessage) {
+  void notifySystemError(String errorMessage) {
     state = <Widget>[
       ...state,
       ErrorSystemNotification(key: GlobalKey(), errorMessage: errorMessage),

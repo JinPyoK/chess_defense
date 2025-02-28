@@ -28,8 +28,12 @@ class HomeScreen extends StatelessWidget {
         ),
         Column(
           children: [
-            _renderButton(context, 'Game Start', const HomeGameStartChild(),
-                defaultAction: false),
+            _renderButton(
+              context,
+              'Game Start',
+              const HomeGameStartChild(),
+              defaultAction: false,
+            ),
             SizedBox(height: 20 * hu),
             _renderButton(context, 'Help', const HomeHelpChild()),
             SizedBox(height: 20 * hu),
@@ -42,40 +46,37 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-OutlinedButton _renderButton(BuildContext context, String text, Widget child,
-        {bool defaultAction = true}) =>
-    OutlinedButton(
-      onPressed: () async {
-        /// 앱 시작시 저장된 게임 있는지 확인
-        final inGameSave = await InGameSavedDataRepository().getSavedData();
-        await soundInit();
+OutlinedButton _renderButton(
+  BuildContext context,
+  String text,
+  Widget child, {
+  bool defaultAction = true,
+}) => OutlinedButton(
+  onPressed: () async {
+    /// 앱 시작시 저장된 게임 있는지 확인
+    final inGameSave = await InGameSavedDataRepository().getSavedData();
+    await soundInit();
 
-        if (context.mounted) {
-          /// 게임 시작 버튼일 때
-          if (defaultAction == false) {
-            if (context.mounted && inGameSave.isNotEmpty) {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (_) => const InGameScreen(gameHadSaved: true)));
-            } else {
-              if (context.mounted) {
-                showCustomDialog(
-                  context,
-                  child,
-                  defaultAction: defaultAction,
-                );
-              }
-            }
-          } else {
-            showCustomDialog(
-              context,
-              child,
-              defaultAction: defaultAction,
-            );
+    if (context.mounted) {
+      /// 게임 시작 버튼일 때
+      if (defaultAction == false) {
+        if (context.mounted && inGameSave.isNotEmpty) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => const InGameScreen(gameHadSaved: true),
+            ),
+          );
+        } else {
+          if (context.mounted) {
+            showCustomDialog(context, child, defaultAction: defaultAction);
           }
         }
-      },
-      style: OutlinedButton.styleFrom(fixedSize: Size(100 * wu, 40 * hu)),
-      child: Text(text),
-    );
+      } else {
+        showCustomDialog(context, child, defaultAction: defaultAction);
+      }
+    }
+  },
+  style: OutlinedButton.styleFrom(fixedSize: Size(100 * wu, 40 * hu)),
+  child: FittedBox(child: Text(text)),
+);
