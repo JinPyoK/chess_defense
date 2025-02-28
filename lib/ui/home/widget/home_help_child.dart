@@ -79,7 +79,7 @@ class HomeHelpChild extends StatelessWidget {
               'https://power-goal-234.notion.site/Chess-Defense-1a5edbcd9b1680feac0bf5f2b6d3be5e',
           text: "Privacy Policy & Terms of Use",
         ),
-        _renderTitle('10. License'),
+        _renderTitle('10. Asset Source'),
         _renderDescription(
           'The app icon and the top image in the Help section were generated using AI.',
         ),

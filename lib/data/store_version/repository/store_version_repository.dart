@@ -11,8 +11,9 @@ final class StoreVersionRepository {
       final response = await _dio.get(androidPlayStoreUrl);
 
       if (response.statusCode == 200) {
-        final RegExp regexp =
-        RegExp(r'\[\[\["(\d+\.\d+(\.[a-z]+)?(\.([^"]|\\")*)?)"\]\]');
+        final RegExp regexp = RegExp(
+          r'\[\[\["(\d+\.\d+(\.[a-z]+)?(\.([^"]|\\")*)?)"\]\]',
+        );
         final String? version = regexp.firstMatch(response.data)?.group(1);
         return version;
       }
@@ -36,5 +37,4 @@ final class StoreVersionRepository {
     }
     return null;
   }
-
 }
