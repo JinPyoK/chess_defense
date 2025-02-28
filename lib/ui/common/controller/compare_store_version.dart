@@ -45,7 +45,7 @@ Future<void> compareStoreVersionAndShowDialog(BuildContext context) async {
                               ? 'https://play.google.com/store/apps/details?id=com.jinpyok.chess_defense'
                               : '훗날 IOS 앱스토어 추가',
                         );
-                      } catch (_, __) {
+                      } catch (_, _) {
                         if (context.mounted) {
                           showCustomSnackBar(
                             context,
