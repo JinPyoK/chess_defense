@@ -1,5 +1,4 @@
 import 'package:chess_defense/core/constant/color.dart';
-import 'package:chess_defense/data/gold/repository/gold_repository.dart';
 import 'package:chess_defense/data/in_game/repository/in_game_saved_data_repository.dart';
 import 'package:chess_defense/domain/in_game/entity/in_game_board_status.dart';
 import 'package:chess_defense/domain/in_game/entity/piece_enum.dart';
@@ -10,7 +9,6 @@ import 'package:chess_defense/provider/in_game/in_game_turn_provider.dart';
 import 'package:chess_defense/ui/common/controller/screen_size.dart';
 import 'package:chess_defense/ui/common/controller/show_custom_dialog.dart';
 import 'package:chess_defense/ui/common/controller/util_function.dart';
-import 'package:chess_defense/ui/common/screen/main_navigation_screen.dart';
 import 'package:chess_defense/ui/common/widget/gold_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -216,7 +214,7 @@ class _InGameFooterState extends ConsumerState<InGameFooter> {
                                         CrossAxisAlignment.stretch,
                                     children: [
                                       const Text(
-                                        "Do you want to exit the game?\n\nIf you exit without saving, any remaining Gold will be refunded.",
+                                        "Do you want to exit the game?\n\nIf you exit without saving, any remaining Gold will be lost.",
                                         style: TextStyle(
                                           color: blackColor,
                                           fontWeight: FontWeight.bold,
@@ -264,16 +262,6 @@ class _InGameFooterState extends ConsumerState<InGameFooter> {
                                           backgroundColor: Colors.redAccent,
                                         ),
                                         onPressed: () async {
-                                          final inGameGold = ref.read(
-                                            inGameGoldProvider,
-                                          );
-
-                                          myGolds += inGameGold;
-
-                                          await GoldRepository().setGolds(
-                                            golds: myGolds,
-                                          );
-
                                           await InGameSavedDataRepository()
                                               .removeInGameData();
 

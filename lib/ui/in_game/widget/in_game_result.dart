@@ -1,15 +1,12 @@
 import 'package:chess_defense/core/constant/color.dart';
-import 'package:chess_defense/data/gold/repository/gold_repository.dart';
 import 'package:chess_defense/data/in_game/repository/in_game_saved_data_repository.dart';
 import 'package:chess_defense/data/ranking/model/rank_model.dart';
-import 'package:chess_defense/provider/in_game/in_game_gold_provider.dart';
 import 'package:chess_defense/provider/in_game/in_game_move_provider.dart';
 import 'package:chess_defense/provider/ranking/ranking_provider.dart';
 import 'package:chess_defense/ui/common/controller/global_context.dart';
 import 'package:chess_defense/ui/common/controller/screen_size.dart';
 import 'package:chess_defense/ui/common/controller/show_custom_snackbar.dart';
 import 'package:chess_defense/ui/common/controller/util_function.dart';
-import 'package:chess_defense/ui/common/screen/main_navigation_screen.dart';
 import 'package:chess_defense/ui/in_game/controller/check_bad_words.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -113,7 +110,7 @@ class _InGameResultState extends ConsumerState<InGameResult> {
             decoration: const InputDecoration(
               hintText: "Please enter a nickname",
             ),
-            maxLength: 10,
+            maxLength: 12,
             inputFormatters: [
               FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9 ]')),
               // 영어와 숫자만 허용
@@ -179,12 +176,6 @@ class _InGameResultState extends ConsumerState<InGameResult> {
               ElevatedButton(
                 style: ElevatedButton.styleFrom(backgroundColor: redColor),
                 onPressed: () async {
-                  final inGameGold = ref.read(inGameGoldProvider);
-
-                  myGolds += inGameGold;
-
-                  await GoldRepository().setGolds(golds: myGolds);
-
                   await InGameSavedDataRepository().removeInGameData();
 
                   if (context.mounted) {

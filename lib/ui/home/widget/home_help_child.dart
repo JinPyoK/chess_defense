@@ -37,7 +37,7 @@ class HomeHelpChild extends StatelessWidget {
           'You earn a small amount of Gold by capturing Black\'s pieces during the match.',
         ),
         _renderDescription(
-          'After the game ends, all remaining Gold is refunded.',
+          'After the game ends, any remaining Gold will be lost.',
         ),
         _renderDescription(
           'However, please note that if you delete the app, all accumulated Gold will be lost.',
