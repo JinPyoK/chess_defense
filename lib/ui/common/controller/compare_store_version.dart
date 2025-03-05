@@ -1,5 +1,6 @@
 import 'dart:io' show Platform;
 
+import 'package:chess_defense/core/constant/store_url.dart';
 import 'package:chess_defense/provider/store_version/store_version_provider.dart';
 import 'package:chess_defense/ui/common/controller/screen_size.dart';
 import 'package:chess_defense/ui/common/controller/show_custom_dialog.dart';
@@ -42,8 +43,8 @@ Future<void> compareStoreVersionAndShowDialog(BuildContext context) async {
                       try {
                         await launchUrlString(
                           Platform.isAndroid
-                              ? 'https://play.google.com/store/apps/details?id=com.jinpyok.chess_defense'
-                              : '훗날 IOS 앱스토어 추가',
+                              ? androidPlayStoreUrl
+                              : iosAppStoreUrl,
                         );
                       } catch (_, _) {
                         if (context.mounted) {
