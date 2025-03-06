@@ -30,7 +30,6 @@ final class StoreVersionRepository {
       if (response.statusCode == 200) {
         final jsonObj = json.decode(response.data);
         String? version = jsonObj['results'][0]['version'];
-
         return version;
       }
     } catch (_) {

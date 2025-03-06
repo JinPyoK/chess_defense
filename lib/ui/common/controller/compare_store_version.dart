@@ -44,7 +44,7 @@ Future<void> compareStoreVersionAndShowDialog(BuildContext context) async {
                         await launchUrlString(
                           Platform.isAndroid
                               ? androidPlayStoreUrl
-                              : iosAppStoreUrl,
+                              : 'https://apps.apple.com/us/app/chess-defense/id6742506198',
                         );
                       } catch (_, _) {
                         if (context.mounted) {
