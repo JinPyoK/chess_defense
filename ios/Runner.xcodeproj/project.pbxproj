@@ -497,7 +497,7 @@
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 5KKTS533H4;
 				ENABLE_BITCODE = NO;
-				FLUTTER_BUILD_NAME = 1.0.0;
+				FLUTTER_BUILD_NAME = 1.0.1;
 				FLUTTER_BUILD_NUMBER = 1;
 				FLUTTER_TARGET = lib/core/main/main.dart;
 				INFOPLIST_FILE = Runner/Info.plist;
@@ -689,7 +689,7 @@
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 5KKTS533H4;
 				ENABLE_BITCODE = NO;
-				FLUTTER_BUILD_NAME = 1.0.0;
+				FLUTTER_BUILD_NAME = 1.0.1;
 				FLUTTER_BUILD_NUMBER = 1;
 				FLUTTER_TARGET = lib/core/main/main.dart;
 				INFOPLIST_FILE = Runner/Info.plist;
@@ -721,7 +721,7 @@
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 5KKTS533H4;
 				ENABLE_BITCODE = NO;
-				FLUTTER_BUILD_NAME = 1.0.0;
+				FLUTTER_BUILD_NAME = 1.0.1;
 				FLUTTER_BUILD_NUMBER = 1;
 				FLUTTER_TARGET = lib/core/main/main.dart;
 				INFOPLIST_FILE = Runner/Info.plist;
