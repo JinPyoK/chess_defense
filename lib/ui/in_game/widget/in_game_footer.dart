@@ -8,7 +8,6 @@ import 'package:chess_defense/provider/in_game/in_game_navigator_provider.dart';
 import 'package:chess_defense/provider/in_game/in_game_turn_provider.dart';
 import 'package:chess_defense/ui/common/controller/screen_size.dart';
 import 'package:chess_defense/ui/common/controller/show_custom_dialog.dart';
-import 'package:chess_defense/ui/common/controller/util_function.dart';
 import 'package:chess_defense/ui/common/widget/gold_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -269,8 +268,6 @@ class _InGameFooterState extends ConsumerState<InGameFooter> {
                                             Navigator.pop(context);
                                             Navigator.pop(context);
                                           }
-
-                                          setStateGold!(() {});
                                         },
                                         child: const Text(
                                           "Exit Without Saving",

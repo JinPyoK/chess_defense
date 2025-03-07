@@ -6,7 +6,6 @@ import 'package:chess_defense/provider/ranking/ranking_provider.dart';
 import 'package:chess_defense/ui/common/controller/global_context.dart';
 import 'package:chess_defense/ui/common/controller/screen_size.dart';
 import 'package:chess_defense/ui/common/controller/show_custom_snackbar.dart';
-import 'package:chess_defense/ui/common/controller/util_function.dart';
 import 'package:chess_defense/ui/in_game/controller/check_bad_words.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -182,8 +181,6 @@ class _InGameResultState extends ConsumerState<InGameResult> {
                     Navigator.pop(globalContext!);
                     Navigator.pop(context);
                   }
-
-                  setStateGold!(() {});
                 },
                 child: const Text("Exit"),
               ),
