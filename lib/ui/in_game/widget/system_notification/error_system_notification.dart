@@ -11,35 +11,37 @@ class ErrorSystemNotification extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Positioned(
-      left: pieceIconSize,
-      bottom: pieceIconSize,
-      child: IgnorePointer(
-        child: Container(
-              decoration: BoxDecoration(
-                color: inGameBlackColor.withValues(alpha: 0.8),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              padding: EdgeInsets.symmetric(horizontal: pieceIconSize),
-              width: pieceIconSize * 8,
-              height: pieceIconSize * 1.5,
-              child: FittedBox(
-                child: Text(
-                  errorMessage,
-                  style: GoogleFonts.roboto(
-                    color: whiteColor,
-                    fontWeight: FontWeight.bold,
+    return Align(
+      alignment: Alignment.bottomCenter,
+      child: Padding(
+        padding: EdgeInsets.only(bottom: pieceIconSize),
+        child: IgnorePointer(
+          child: Container(
+                decoration: BoxDecoration(
+                  color: inGameBlackColor.withValues(alpha: 0.8),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                padding: EdgeInsets.symmetric(horizontal: pieceIconSize),
+                width: pieceIconSize * 8,
+                height: pieceIconSize * 1.5,
+                child: FittedBox(
+                  child: Text(
+                    errorMessage,
+                    style: GoogleFonts.roboto(
+                      color: whiteColor,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
+              )
+              .animate()
+              .fadeIn(duration: const Duration(seconds: 1))
+              .then()
+              .fadeOut(
+                delay: const Duration(milliseconds: 500),
+                duration: const Duration(seconds: 1),
               ),
-            )
-            .animate()
-            .fadeIn(duration: const Duration(seconds: 1))
-            .then()
-            .fadeOut(
-              delay: const Duration(milliseconds: 500),
-              duration: const Duration(seconds: 1),
-            ),
+        ),
       ),
     );
   }

@@ -1,6 +1,11 @@
+import 'package:flutter/material.dart';
+
 double boardSize = 1;
 
 double pieceIconSize = 1;
+
+/// 체스판을 센터에 배치할 때 왼쪽 여백 만큼 이동
+double screenOffset = 0;
 
 Map<int, double> boardPositionXValue = {
   0: 0,
@@ -24,9 +29,11 @@ Map<int, double> boardPositionYValue = {
   7: 0,
 };
 
-void initBoardPositionValue() {
+void initBoardPositionValue(BuildContext context) {
   final positionXValue = boardSize / 360;
   final positionYValue = boardSize / 720;
+
+  screenOffset = (MediaQuery.of(context).size.width - boardSize) / 2;
 
   boardPositionXValue[0] = positionXValue * 4.1;
   boardPositionXValue[1] = positionXValue * 50.1;

@@ -109,7 +109,7 @@ class _InGamePieceState extends ConsumerState<InGamePiece> {
     return AnimatedPositioned(
       duration: const Duration(milliseconds: 500),
       curve: Curves.easeOutCubic,
-      left: boardPositionXValue[widget.pieceEntity.x],
+      left: boardPositionXValue[widget.pieceEntity.x]! + screenOffset,
       bottom: boardPositionYValue[widget.pieceEntity.y],
       child: Stack(
         alignment: AlignmentDirectional.topCenter,

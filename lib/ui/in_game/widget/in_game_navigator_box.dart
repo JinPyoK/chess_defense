@@ -394,7 +394,8 @@ class _InGameNavigatorState extends ConsumerState<InGameNavigatorBox> {
     return Positioned(
       left:
           boardPositionXValue[widget.pieceActionable.targetX]! +
-          pieceIconSize / 5,
+          pieceIconSize / 5 +
+          screenOffset,
       bottom:
           boardPositionYValue[widget.pieceActionable.targetY]! +
           pieceIconSize / 5,

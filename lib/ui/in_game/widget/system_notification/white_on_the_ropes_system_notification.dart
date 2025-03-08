@@ -9,9 +9,8 @@ class WhiteOnTheRopesSystemNotification extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Positioned(
-      left: pieceIconSize * 2.5,
-      bottom: pieceIconSize * 4,
+    return Align(
+      alignment: Alignment.center,
       child: IgnorePointer(
         child: Container(
               decoration: BoxDecoration(
