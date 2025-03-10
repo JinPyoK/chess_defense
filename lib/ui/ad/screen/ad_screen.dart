@@ -1,10 +1,9 @@
 import 'package:chess_defense/ui/ad/controller/ad_id.dart';
+import 'package:chess_defense/ui/ad/widget/ad_banner.dart';
 import 'package:chess_defense/ui/ad/widget/ad_reward.dart';
 import 'package:chess_defense/ui/common/controller/screen_size.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart' show AdSize;
-
-import '../widget/ad_banner.dart' show AdBanner;
 
 class AdScreen extends StatefulWidget {
   const AdScreen({super.key});

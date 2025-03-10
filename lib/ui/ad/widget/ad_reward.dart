@@ -96,7 +96,7 @@ class _AdRewardState extends State<AdReward> {
                 },
               );
             } catch (_) {
-              showCustomSnackBar(context, "Please try again later");
+              showCustomSnackBar(context, "You can't watch the ad right now");
             }
           }
         },
