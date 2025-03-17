@@ -14,4 +14,5 @@
 </div>
 
 ## 스토어
-구글 플레이스토어 심사중입니다.
+[구글 플레이스토어](https://play.google.com/store/apps/details?id=com.jinpyok.chess_defense)  
+[애플 앱스토어](https://apps.apple.com/us/app/chess-defense/id6742506198)
